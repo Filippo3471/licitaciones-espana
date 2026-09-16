@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ licitacion.titulo if licitacion else "No encontrada" }}{% endblock %}
+{% block content %}
+
+{% if not licitacion %}
+<div class="card">No se encontró esta licitación. <a href="/">Volver al listado</a></div>
+{% else %}
+
+<p><a href="/">&larr; Volver al listado</a></p>
+
+<div class="card">
+  <span class="pill estado-{{ licitacion.estado }}">{{ licitacion.estado_legible }}</span>
+  <span class="pill">{{ licitacion.tipo_contrato_legible }}</span>
+  <span class="pill">{{ licitacion.sector }}</span>
+  <h2 style="margin:10px 0 4px">{{ licitacion.titulo }}</h2>
+  <p class="muted">Expediente {{ licitacion.expediente or "s/n" }} · {{ licitacion.organo or "Órgano no especificado" }}</p>
+
+  <table>
+    <tr><td class="muted">Importe</td><td>{% if licitacion.importe %}{{ "{:,.2f}".format(licitacion.importe).replace(",", "X").replace(".", ",").replace("X", ".") }} €{% else %}No especificado{% endif %}</td></tr>
+    <tr><td class="muted">Zona geográfica</td><td>{{ licitacion.ccaa }}{% if licitacion.ubicacion_nombre %} — {{ licitacion.ubicacion_nombre }}{% endif %}{% if licitacion.ubicacion_nuts %} ({{ licitacion.ubicacion_nuts }}){% endif %}</td></tr>
+    <tr><td class="muted">Plazo de presentación</td><td>{% if licitacion.plazo_fecha %}{{ licitacion.plazo_fecha }} {{ licitacion.plazo_hora or "" }}{% else %}No especificado en el feed{% endif %}</td></tr>
+    <tr><td class="muted">Tipo de órgano</td><td>{{ licitacion.tipo_organo_legible }}</td></tr>
+    <tr><td class="muted">Códigos CPV</td><td>{{ licitacion.cpv_codes | join(", ") if licitacion.cpv_codes else "—" }}</td></tr>
+  </table>
+
+  {% if licitacion.detail_url %}
+  <p style="margin-top:12px"><a href="{{ licitacion.detail_url }}" target="_blank" rel="noopener">Ver ficha oficial completa en la PLACSP &rarr;</a></p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3>¿Qué empresa puede presentarse? — Requisitos y solvencia</h3>
+  {% if licitacion.requisitos %}
+  <p class="muted">Declaraciones / requisitos administrativos exigidos:</p>
+  <ul>{% for r in licitacion.requisitos %}<li>{{ r }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if licitacion.solvencia_tecnica %}
+  <p class="muted">Solvencia técnica / profesional:</p>
+  <ul>{% for r in licitacion.solvencia_tecnica %}<li>{{ r }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if licitacion.solvencia_economica %}
+  <p class="muted">Solvencia económica / financiera:</p>
+  <ul>{% for r in licitacion.solvencia_economica %}<li>{{ r }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if not licitacion.requisitos and not licitacion.solvencia_tecnica and not licitacion.solvencia_economica %}
+  <p class="muted">El feed no incluye requisitos estructurados para esta licitación — consulta el PCAP (pliego administrativo) más abajo, ahí están siempre los requisitos completos de solvencia y clasificación empresarial.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3>Pliegos y documentación para presentar la oferta</h3>
+  {% if licitacion.documentos %}
+  <ul class="doc-list">
+    {% for d in licitacion.documentos %}
+    <li><strong>{{ d.categoria }}</strong> — {{ d.nombre }}<br><a href="{{ d.url }}" target="_blank" rel="noopener">Descargar PDF &rarr;</a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">No hay documentos adjuntos en el feed para esta licitación. Consulta la ficha oficial en la PLACSP (enlace arriba) para ver el PCAP y el PPT.</p>
+  {% endif %}
+</div>
+
+{% endif %}
+{% endblock %}

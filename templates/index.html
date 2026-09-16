@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="filters" method="get">
+  <div class="field">
+    <label>Estado</label>
+    <select name="estado">
+      <option value="" {{ "selected" if filtros.estado == "" }}>Todos</option>
+      <option value="PUB" {{ "selected" if filtros.estado == "PUB" }}>Abiertas (plazo en curso)</option>
+      <option value="EV" {{ "selected" if filtros.estado == "EV" }}>En evaluación</option>
+      <option value="ADJ" {{ "selected" if filtros.estado == "ADJ" }}>Adjudicadas</option>
+      <option value="RES" {{ "selected" if filtros.estado == "RES" }}>Resueltas</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Comunidad Autónoma</label>
+    <select name="ccaa">
+      <option value="">Todas</option>
+      {% for c in ccaas %}
+      <option value="{{ c }}" {{ "selected" if filtros.ccaa == c }}>{{ c }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label>Tipo de contrato</label>
+    <select name="tipo_contrato">
+      <option value="">Todos</option>
+      <option value="1" {{ "selected" if filtros.tipo_contrato == "1" }}>Suministros</option>
+      <option value="2" {{ "selected" if filtros.tipo_contrato == "2" }}>Servicios</option>
+      <option value="3" {{ "selected" if filtros.tipo_contrato == "3" }}>Obras</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Sector (CPV)</label>
+    <select name="sector">
+      <option value="">Todos</option>
+      {% for s in sectores %}
+      <option value="{{ s }}" {{ "selected" if filtros.sector == s }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="field" style="flex:1">
+    <label>Buscar (título / órgano / objeto)</label>
+    <input type="text" name="q" value="{{ filtros.q }}" placeholder="ej. limpieza, ayuntamiento, obras...">
+  </div>
+  <button type="submit">Filtrar</button>
+</form>
+
+<p class="muted">
+  Mostrando {{ mostrando }} de {{ total }} licitaciones en base de datos.
+  {% if ultima_actualizacion %}Última actualización de datos: {{ ultima_actualizacion }}.{% else %}Aún no se han descargado datos — ejecuta <code>python -m backend.update</code>.{% endif %}
+</p>
+
+{% for l in licitaciones %}
+<div class="card">
+  <span class="pill estado-{{ l.estado }}">{{ l.estado_legible }}</span>
+  <span class="pill">{{ l.tipo_contrato_legible }}</span>
+  <span class="pill">{{ l.sector }}</span>
+  {% if l.ccaa %}<span class="pill">{{ l.ccaa }}{% if l.ubicacion_nombre %} · {{ l.ubicacion_nombre }}{% endif %}</span>{% endif %}
+  <div>
+    <a class="tender-title" href="/licitacion/{{ l.numero }}">{{ l.titulo }}</a>
+  </div>
+  <p class="muted" style="margin:6px 0 0">
+    {{ l.organo or "Órgano no especificado" }}
+    {% if l.importe %} · {{ "{:,.0f}".format(l.importe).replace(",", ".") }} €{% endif %}
+    {% if l.plazo_fecha %} · Plazo de presentación: {{ l.plazo_fecha }}{% if l.plazo_hora %} {{ l.plazo_hora }}{% endif %}{% endif %}
+  </p>
+</div>
+{% else %}
+<div class="card">No hay licitaciones con estos filtros todavía.</div>
+{% endfor %}
+
+{% endblock %}
