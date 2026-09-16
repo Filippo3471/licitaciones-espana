@@ -15,9 +15,14 @@ TIPO_CONTRATO = {
     "1": "Suministros",
     "2": "Servicios",
     "3": "Obras",
+    "7": "Administrativo especial",
+    "8": "Privado",
     "21": "Gestión de servicios públicos",
-    "31": "Concesión de servicios",
+    "22": "Concesión de servicios",
+    "31": "Concesión de obras públicas",
     "32": "Concesión de obras",
+    "40": "Colaboración público-privada",
+    "50": "Patrimonial",
 }
 
 TIPO_ORGANO = {
@@ -36,7 +41,7 @@ def estado_legible(codigo: str) -> str:
 
 
 def tipo_contrato_legible(codigo: str) -> str:
-    return TIPO_CONTRATO.get(codigo, f"Otro ({codigo})" if codigo else "No especificado")
+    return TIPO_CONTRATO.get(codigo, f"Tipo de contrato (código {codigo})" if codigo else "No especificado")
 
 
 def tipo_organo_legible(codigo: str) -> str:

@@ -94,7 +94,11 @@ def _ca_bundle(tmp_dir: Path) -> str:
 # --------------------------------------------------------------------------
 # Tablas de códigos (CODICE / CPV / NUTS)
 # --------------------------------------------------------------------------
-TIPO_CONTRATO = {"1": "Suministros", "2": "Servicios", "3": "Obras", "21": "Gestión de servicios públicos", "31": "Concesión de servicios", "32": "Concesión de obras"}
+TIPO_CONTRATO = {
+    "1": "Suministros", "2": "Servicios", "3": "Obras", "7": "Administrativo especial", "8": "Privado",
+    "21": "Gestión de servicios públicos", "22": "Concesión de servicios", "31": "Concesión de obras públicas",
+    "32": "Concesión de obras", "40": "Colaboración público-privada", "50": "Patrimonial",
+}
 
 CPV_DIVISIONES = {
     "03": "Agricultura, ganadería, pesca, silvicultura", "09": "Productos petrolíferos, combustibles, electricidad y energía",
@@ -218,7 +222,7 @@ def parse_entry(entry) -> dict | None:
         "titulo": titulo,
         "objeto": objeto,
         "organo": organo,
-        "tipo_contrato_legible": TIPO_CONTRATO.get(tipo_code, tipo_code),
+        "tipo_contrato_legible": TIPO_CONTRATO.get(tipo_code, f"Tipo de contrato (código {tipo_code})" if tipo_code else "No especificado"),
         "importe": importe_f,
         "sector": sector_legible(cpv_codes[0]) if cpv_codes else "Sin clasificar",
         "ccaa": ccaa_legible(ubicacion_nuts),
