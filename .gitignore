@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 data/*.db
 data/ca-bundle.pem
+data/licitaciones.json
+artifact/licitaciones.json
