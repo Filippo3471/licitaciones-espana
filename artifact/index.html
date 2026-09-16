@@ -129,12 +129,11 @@
   }
   .expediente > summary {
     list-style: none; cursor: pointer; padding: 13px 16px 13px 14px;
-    display: grid; grid-template-columns: 4px 1fr auto; gap: 14px; align-items: start;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: start;
     border-left: 4px solid var(--ok);
   }
   .expediente > summary::-webkit-details-marker { display: none; }
   .expediente[data-estado-color="warn"] > summary { border-left-color: var(--warn); }
-  .rail { display: none; }
   .exp-main { min-width: 0; }
   .exp-id { font-size: 0.72rem; color: var(--ink-muted); margin-bottom: 3px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .exp-title { font-family: "Fraunces", Georgia, serif; font-size: 1.05rem; font-weight: 500; margin: 0 0 6px; text-wrap: balance; }
@@ -167,6 +166,7 @@
   .doc-link .cat { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); flex: none; }
   .doc-link .name { color: var(--ink); }
   .doc-link:hover { border-color: var(--accent); }
+  .exp-body > a.doc-link { margin-top: 4px; }
   .official-link { display: inline-block; margin-top: 14px; font-size: 0.85rem; }
   .empty { text-align: center; padding: 60px 20px; color: var(--ink-muted); }
 
@@ -260,7 +260,6 @@
 
     const summary = document.createElement("summary");
     summary.innerHTML = `
-      <span class="rail"></span>
       <span class="exp-main">
         <span class="exp-id mono">Exp. ${escapeHtml(item.expediente || "s/n")} · ${escapeHtml(item.fuente)}</span>
         <p class="exp-title">${escapeHtml(item.titulo)}</p>
@@ -285,6 +284,8 @@
     body.className = "exp-body";
     let bodyHtml = "";
 
+    const pcap = (item.documentos || []).find((d) => /PCAP/i.test(d.categoria));
+
     if ((item.requisitos && item.requisitos.length) || (item.solvencia_tecnica && item.solvencia_tecnica.length) || (item.solvencia_economica && item.solvencia_economica.length)) {
       bodyHtml += `<h4>¿Qué empresa puede presentarse?</h4>`;
       if (item.requisitos && item.requisitos.length) {
@@ -295,6 +296,9 @@
       }
       if (item.solvencia_economica && item.solvencia_economica.length) {
         bodyHtml += `<h4>Solvencia económica</h4><ul>${item.solvencia_economica.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>`;
+      }
+      if (pcap) {
+        bodyHtml += `<a class="doc-link" href="${escapeAttr(pcap.url)}" target="_blank" rel="noopener"><span class="cat">Detalle completo</span><span class="name">Ver el PCAP de esta licitación (PDF) →</span></a>`;
       }
     }
 
