@@ -39,13 +39,23 @@ def _combined_ca_bundle() -> str:
     return str(_COMBINED_BUNDLE)
 
 
-def fetch_page(url: str, timeout: int = 30) -> bytes:
-    resp = requests.get(url, headers=HEADERS, timeout=timeout, verify=_combined_ca_bundle())
-    resp.raise_for_status()
-    return resp.content
+def fetch_page(url: str, timeout: int = 45, retries: int = 3) -> bytes:
+    last_exc = None
+    for attempt in range(1, retries + 1):
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=timeout, verify=_combined_ca_bundle())
+            resp.raise_for_status()
+            return resp.content
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            last_exc = exc
+            if attempt < retries:
+                wait = 3 * attempt
+                print(f"  [fetch] intento {attempt}/{retries} falló ({exc.__class__.__name__}), reintentando en {wait}s...")
+                time.sleep(wait)
+    raise last_exc
 
 
-def iter_pages(start_url: str = FEED_URL, max_pages: int = 10, delay: float = 0.5):
+def iter_pages(start_url: str = FEED_URL, max_pages: int = 10, delay: float = 1.0):
     """Descarga páginas siguiendo rel=next, hasta max_pages (cortesía: pausa
     entre peticiones para no sobrecargar el servidor público)."""
     from . import parser

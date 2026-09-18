@@ -254,12 +254,27 @@ def next_link(xml_bytes: bytes) -> str | None:
     return None
 
 
+def _get_with_retries(url: str, ca_bundle: str, timeout: int = 45, retries: int = 3):
+    last_exc = None
+    for attempt in range(1, retries + 1):
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=timeout, verify=ca_bundle)
+            resp.raise_for_status()
+            return resp
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            last_exc = exc
+            if attempt < retries:
+                wait = 3 * attempt
+                print(f"  [fetch] intento {attempt}/{retries} falló ({exc.__class__.__name__}), reintentando en {wait}s...", file=sys.stderr)
+                time.sleep(wait)
+    raise last_exc
+
+
 def fetch_placsp(max_pages: int, ca_bundle: str) -> list[dict]:
     out = []
     url = FEED_URL
     for i in range(max_pages):
-        resp = requests.get(url, headers=HEADERS, timeout=30, verify=ca_bundle)
-        resp.raise_for_status()
+        resp = _get_with_retries(url, ca_bundle)
         content = resp.content
         root = ET.fromstring(content)
         for entry in root.findall("atom:entry", NS):
@@ -271,7 +286,7 @@ def fetch_placsp(max_pages: int, ca_bundle: str) -> list[dict]:
         if not nxt:
             break
         url = nxt
-        time.sleep(0.4)
+        time.sleep(1.0)
     return out
 
 
