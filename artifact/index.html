@@ -103,6 +103,17 @@
   .review-strip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); flex: none; }
   .review-strip b { font-family: "IBM Plex Mono", monospace; font-weight: 500; }
 
+  .tabs {
+    display: flex; gap: 4px; margin-bottom: 6px; border-bottom: 1px solid var(--line);
+  }
+  .tabs button {
+    font-family: "Fraunces", Georgia, serif; font-size: 0.98rem; font-weight: 500;
+    background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;
+    color: var(--ink-muted); padding: 9px 4px 10px; margin-right: 18px;
+  }
+  .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .tabs button:hover { color: var(--ink); }
+
   .filters {
     position: sticky; top: env(safe-area-inset-top, 0px);
     background: var(--paper); z-index: 5; padding-block: 10px 14px;
@@ -134,7 +145,12 @@
   }
   .expediente > summary::-webkit-details-marker { display: none; }
   .expediente[data-estado-color="warn"] > summary { border-left-color: var(--warn); }
+  .expediente[data-estado-color="closed"] > summary { border-left-color: var(--accent); }
   .exp-main { min-width: 0; }
+  .winner-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); margin-bottom: 1px; }
+  .winner-name { font-family: "Fraunces", Georgia, serif; font-size: 1.05rem; font-weight: 600; color: var(--accent); }
+  .price-compare { font-size: 0.78rem; color: var(--ink-muted); margin-top: 2px; }
+  .price-compare .baja { color: var(--ok); font-weight: 500; }
   .exp-id { font-size: 0.72rem; color: var(--ink-muted); margin-bottom: 3px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .exp-title { font-family: "Fraunces", Georgia, serif; font-size: 1.05rem; font-weight: 500; margin: 0 0 6px; text-wrap: balance; }
   .exp-meta { font-size: 0.83rem; color: var(--ink-muted); display: flex; flex-wrap: wrap; gap: 4px 10px; }
@@ -189,10 +205,11 @@
     <div class="title-block">
       <p class="eyebrow">Registro · Contratación Pública</p>
       <h1>Licitaciones abiertas en España</h1>
-      <p class="sub">Pliegos, requisitos de solvencia y zona de ejecución de cada expediente, agregados de varias fuentes oficiales y de terceros.</p>
+      <p class="sub">Pliegos, requisitos de solvencia y zona de ejecución de cada expediente, más el histórico de quién gana cada adjudicación y por cuánto — agregados de varias fuentes oficiales y de terceros.</p>
     </div>
     <div class="stats">
       <div class="stat"><span class="n num" id="stat-total">–</span><span class="l">En plazo</span></div>
+      <div class="stat"><span class="n num" id="stat-adjudicaciones">–</span><span class="l">Adjudicadas</span></div>
       <div class="stat"><span class="n num" id="stat-fuentes">–</span><span class="l">Fuentes</span></div>
     </div>
   </header>
@@ -202,21 +219,44 @@
     <span>Revisión automática a las <b>09:00</b> y <b>15:00</b> — datos generados el <b id="generado-en">—</b></span>
   </div>
 
-  <div class="filters">
-    <input type="search" id="f-texto" placeholder="Buscar por título, órgano u objeto…" aria-label="Buscar">
-    <select id="f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
-    <select id="f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
-    <select id="f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
-    <select id="f-fuente" aria-label="Fuente"><option value="">Todas las fuentes</option></select>
-    <select id="f-orden" aria-label="Ordenar por">
-      <option value="plazo">Plazo más próximo primero</option>
-      <option value="importe">Importe (mayor a menor)</option>
-    </select>
-    <p class="count" id="count-label">Cargando licitaciones…</p>
-  </div>
+  <nav class="tabs" role="tablist">
+    <button type="button" id="tabbtn-licitaciones" role="tab" aria-selected="true" aria-controls="tab-licitaciones">Licitaciones abiertas</button>
+    <button type="button" id="tabbtn-adjudicaciones" role="tab" aria-selected="false" aria-controls="tab-adjudicaciones">Histórico de adjudicaciones</button>
+  </nav>
 
-  <ul class="registro" id="lista"></ul>
-  <p class="empty" id="empty" hidden>No hay licitaciones que coincidan con estos filtros.</p>
+  <section id="tab-licitaciones" role="tabpanel">
+    <div class="filters">
+      <input type="search" id="lic-f-texto" placeholder="Buscar por título, órgano u objeto…" aria-label="Buscar">
+      <select id="lic-f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
+      <select id="lic-f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
+      <select id="lic-f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
+      <select id="lic-f-fuente" aria-label="Fuente"><option value="">Todas las fuentes</option></select>
+      <select id="lic-f-orden" aria-label="Ordenar por">
+        <option value="plazo">Plazo más próximo primero</option>
+        <option value="importe">Importe (mayor a menor)</option>
+      </select>
+      <p class="count" id="lic-count-label">Cargando licitaciones…</p>
+    </div>
+    <ul class="registro" id="lic-lista"></ul>
+    <p class="empty" id="lic-empty" hidden>No hay licitaciones que coincidan con estos filtros.</p>
+  </section>
+
+  <section id="tab-adjudicaciones" role="tabpanel" hidden>
+    <p class="sub" style="max-width:none;margin-bottom:14px">Quién se ha llevado cada contrato, por cuánto y compitiendo con cuántas empresas — útil para saber qué adjudicatarios se mueven en tu sector o zona antes de presentarte a una licitación similar.</p>
+    <div class="filters">
+      <input type="search" id="adj-f-texto" placeholder="Buscar por empresa, título u órgano…" aria-label="Buscar">
+      <select id="adj-f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
+      <select id="adj-f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
+      <select id="adj-f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
+      <select id="adj-f-orden" aria-label="Ordenar por">
+        <option value="fecha">Más recientes primero</option>
+        <option value="importe">Importe adjudicación (mayor a menor)</option>
+      </select>
+      <p class="count" id="adj-count-label">Cargando adjudicaciones…</p>
+    </div>
+    <ul class="registro" id="adj-lista"></ul>
+    <p class="empty" id="adj-empty" hidden>No hay adjudicaciones que coincidan con estos filtros.</p>
+  </section>
 
   <footer class="foot">
     <span>Fuentes: Plataforma de Contratación del Sector Público (oficial) · Ayuntamiento de Bilbao / Open Data Euskadi (oficial) · TendersGuru (terceros)</span>
@@ -227,11 +267,13 @@
 <script>
 (function () {
   const $ = (sel) => document.querySelector(sel);
-  const lista = $("#lista");
-  const empty = $("#empty");
   const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-
   const money = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
+
+  function escapeHtml(s) {
+    return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
 
   function fillSelect(select, values, formatter) {
     const seen = [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
@@ -246,11 +288,11 @@
   function daysUntil(dateStr) {
     if (!dateStr) return null;
     const d = new Date(dateStr + "T23:59:59");
-    const diff = Math.ceil((d - new Date()) / 86400000);
-    return diff;
+    return Math.ceil((d - new Date()) / 86400000);
   }
 
-  function renderRow(item) {
+  // ---- Tab: licitaciones abiertas ------------------------------------
+  function renderLicitacionRow(item) {
     const li = document.createElement("li");
     const det = document.createElement("details");
     det.className = "expediente";
@@ -322,75 +364,185 @@
     return li;
   }
 
-  function escapeHtml(s) {
-    return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  // ---- Tab: histórico de adjudicaciones -------------------------------
+  function renderAdjudicacionRow(item) {
+    const li = document.createElement("li");
+    const det = document.createElement("details");
+    det.className = "expediente";
+    det.dataset.estadoColor = "closed";
+
+    let compareHtml = "";
+    if (item.importe_licitacion && item.importe_adjudicacion && item.importe_licitacion > 0) {
+      const baja = 100 - (item.importe_adjudicacion / item.importe_licitacion) * 100;
+      compareHtml = `<div class="price-compare">Licitado en ${money.format(item.importe_licitacion)} € ${baja > 0.5 ? `· <span class="baja">${baja.toFixed(1)}% a la baja</span>` : ""}</div>`;
+    }
+
+    const summary = document.createElement("summary");
+    summary.innerHTML = `
+      <span class="exp-main">
+        <span class="exp-id mono">Exp. ${escapeHtml(item.expediente || "s/n")} · ${escapeHtml(item.fuente)}</span>
+        <span class="winner-label">Adjudicataria</span>
+        <p class="winner-name">${escapeHtml(item.adjudicatario_nombre || "No especificada")}</p>
+        <p class="exp-title" style="font-size:0.92rem;font-weight:400;margin-top:4px">${escapeHtml(item.titulo)}</p>
+        <span class="exp-meta">
+          <span>${escapeHtml(item.organo || "Órgano no especificado")}</span>
+          ${item.ccaa ? `<span class="sep">·</span><span>${escapeHtml(item.ccaa)}${item.ubicacion_nombre ? " — " + escapeHtml(item.ubicacion_nombre) : ""}</span>` : ""}
+        </span>
+        <span class="exp-chips">
+          <span class="chip">${escapeHtml(item.estado_legible || "Adjudicada")}</span>
+          ${item.tipo_contrato_legible ? `<span class="chip">${escapeHtml(item.tipo_contrato_legible)}</span>` : ""}
+          ${item.sector ? `<span class="chip">${escapeHtml(item.sector)}</span>` : ""}
+          ${item.num_licitadores ? `<span class="chip">${item.num_licitadores} licitador${item.num_licitadores === 1 ? "" : "es"}${item.num_pymes_licitadoras ? ` (${item.num_pymes_licitadoras} pyme)` : ""}</span>` : ""}
+        </span>
+      </span>
+      <span class="exp-side">
+        ${item.fecha_adjudicacion ? `<span class="plazo-label">Adjudicada</span><br><span class="plazo-fecha num">${escapeHtml(item.fecha_adjudicacion)}</span>` : ""}
+        ${item.importe_adjudicacion ? `<div class="importe num">${money.format(item.importe_adjudicacion)} €</div>` : ""}
+        ${compareHtml}
+      </span>
+    `;
+    det.appendChild(summary);
+
+    const body = document.createElement("div");
+    body.className = "exp-body";
+    let bodyHtml = `<h4>Adjudicataria</h4>`;
+    bodyHtml += `<ul>
+      <li>${escapeHtml(item.adjudicatario_nombre || "No especificada")}${item.adjudicatario_nif ? ` — NIF ${escapeHtml(item.adjudicatario_nif)}` : ""}</li>
+      ${item.adjudicatario_ciudad ? `<li>Sede en ${escapeHtml(item.adjudicatario_ciudad)}${item.adjudicatario_ccaa ? `, ${escapeHtml(item.adjudicatario_ccaa)}` : ""}</li>` : ""}
+    </ul>`;
+    if (item.detail_url) {
+      bodyHtml += `<a class="official-link" href="${escapeAttr(item.detail_url)}" target="_blank" rel="noopener">Ver ficha oficial completa →</a>`;
+    }
+    body.innerHTML = bodyHtml;
+    det.appendChild(body);
+    li.appendChild(det);
+    return li;
   }
-  function escapeAttr(s) { return escapeHtml(s); }
 
-  function applyFilters(data) {
-    const texto = norm($("#f-texto").value);
-    const ccaa = $("#f-ccaa").value;
-    const tipo = $("#f-tipo").value;
-    const sector = $("#f-sector").value;
-    const fuente = $("#f-fuente").value;
-    const orden = $("#f-orden").value;
+  // ---- Motor de filtros/orden genérico --------------------------------
+  function makeTab(cfg) {
+    const listEl = $(cfg.listId);
+    const emptyEl = $(cfg.emptyId);
+    const countEl = $(cfg.countId);
+    let data = [];
 
-    let out = data.filter((it) => {
-      if (ccaa && it.ccaa !== ccaa) return false;
-      if (tipo && it.tipo_contrato_legible !== tipo) return false;
-      if (sector && it.sector !== sector) return false;
-      if (fuente && it.fuente !== fuente) return false;
-      if (texto) {
-        const hay = norm(it.titulo) + " " + norm(it.organo) + " " + norm(it.objeto);
-        if (!hay.includes(texto)) return false;
+    function applyFilters() {
+      const texto = norm($(cfg.filterIds.texto).value);
+      const ccaa = $(cfg.filterIds.ccaa).value;
+      const tipo = $(cfg.filterIds.tipo).value;
+      const sector = $(cfg.filterIds.sector).value;
+      const fuente = cfg.filterIds.fuente ? $(cfg.filterIds.fuente).value : "";
+      const orden = $(cfg.filterIds.orden).value;
+
+      let out = data.filter((it) => {
+        if (ccaa && it.ccaa !== ccaa) return false;
+        if (tipo && it.tipo_contrato_legible !== tipo) return false;
+        if (sector && it.sector !== sector) return false;
+        if (fuente && it.fuente !== fuente) return false;
+        if (texto && !cfg.searchHaystack(it).includes(texto)) return false;
+        return true;
+      });
+
+      out.sort(cfg.sorters[orden] || cfg.sorters[Object.keys(cfg.sorters)[0]]);
+      return out;
+    }
+
+    function render() {
+      const filtered = applyFilters();
+      listEl.innerHTML = "";
+      countEl.textContent = `${filtered.length} de ${data.length} ${cfg.noun}`;
+      emptyEl.hidden = filtered.length !== 0;
+      const frag = document.createDocumentFragment();
+      for (const item of filtered.slice(0, 400)) frag.appendChild(cfg.renderRow(item));
+      listEl.appendChild(frag);
+    }
+
+    async function boot() {
+      let payload;
+      try {
+        const res = await fetch(cfg.url);
+        payload = await res.json();
+        data = payload[cfg.dataKey] || [];
+      } catch (e) {
+        countEl.textContent = "No se pudieron cargar los datos.";
+        return null;
       }
-      return true;
-    });
 
-    out.sort((a, b) => {
-      if (orden === "importe") return (b.importe || 0) - (a.importe || 0);
-      const da = a.plazo_fecha || "9999";
-      const db = b.plazo_fecha || "9999";
-      return da.localeCompare(db);
-    });
+      fillSelect($(cfg.filterIds.ccaa), data.map((d) => d.ccaa));
+      fillSelect($(cfg.filterIds.tipo), data.map((d) => d.tipo_contrato_legible));
+      fillSelect($(cfg.filterIds.sector), data.map((d) => d.sector));
+      if (cfg.filterIds.fuente) fillSelect($(cfg.filterIds.fuente), data.map((d) => d.fuente));
 
-    return out;
+      for (const id of Object.values(cfg.filterIds)) {
+        $(id).addEventListener("input", render);
+      }
+      render();
+      return payload;
+    }
+
+    return { boot };
   }
 
-  function render(data) {
-    const filtered = applyFilters(data);
-    lista.innerHTML = "";
-    $("#count-label").textContent = `${filtered.length} de ${data.length} licitaciones`;
-    empty.hidden = filtered.length !== 0;
-    const frag = document.createDocumentFragment();
-    for (const item of filtered.slice(0, 400)) frag.appendChild(renderRow(item));
-    lista.appendChild(frag);
+  const licitacionesTab = makeTab({
+    url: "licitaciones.json",
+    dataKey: "licitaciones",
+    noun: "licitaciones",
+    listId: "#lic-lista",
+    emptyId: "#lic-empty",
+    countId: "#lic-count-label",
+    filterIds: { texto: "#lic-f-texto", ccaa: "#lic-f-ccaa", tipo: "#lic-f-tipo", sector: "#lic-f-sector", fuente: "#lic-f-fuente", orden: "#lic-f-orden" },
+    searchHaystack: (it) => norm(it.titulo) + " " + norm(it.organo) + " " + norm(it.objeto),
+    sorters: {
+      plazo: (a, b) => (a.plazo_fecha || "9999").localeCompare(b.plazo_fecha || "9999"),
+      importe: (a, b) => (b.importe || 0) - (a.importe || 0),
+    },
+    renderRow: renderLicitacionRow,
+  });
+
+  const adjudicacionesTab = makeTab({
+    url: "adjudicaciones.json",
+    dataKey: "adjudicaciones",
+    noun: "adjudicaciones",
+    listId: "#adj-lista",
+    emptyId: "#adj-empty",
+    countId: "#adj-count-label",
+    filterIds: { texto: "#adj-f-texto", ccaa: "#adj-f-ccaa", tipo: "#adj-f-tipo", sector: "#adj-f-sector", orden: "#adj-f-orden" },
+    searchHaystack: (it) => norm(it.titulo) + " " + norm(it.organo) + " " + norm(it.adjudicatario_nombre),
+    sorters: {
+      fecha: (a, b) => (b.fecha_adjudicacion || "0000").localeCompare(a.fecha_adjudicacion || "0000"),
+      importe: (a, b) => (b.importe_adjudicacion || 0) - (a.importe_adjudicacion || 0),
+    },
+    renderRow: renderAdjudicacionRow,
+  });
+
+  function setupTabs() {
+    const btnLic = $("#tabbtn-licitaciones");
+    const btnAdj = $("#tabbtn-adjudicaciones");
+    const panelLic = $("#tab-licitaciones");
+    const panelAdj = $("#tab-adjudicaciones");
+
+    function show(which) {
+      const onLic = which === "lic";
+      panelLic.hidden = !onLic;
+      panelAdj.hidden = onLic;
+      btnLic.setAttribute("aria-selected", String(onLic));
+      btnAdj.setAttribute("aria-selected", String(!onLic));
+    }
+    btnLic.addEventListener("click", () => show("lic"));
+    btnAdj.addEventListener("click", () => show("adj"));
   }
 
   async function boot() {
-    let payload;
-    try {
-      const res = await fetch("licitaciones.json");
-      payload = await res.json();
-    } catch (e) {
-      $("#count-label").textContent = "No se pudieron cargar los datos.";
-      return;
-    }
-    const data = payload.licitaciones || [];
+    setupTabs();
+    const [licPayload, adjPayload] = await Promise.all([licitacionesTab.boot(), adjudicacionesTab.boot()]);
+    const licData = licPayload ? licPayload.licitaciones || [] : [];
+    const adjData = adjPayload ? adjPayload.adjudicaciones || [] : [];
 
-    $("#stat-total").textContent = data.length;
-    $("#stat-fuentes").textContent = new Set(data.map((d) => d.fuente)).size;
-    $("#generado-en").textContent = payload.generado_en ? payload.generado_en.replace("T", " ") : "—";
-
-    fillSelect($("#f-ccaa"), data.map((d) => d.ccaa));
-    fillSelect($("#f-tipo"), data.map((d) => d.tipo_contrato_legible));
-    fillSelect($("#f-sector"), data.map((d) => d.sector));
-    fillSelect($("#f-fuente"), data.map((d) => d.fuente));
-
-    for (const id of ["f-texto", "f-ccaa", "f-tipo", "f-sector", "f-fuente", "f-orden"]) {
-      $("#" + id).addEventListener("input", () => render(data));
-    }
-    render(data);
+    $("#stat-total").textContent = licPayload ? licData.length : "–";
+    $("#stat-adjudicaciones").textContent = adjPayload ? adjData.length : "–";
+    const fuentes = new Set([...licData, ...adjData].map((d) => d.fuente));
+    $("#stat-fuentes").textContent = fuentes.size || "–";
+    $("#generado-en").textContent = licPayload && licPayload.generado_en ? licPayload.generado_en.replace("T", " ") : "—";
   }
 
   boot();

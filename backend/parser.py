@@ -90,6 +90,29 @@ def parse_entry(entry: ET.Element) -> dict | None:
 
     pyme_adjudicado = _text(cfs, ".//cbc:SMEAwardedIndicator")
 
+    # Datos de adjudicación (solo presentes cuando estado es ADJ/RES/DES).
+    # Si hay varios lotes, cada uno trae su propio TenderResult; nos
+    # quedamos con el primero como simplificación razonable para el MVP.
+    result = cfs.find(".//cac:TenderResult", NS)
+    fecha_adjudicacion = _text(result, "cbc:AwardDate") if result is not None else None
+    num_licitadores = _text(result, "cbc:ReceivedTenderQuantity") if result is not None else None
+    num_pymes_licitadoras = _text(result, "cbc:SMEsReceivedTenderQuantity") if result is not None else None
+    adjudicatario_nombre = None
+    adjudicatario_nif = None
+    adjudicatario_ciudad = None
+    adjudicatario_ccaa_nuts = None
+    importe_adjudicacion = None
+    if result is not None:
+        winner = result.find("cac:WinningParty", NS)
+        if winner is not None:
+            adjudicatario_nombre = _text(winner, "cac:PartyName/cbc:Name")
+            adjudicatario_nif = _text(winner, "cac:PartyIdentification/cbc:ID")
+            adjudicatario_ciudad = _text(winner, "cac:PhysicalLocation/cac:Address/cbc:CityName")
+            adjudicatario_ccaa_nuts = _text(winner, "cac:PhysicalLocation/cbc:CountrySubentityCode")
+        importe_adjudicacion = _text(
+            result, "cac:AwardedTenderedProject/cac:LegalMonetaryTotal/cbc:TaxExclusiveAmount"
+        )
+
     if not expediente and not titulo:
         return None
 
@@ -115,6 +138,14 @@ def parse_entry(entry: ET.Element) -> dict | None:
         "solvencia_economica": solvencia_economica,
         "documentos": documentos,
         "pyme_adjudicado": pyme_adjudicado,
+        "fecha_adjudicacion": fecha_adjudicacion,
+        "num_licitadores": num_licitadores,
+        "num_pymes_licitadoras": num_pymes_licitadoras,
+        "importe_adjudicacion": importe_adjudicacion,
+        "adjudicatario_nombre": adjudicatario_nombre,
+        "adjudicatario_nif": adjudicatario_nif,
+        "adjudicatario_ciudad": adjudicatario_ciudad,
+        "adjudicatario_ccaa_nuts": adjudicatario_ccaa_nuts,
     }
 
 

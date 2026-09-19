@@ -5,5 +5,7 @@ data/*.db
 data/ca-bundle.pem
 data/licitaciones.json
 artifact/licitaciones.json
+data/adjudicaciones.json
+artifact/adjudicaciones.json
 data/refresh.log
 data/cron.log

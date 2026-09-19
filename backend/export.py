@@ -61,7 +61,69 @@ def _tipo_contrato(code: str | None) -> str:
     return tipo_contrato_legible(code)
 
 
-def run(pages: int, out_path: Path, refresh_placsp: bool = True, include_optional_sources: bool = True):
+ESTADO_ADJUDICACION_LEGIBLE = {
+    "ADJ": "Adjudicada",
+    "RES": "Resuelta / formalizada",
+}
+
+
+def _adjudicaciones_rows(limit: int = 4000) -> list[dict]:
+    """Histórico de adjudicaciones: quién ganó cada licitación, por cuánto y
+    con cuántos competidores. Se ordena por fecha de adjudicación descendente
+    y se limita para mantener el tamaño del JSON manejable — la base de
+    datos local conserva todo, así que este histórico se hace más rico con
+    cada ejecución programada."""
+    conn = get_conn()
+    rows = conn.execute(
+        """
+        SELECT * FROM licitaciones
+        WHERE estado IN ('ADJ', 'RES') AND adjudicatario_nombre IS NOT NULL
+        ORDER BY (fecha_adjudicacion IS NULL), fecha_adjudicacion DESC
+        LIMIT ?
+        """,
+        (limit,),
+    ).fetchall()
+    conn.close()
+    out = []
+    for r in rows:
+        d = dict(r)
+        cpv_codes = json.loads(d["cpv_codes"]) if d["cpv_codes"] else []
+        out.append(
+            {
+                "fuente": "PLACSP",
+                "external_id": d["external_id"],
+                "expediente": d["expediente"],
+                "titulo": d["titulo"],
+                "organo": d["organo"],
+                "tipo_contrato_legible": _tipo_contrato(d["tipo_contrato_code"]),
+                "sector": d["sector"],
+                "ccaa": d["ccaa"],
+                "ubicacion_nombre": d["ubicacion_nombre"],
+                "estado": d["estado"],
+                "estado_legible": ESTADO_ADJUDICACION_LEGIBLE.get(d["estado"], d["estado"]),
+                "importe_licitacion": d["importe"],
+                "importe_adjudicacion": d["importe_adjudicacion"],
+                "fecha_adjudicacion": d["fecha_adjudicacion"],
+                "num_licitadores": d["num_licitadores"],
+                "num_pymes_licitadoras": d["num_pymes_licitadoras"],
+                "adjudicatario_nombre": d["adjudicatario_nombre"],
+                "adjudicatario_nif": d["adjudicatario_nif"],
+                "adjudicatario_ciudad": d["adjudicatario_ciudad"],
+                "adjudicatario_ccaa": d["adjudicatario_ccaa"],
+                "detail_url": d["detail_url"],
+                "cpv_codes": cpv_codes,
+            }
+        )
+    return out
+
+
+def run(
+    pages: int,
+    out_path: Path,
+    refresh_placsp: bool = True,
+    include_optional_sources: bool = True,
+    adjudicaciones_out_path: Path | None = None,
+):
     if refresh_placsp:
         print("Actualizando PLACSP...")
         placsp_update.run(max_pages=pages)
@@ -91,6 +153,16 @@ def run(pages: int, out_path: Path, refresh_placsp: bool = True, include_optiona
     print(f"\nExportado {len(registros)} licitaciones a {out_path}")
     for f, n in conteo.items():
         print(f"  {f}: {n}")
+
+    adjudicaciones = _adjudicaciones_rows()
+    adj_path = adjudicaciones_out_path or (out_path.parent / "adjudicaciones.json")
+    adj_payload = {
+        "generado_en": dt.datetime.now().isoformat(timespec="seconds"),
+        "total": len(adjudicaciones),
+        "adjudicaciones": adjudicaciones,
+    }
+    adj_path.write_text(json.dumps(adj_payload, ensure_ascii=False, separators=(",", ":")))
+    print(f"Exportadas {len(adjudicaciones)} adjudicaciones a {adj_path}")
 
 
 if __name__ == "__main__":
