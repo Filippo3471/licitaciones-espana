@@ -1,5 +1,5 @@
-"""Combina todas las fuentes (PLACSP + Bilbao + TendersGuru) en un único
-JSON compacto, listo para incrustar en el sitio de búsqueda.
+"""Combina todas las fuentes (PLACSP + Catalunya + TED + Bilbao + TendersGuru)
+en un único JSON compacto, listo para incrustar en el sitio de búsqueda.
 
 Uso:
     python -m backend.export --pages 15 --out data/licitaciones.json
@@ -13,7 +13,7 @@ from pathlib import Path
 
 from . import update as placsp_update
 from .db import get_conn
-from .sources import bilbao, tenders_guru
+from .sources import bilbao, catalunya, ted, tenders_guru
 
 OUT_DEFAULT = Path(__file__).resolve().parent.parent / "data" / "licitaciones.json"
 
@@ -132,7 +132,12 @@ def run(
     conteo = {"PLACSP": len(registros)}
 
     if include_optional_sources:
-        for nombre, fn in (("Bilbao", bilbao.fetch), ("TendersGuru", tenders_guru.fetch)):
+        for nombre, fn in (
+            ("Catalunya (Generalitat)", catalunya.fetch),
+            ("TED (UE)", ted.fetch),
+            ("Bilbao", bilbao.fetch),
+            ("TendersGuru", tenders_guru.fetch),
+        ):
             try:
                 extra = fn()
             except Exception as exc:  # fuente externa: nunca debe tumbar el export
