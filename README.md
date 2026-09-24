@@ -1,10 +1,12 @@
 # Licitaciones públicas España
 
-Sitio web local que agrega las licitaciones publicadas en la **Plataforma de
-Contratación del Sector Público (PLACSP)** — la fuente oficial del Ministerio
-de Hacienda que centraliza (mediante mecanismos de agregación) las
-licitaciones de la Administración General del Estado, comunidades autónomas
-y administración local — y muestra para cada una:
+Buscador de licitaciones públicas **abiertas** en España, con un histórico
+de **adjudicaciones** (quién gana, por cuánto, compitiendo con cuántos).
+
+**Sitio en vivo (se actualiza solo, dos veces al día):**
+https://filippo3471.github.io/licitaciones-espana/
+
+Para cada licitación abierta:
 
 - **Qué pliegos y documentos hay que presentar** (PCAP, PPT y anexos), con
   enlace directo de descarga del PDF oficial.
@@ -12,21 +14,61 @@ y administración local — y muestra para cada una:
   empresa le aplica: capacidad de obrar, solvencia técnica/económica, etc.).
 - **Zona geográfica** de ejecución (comunidad autónoma / provincia, vía
   códigos NUTS oficiales).
-- **Estado, tipo de contrato (obras/servicios/suministros), sector (CPV) y
-  plazo de presentación.**
+- **Estado, tipo de contrato, sector (CPV) y plazo de presentación.**
 
-## Cómo funciona
+Para cada adjudicación en el histórico: empresa ganadora (nombre, NIF,
+ciudad), importe adjudicado vs. importe licitado, fecha, y cuántas empresas
+compitieron.
 
-1. `backend/update.py` descarga el feed ATOM/CODICE público de
-   `contrataciondelestado.es` (formato oficial de datos abiertos del
-   Ministerio de Hacienda) y lo guarda en una base SQLite local
-   (`data/licitaciones.db`).
-2. `app.py` (Flask) sirve un sitio web local para explorar y filtrar esos
-   datos.
+## Fuentes de datos
 
-No hay scraping de HTML ni bypass de ningún sistema de acceso: se usa
-exclusivamente el feed de sindicación oficial que la propia plataforma
-publica para reutilización de datos.
+| Fuente | Tipo | Cobertura |
+|---|---|---|
+| [PLACSP](https://contrataciondelestado.es) | Oficial (feed ATOM/CODICE) | Administración General del Estado, CCAA y entidades locales agregadas |
+| [Generalitat de Catalunya](https://analisi.transparenciacatalunya.cat) | Oficial (Socrata) | Cataluña (en buena parte no solapa con PLACSP) |
+| [TED](https://ted.europa.eu) | Oficial (Search API v3, UE) | Contratos por encima de umbrales europeos, toda España |
+| Ayuntamiento de Bilbao | Oficial (JSON propio) | Bilbao |
+| [TendersGuru](https://tenders.guru) | Terceros | Intermitente — el conector es defensivo y no rompe el pipeline si está caído |
+
+No hay scraping de HTML ni bypass de ningún sistema de acceso: todo son
+feeds/APIs oficiales de datos abiertos.
+
+## Arquitectura
+
+```
+backend/
+  fetch.py, parser.py     # PLACSP: descarga + parseo CODICE (con CA bundle FNMT)
+  sources/                # Un conector por fuente adicional (catalunya, ted, bilbao, tenders_guru)
+  db.py                   # SQLite — acumula histórico, nunca se purga
+  export.py               # Combina todas las fuentes en licitaciones.json + adjudicaciones.json
+scripts/
+  refresh_and_publish.sh  # Orquesta export + publica en docs/ vía git push
+docs/                     # Lo que sirve GitHub Pages (index.html + los dos JSON)
+artifact/                 # Copia para publicar a mano en un Claude Artifact (opcional, no automático)
+```
+
+Dos veces al día (cron, 09:00 y 15:00 hora de España) `scripts/refresh_and_publish.sh`:
+1. Vuelve a descargar todas las fuentes y las guarda en `data/licitaciones.db` (SQLite, acumulativo — el histórico de adjudicaciones crece con cada ejecución).
+2. Exporta el estado actual a `data/licitaciones.json` (solo licitaciones abiertas) y `data/adjudicaciones.json` (histórico, tope 4000 más recientes).
+3. Copia ambos a `docs/` y hace `git commit` + `git push` — GitHub Pages recoge el cambio solo.
+
+### Por qué GitHub Pages y no solo un Claude Artifact
+
+La primera versión publicaba directamente en un Claude Artifact desde cron,
+llamando a `claude -p`. Dos límites reales de esa vía, confirmados
+probando en el propio entorno de cron:
+
+- `claude -p` (modo headless) **no expone la herramienta Artifact en
+  absoluto** — no es un permiso denegado, es que ese modo no la tiene.
+- `claude --bg` (agente en segundo plano) sí la tiene, pero exige aceptar
+  una comprobación de "workspace trust" que solo se puede pasar de forma
+  interactiva; saltarla con `--dangerously-skip-permissions` está
+  bloqueado por el clasificador de seguridad, con razón.
+
+`git push` no depende de ninguna herramienta de Claude, así que es la vía
+robusta para publicar sin supervisión. El Claude Artifact original sigue
+existiendo para republicar a mano si se quiere, pero ya no es la copia
+"viva".
 
 ## Instalación
 
@@ -35,78 +77,43 @@ cd ~/licitaciones-app
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+gh auth login   # una vez, para que git push funcione sin pedir contraseña
 ```
 
-## Descargar / actualizar datos
+## Actualizar manualmente
 
 ```bash
-python -m backend.update --pages 15
+python -m backend.export --pages 15
 ```
 
-Cada página trae hasta ~500 entradas. El feed es un histórico continuo de
-altas y cambios, así que con 10-15 páginas ya se cubren varios miles de
-expedientes recientes, incluyendo las licitaciones actualmente abiertas
-(estado `PUB`). Vuelve a ejecutar este comando cuando quieras refrescar los
-datos (puedes ponerlo en un cron, ver más abajo).
-
-## Arrancar el sitio
-
-```bash
-python app.py
-```
-
-Abre `http://127.0.0.1:5050`. Por defecto solo muestra licitaciones con
-estado **"Abierta"** (`PUB`); desde los filtros puedes cambiar el estado,
-la comunidad autónoma, el tipo de contrato, el sector (CPV) o buscar texto
-libre.
-
-## Actualización automática (opcional)
-
-Para refrescar los datos cada mañana, añade a tu crontab (`crontab -e`):
+## Automatización (ya instalada)
 
 ```
-0 8 * * * cd ~/licitaciones-app && .venv/bin/python -m backend.update --pages 15 >> data/update.log 2>&1
+0 9,15 * * * ~/licitaciones-app/scripts/refresh_and_publish.sh >> ~/licitaciones-app/data/cron.log 2>&1
 ```
 
-## Nota técnica sobre el certificado TLS
+Logs en `data/refresh.log`. El cron **solo corre si el Mac está despierto**
+a esa hora — no hay cola de alcance si estaba dormido.
+
+## Nota técnica sobre el certificado TLS de PLACSP
 
 `contrataciondelestado.es` usa un certificado emitido por la CA oficial
-española **"AC RAIZ FNMT-RCM SERVIDORES SEGUROS"** (FNMT — Fábrica Nacional
-de Moneda y Timbre). Ese root no está en el almacén de confianza por
-defecto de macOS/curl en muchos sistemas fuera de España, así que
-`backend/fetch.py` combina el bundle estándar de `certifi` con la cadena de
-certificados FNMT incluida en `backend/certs/` para verificar la conexión
-correctamente — en ningún momento se desactiva la verificación TLS
-(`verify=False`).
+española **"AC RAIZ FNMT-RCM SERVIDORES SEGUROS"**. Ese root no está en el
+almacén de confianza por defecto de macOS/curl en muchos sistemas fuera de
+España, así que `backend/fetch.py` combina el bundle estándar de `certifi`
+con la cadena FNMT incluida en `backend/certs/` — nunca se desactiva la
+verificación TLS.
 
-## Limitaciones conocidas (prototipo local)
+## Limitaciones conocidas
 
-- Cubre las licitaciones agregadas en la PLACSP. Algunas comunidades
-  autónomas con plataforma propia (Aragón, Euskadi, Illes Balears...) solo
-  aparecen aquí si están federadas/agregadas a la PLACSP; si no, habría que
-  añadir un conector específico a su portal.
+- **Sin deduplicación entre fuentes**: una misma licitación por encima de
+  umbrales UE puede aparecer tanto en PLACSP como en TED. No hay matching
+  implementado todavía (~23% de solape de órganos observado).
+- Euskadi tiene API propia pero su documentación estaba rota/inaccesible al
+  investigarla; Navarra tiene portal de datos abiertos pero no respondió en
+  las pruebas. Ninguna de las dos está integrada.
+- `app.py` (Flask) y `templates/` son la versión local original, previa al
+  sitio estático — ya no es la vía principal, se mantiene sin garantías.
 - Los requisitos de solvencia estructurados dependen de lo que cada órgano
-  de contratación haya rellenado en el formulario CODICE; cuando no vienen
-  detallados, siempre están completos dentro del PCAP (pliego
-  administrativo) descargable.
-- El feed usado es el "histórico continuo" (`licitacionesPerfilesContratanteCompleto3`);
-  para una cobertura exhaustiva de años completos existen también los ZIPs
-  anuales de datos abiertos en
-  `https://contrataciondelestado.es/wps/portal/plataforma/datos_abiertos`.
-
-## Estructura del proyecto
-
-```
-app.py                  # Sitio web Flask
-backend/
-  fetch.py               # Descarga del feed ATOM/CODICE (con CA bundle FNMT)
-  parser.py               # Parseo del XML CODICE a dicts
-  db.py                    # Esquema SQLite y upsert
-  update.py                 # CLI: orquesta descarga + parseo + guardado
-  cpv.py                     # Tabla de sectores CPV (2 dígitos)
-  nuts_es.py                  # Tabla de comunidades autónomas (NUTS-2)
-  codelists.py                 # Traducción de códigos de estado/contrato
-  certs/                        # Cadena de certificados FNMT
-templates/               # Plantillas Jinja2 (listado + detalle)
-data/                     # Base de datos SQLite (se genera al actualizar)
-```
+  haya rellenado en CODICE; cuando faltan, siempre están completos en el
+  PCAP descargable.
