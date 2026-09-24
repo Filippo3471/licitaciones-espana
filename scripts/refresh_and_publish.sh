@@ -9,6 +9,12 @@ set -uo pipefail
 # binario `claude`) ni /opt/homebrew/bin; lo añadimos explícitamente.
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
+# cron tampoco define USER/LOGNAME, y el CLI de `claude` los necesita para
+# resolver las credenciales guardadas en el Keychain de macOS — sin esto
+# falla con "Not logged in" aunque la sesión interactiva esté autenticada.
+export USER="${USER:-$(id -un)}"
+export LOGNAME="${LOGNAME:-$USER}"
+
 cd "$(dirname "$0")/.."
 LOG="data/refresh.log"
 mkdir -p data
@@ -28,11 +34,12 @@ if [ -z "$TOTAL" ] || [ "$TOTAL" -eq 0 ]; then
 fi
 
 cp data/licitaciones.json artifact/licitaciones.json
+[ -f data/adjudicaciones.json ] && cp data/adjudicaciones.json artifact/adjudicaciones.json
 
 PROJECT_DIR="$(pwd)"
 ARTIFACT_URL="https://claude.ai/code/artifact/d9469c85-6ceb-49d4-8cf4-d98b04b2f9a2"
 
-PUBLISH_OUTPUT=$(claude -p "Llama a la herramienta Artifact con action='publish', url='${ARTIFACT_URL}' (esta es la URL canónica exacta, úsala tal cual, NO la sustituyas ni preguntes nada), file_path='${PROJECT_DIR}/artifact/index.html', files={\"licitaciones.json\": \"${PROJECT_DIR}/artifact/licitaciones.json\"}. No pases favicon. No hagas ninguna otra llamada ni preguntes nada: llama a la herramienta directamente con esos parámetros. Responde solo con 'PUBLICADO' seguido del número de versión si la llamada tuvo éxito, o 'ERROR: <motivo>' si falló." \
+PUBLISH_OUTPUT=$(claude -p "Llama a la herramienta Artifact con action='publish', url='${ARTIFACT_URL}' (esta es la URL canónica exacta, úsala tal cual, NO la sustituyas ni preguntes nada), file_path='${PROJECT_DIR}/artifact/index.html', files={\"licitaciones.json\": \"${PROJECT_DIR}/artifact/licitaciones.json\", \"adjudicaciones.json\": \"${PROJECT_DIR}/artifact/adjudicaciones.json\"}. No pases favicon. No hagas ninguna otra llamada ni preguntes nada: llama a la herramienta directamente con esos parámetros. Responde solo con 'PUBLICADO' seguido del número de versión si la llamada tuvo éxito, o 'ERROR: <motivo>' si falló." \
   --allowedTools "Artifact" 2>>"$LOG")
 echo "$PUBLISH_OUTPUT" >>"$LOG"
 
