@@ -694,6 +694,7 @@
     container.innerHTML = `<p class="spinner-line">Leyendo el pliego y generando el resumen… puede tardar hasta un minuto la primera vez que se pide para esta licitación.</p>`;
     try {
       const { data: sess } = await sb.auth.getSession();
+      if (!sess.session) throw new Error("Tu sesión ha caducado. Inicia sesión de nuevo y vuelve a intentarlo.");
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/ayuda-pliego`, {
         method: "POST",
         headers: {
@@ -753,7 +754,9 @@
   });
 
   async function loadProfile() {
-    const { data } = await sb.from("company_profiles").select("*").eq("user_id", currentUser.id).maybeSingle();
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) { currentProfile = null; return; }
+    const { data } = await sb.from("company_profiles").select("*").eq("user_id", user.id).maybeSingle();
     currentProfile = data || null;
   }
 
@@ -792,8 +795,11 @@
     $("#emp-error").textContent = "";
     $("#emp-submit").disabled = true;
     try {
+      const { data: { user } } = await sb.auth.getUser();
+      if (!user) throw new Error("Tu sesión ha caducado. Cierra este formulario, inicia sesión de nuevo y vuelve a intentarlo.");
+      currentUser = user;
       const row = {
-        user_id: currentUser.id,
+        user_id: user.id,
         company_name: $("#emp-nombre").value.trim(),
         nif: $("#emp-nif").value.trim() || null,
         clasificacion_empresarial: $("#emp-clasificacion").value.trim() || null,
@@ -831,8 +837,10 @@
       return;
     }
 
-    const { data: { session } } = await sb.auth.getSession();
-    await onAuthChange(session);
+    // onAuthStateChange dispara inmediatamente con el estado actual (evento
+    // INITIAL_SESSION) además de en cada cambio futuro — un único punto de
+    // entrada evita la carrera de tener dos llamadas a onAuthChange
+    // solapándose al cargar la página.
     sb.auth.onAuthStateChange((_event, session) => onAuthChange(session));
 
     $("#btn-login").addEventListener("click", () => { $("#auth-error").textContent = ""; openModal("#modal-auth"); });
