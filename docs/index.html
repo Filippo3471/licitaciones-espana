@@ -595,8 +595,8 @@
   }
 
   // ---- Cuenta de empresa, GO/NO-GO y Ayuda con el pliego ---------------
-  const SUPABASE_URL = "__SUPABASE_URL__";
-  const SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+  const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_dioPbNOINWVB3SB6X-fwJQ_YXBXrCTT";
   const supabaseConfigured = !SUPABASE_URL.startsWith("__") && !SUPABASE_ANON_KEY.startsWith("__");
   const sb = supabaseConfigured && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 

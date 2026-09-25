@@ -10,11 +10,15 @@
 //
 // Requiere estos secretos configurados en el proyecto de Supabase:
 //   supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
+//   supabase secrets set ANTHROPIC_WORKSPACE_ID=wrkspc_...   (solo si la
+//     clave no está vinculada a un workspace concreto; la API de Anthropic
+//     lo exige en ese caso)
 // (SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY los inyecta la plataforma sola)
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
+const ANTHROPIC_WORKSPACE_ID = Deno.env.get("ANTHROPIC_WORKSPACE_ID");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -112,13 +116,16 @@ Deno.serve(async (req) => {
         return jsonResponse({ error: "No se pudo descargar ningún PDF de esta licitación" }, 502);
       }
 
+      const anthropicHeaders: Record<string, string> = {
+        "content-type": "application/json",
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+      };
+      if (ANTHROPIC_WORKSPACE_ID) anthropicHeaders["anthropic-workspace-id"] = ANTHROPIC_WORKSPACE_ID;
+
       const anthropicResp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "x-api-key": ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01",
-        },
+        headers: anthropicHeaders,
         body: JSON.stringify({
           model: "claude-sonnet-5",
           max_tokens: 4096,
