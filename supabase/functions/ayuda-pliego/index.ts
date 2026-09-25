@@ -129,7 +129,6 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           model: "claude-sonnet-5",
           max_tokens: 4096,
-          temperature: 0.2,
           messages: [
             {
               role: "user",
@@ -144,7 +143,11 @@ Deno.serve(async (req) => {
         return jsonResponse({ error: `Fallo llamando al LLM: ${errText.slice(0, 300)}` }, 502);
       }
       const anthropicJson = await anthropicResp.json();
-      const text = anthropicJson?.content?.[0]?.text ?? "";
+      // claude-sonnet-5 usa "thinking" extendido por defecto, así que el
+      // bloque de texto útil no siempre es el primero — buscamos el primer
+      // bloque de tipo "text", no content[0] a ciegas.
+      const textBlock = (anthropicJson?.content ?? []).find((b: any) => b.type === "text");
+      const text = textBlock?.text ?? "";
       try {
         resumen = JSON.parse(extractJson(text));
       } catch {
