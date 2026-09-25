@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
 <title>Registro de Licitaciones</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +22,7 @@
     --ok: #2f6b46;
     --ok-soft: #e1efe4;
     --warn: #8a6a1f;
+    --danger-soft: #f3dede;
     --pill: #e3e6ea;
     --shadow: 0 1px 2px rgba(28,34,48,0.06), 0 6px 16px rgba(28,34,48,0.05);
     color-scheme: light;
@@ -37,6 +42,7 @@
       --ok: #7ac598;
       --ok-soft: #1d2b21;
       --warn: #dbb765;
+      --danger-soft: #3a2222;
       --pill: #262b34;
       --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.35);
       color-scheme: dark;
@@ -56,6 +62,7 @@
     --ok: #7ac598;
     --ok-soft: #1d2b21;
     --warn: #dbb765;
+    --danger-soft: #3a2222;
     --pill: #262b34;
     --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.35);
     color-scheme: dark;
@@ -198,14 +205,93 @@
     .stats { justify-content: flex-start; }
     .stat { text-align: left; }
   }
+
+  /* ---- Cuenta de empresa / GO-NO-GO / Ayuda en pliego ---- */
+  .auth-bar {
+    display: flex; align-items: center; gap: 8px; font-size: 0.82rem; margin-top: 8px;
+  }
+  .auth-bar .email { color: var(--ink-muted); }
+  .btn {
+    font-family: "Public Sans", sans-serif; font-size: 0.82rem; font-weight: 600;
+    padding: 7px 13px; border-radius: 7px; border: 1px solid var(--line-strong);
+    background: var(--paper-raised); color: var(--ink); cursor: pointer;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn.small { padding: 5px 10px; font-size: 0.76rem; }
+  .btn[disabled] { opacity: 0.55; cursor: default; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(10,12,16,0.45); z-index: 50;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: var(--shadow); max-width: 460px; width: 100%; max-height: 88vh; overflow-y: auto;
+    padding: 22px;
+  }
+  .modal h3 { font-size: 1.15rem; margin-bottom: 4px; }
+  .modal .modal-sub { color: var(--ink-muted); font-size: 0.85rem; margin-bottom: 16px; }
+  .modal .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .modal .field label { font-size: 0.76rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .modal .field input, .modal .field textarea, .modal .field select {
+    padding: 8px 10px; border-radius: 7px; border: 1px solid var(--line-strong);
+    background: var(--paper); color: var(--ink); font-size: 0.9rem; font-family: inherit;
+  }
+  .modal .field-row { display: flex; gap: 10px; }
+  .modal .field-row .field { flex: 1; }
+  .modal .modal-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 10px; }
+  .modal .modal-error { color: var(--accent-red); font-size: 0.82rem; margin-top: 8px; min-height: 1.2em; }
+  .modal .modal-close { background: none; border: none; color: var(--ink-muted); font-size: 0.85rem; cursor: pointer; }
+  .modal .switch-mode { font-size: 0.82rem; color: var(--ink-muted); background: none; border: none; cursor: pointer; text-decoration: underline; padding: 0; }
+
+  .empresa-tools { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .empresa-tools .prompt { font-size: 0.85rem; color: var(--ink-muted); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .empresa-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .verdict-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px;
+    font-size: 0.78rem; font-weight: 600; margin-bottom: 8px;
+  }
+  .verdict-badge.apto { background: var(--ok-soft); color: var(--ok); }
+  .verdict-badge.apto_con_dudas { background: var(--accent-soft); color: var(--accent); }
+  .verdict-badge.no_apto { background: var(--danger-soft); color: var(--accent-red); }
+  .verdict-badge.sin_datos_suficientes, .verdict-badge.sin_perfil { background: var(--pill); color: var(--ink-muted); }
+
+  .verdict-puntos { list-style: none; margin: 0 0 10px; padding: 0; font-size: 0.85rem; display: flex; flex-direction: column; gap: 5px; }
+  .verdict-puntos li { padding-left: 20px; position: relative; }
+  .verdict-puntos li::before { position: absolute; left: 0; }
+  .verdict-puntos li.cumple::before { content: "✓"; color: var(--ok); }
+  .verdict-puntos li.no_cumple::before { content: "✕"; color: var(--accent-red); }
+  .verdict-puntos li.revisar::before { content: "◐"; color: var(--warn); }
+
+  .pliego-summary { font-size: 0.87rem; }
+  .pliego-summary .campo { margin-bottom: 10px; }
+  .pliego-summary .campo-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); margin-bottom: 2px; }
+  .pliego-summary .cita { font-size: 0.74rem; color: var(--ink-muted); font-style: italic; }
+  .pliego-summary ul { margin: 2px 0 0; padding-left: 1.1em; }
+  .spinner-line { font-size: 0.85rem; color: var(--ink-muted); }
+  .cache-note { font-size: 0.72rem; color: var(--ink-muted); margin-top: 6px; }
+
+  @media (max-width: 560px) {
+    .modal { padding: 18px; }
+  }
 </style>
 
+</head>
+<body>
 <div class="shell">
   <header class="masthead">
     <div class="title-block">
       <p class="eyebrow">Registro · Contratación Pública</p>
       <h1>Licitaciones abiertas en España</h1>
       <p class="sub">Pliegos, requisitos de solvencia y zona de ejecución de cada expediente, más el histórico de quién gana cada adjudicación y por cuánto — agregados de varias fuentes oficiales y de terceros.</p>
+      <div class="auth-bar" id="auth-bar">
+        <button type="button" class="btn" id="btn-login" hidden>Iniciar sesión</button>
+        <span class="email" id="auth-email" hidden></span>
+        <button type="button" class="btn small" id="btn-empresa" hidden>Mi empresa</button>
+        <button type="button" class="btn small" id="btn-logout" hidden>Cerrar sesión</button>
+      </div>
     </div>
     <div class="stats">
       <div class="stat"><span class="n num" id="stat-total">–</span><span class="l">En plazo</span></div>
@@ -264,6 +350,86 @@
   </footer>
 </div>
 
+<div class="modal-backdrop" id="modal-auth" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-auth-title">
+    <h3 id="modal-auth-title">Iniciar sesión</h3>
+    <p class="modal-sub">Para evaluar GO/NO-GO y pedir ayuda con el pliego de una licitación concreta, según el perfil de tu empresa.</p>
+    <form id="form-auth">
+      <div class="field">
+        <label for="auth-input-email">Email</label>
+        <input type="email" id="auth-input-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="auth-input-password">Contraseña</label>
+        <input type="password" id="auth-input-password" required autocomplete="current-password" minlength="6">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="switch-mode" id="auth-switch-mode">¿No tienes cuenta? Regístrate</button>
+        <button type="submit" class="btn primary" id="auth-submit">Entrar</button>
+      </div>
+      <p class="modal-error" id="auth-error"></p>
+    </form>
+    <div class="modal-actions" style="margin-top:4px">
+      <button type="button" class="modal-close" data-close="modal-auth">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-empresa" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-empresa-title">
+    <h3 id="modal-empresa-title">Mi empresa</h3>
+    <p class="modal-sub">Este perfil se usa para calcular GO/NO-GO y personalizar la ayuda con el pliego. Solo tú lo ves.</p>
+    <form id="form-empresa">
+      <div class="field">
+        <label for="emp-nombre">Nombre de la empresa</label>
+        <input type="text" id="emp-nombre" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="emp-nif">NIF (opcional)</label>
+          <input type="text" id="emp-nif">
+        </div>
+        <div class="field">
+          <label for="emp-clasificacion">Clasificación empresarial</label>
+          <input type="text" id="emp-clasificacion" placeholder="p.ej. Grupo A, Subgrupo 1, Categoría 3">
+        </div>
+      </div>
+      <div class="field">
+        <label for="emp-cpv">Sectores CPV de interés (divisiones de 2 dígitos, separadas por coma)</label>
+        <input type="text" id="emp-cpv" placeholder="p.ej. 45, 71, 72">
+      </div>
+      <div class="field">
+        <label for="emp-ccaa">Comunidades autónomas de interés (separadas por coma; vacío = toda España)</label>
+        <input type="text" id="emp-ccaa" placeholder="p.ej. Comunidad de Madrid, Cataluña">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="emp-importe-min">Importe mínimo habitual (€)</label>
+          <input type="number" id="emp-importe-min" min="0">
+        </div>
+        <div class="field">
+          <label for="emp-importe-max">Importe máximo habitual (€)</label>
+          <input type="number" id="emp-importe-max" min="0">
+        </div>
+      </div>
+      <div class="field">
+        <label for="emp-facturacion">Facturación anual (€, opcional)</label>
+        <input type="number" id="emp-facturacion" min="0">
+      </div>
+      <div class="field">
+        <label for="emp-certificaciones">Certificaciones (texto libre, opcional)</label>
+        <input type="text" id="emp-certificaciones" placeholder="p.ej. ISO 9001, ISO 14001">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-close" data-close="modal-empresa">Cancelar</button>
+        <button type="submit" class="btn primary" id="emp-submit">Guardar</button>
+      </div>
+      <p class="modal-error" id="emp-error"></p>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
   const $ = (sel) => document.querySelector(sel);
@@ -360,6 +526,15 @@
 
     body.innerHTML = bodyHtml;
     det.appendChild(body);
+
+    const toolsDiv = document.createElement("div");
+    toolsDiv.className = "empresa-tools";
+    body.appendChild(toolsDiv);
+    det.__item = item;
+    det.addEventListener("toggle", () => {
+      if (det.open) renderEmpresaTools(item, toolsDiv);
+    });
+
     li.appendChild(det);
     return li;
   }
@@ -417,6 +592,289 @@
     det.appendChild(body);
     li.appendChild(det);
     return li;
+  }
+
+  // ---- Cuenta de empresa, GO/NO-GO y Ayuda con el pliego ---------------
+  const SUPABASE_URL = "__SUPABASE_URL__";
+  const SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+  const supabaseConfigured = !SUPABASE_URL.startsWith("__") && !SUPABASE_ANON_KEY.startsWith("__");
+  const sb = supabaseConfigured && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+  let currentUser = null;
+  let currentProfile = null;
+
+  function openModal(sel) { $(sel).hidden = false; }
+  function closeModal(sel) { $(sel).hidden = true; }
+  function splitList(s) { return s.split(",").map((x) => x.trim()).filter(Boolean); }
+  function numOrNull(v) { return v === "" || v == null ? null : Number(v); }
+
+  const VERDICT_LABELS = {
+    apto: "Apto",
+    apto_con_dudas: "Apto con dudas",
+    no_apto: "No apto",
+    sin_datos_suficientes: "Datos insuficientes para evaluar",
+    sin_perfil: "Sin perfil",
+  };
+
+  function renderVerdict(container, veredicto, puntos, explicacion) {
+    if (!container) return;
+    let html = `<span class="verdict-badge ${escapeAttr(veredicto)}">${escapeHtml(VERDICT_LABELS[veredicto] || veredicto)}</span>`;
+    if (explicacion) html += `<p class="cache-note">${escapeHtml(explicacion)}</p>`;
+    if (puntos && puntos.length) {
+      html += `<ul class="verdict-puntos">${puntos.map((p) => `<li class="${escapeAttr(p.tipo)}">${escapeHtml(p.texto)}</li>`).join("")}</ul>`;
+    }
+    container.innerHTML = html;
+  }
+
+  function quickGoNoGo(item, profile) {
+    const puntos = [];
+    if (item.importe != null && (profile.importe_min != null || profile.importe_max != null)) {
+      const min = profile.importe_min ?? 0;
+      const max = profile.importe_max ?? Infinity;
+      puntos.push(
+        item.importe >= min && item.importe <= max
+          ? { tipo: "cumple", texto: `Importe (${money.format(item.importe)} €) dentro de tu rango habitual.` }
+          : { tipo: "revisar", texto: `Importe (${money.format(item.importe)} €) fuera de tu rango habitual (${min}–${profile.importe_max ?? "∞"}).` }
+      );
+    }
+    if ((profile.cpv_codes || []).length && (item.cpv_codes || []).length) {
+      const overlap = item.cpv_codes.some((c) => profile.cpv_codes.some((e) => c.startsWith(e)));
+      puntos.push(
+        overlap
+          ? { tipo: "cumple", texto: "El CPV de la licitación coincide con tus sectores de interés." }
+          : { tipo: "revisar", texto: "El CPV de esta licitación no coincide con los sectores que marcaste." }
+      );
+    }
+    if ((profile.ccaa_scope || []).length && item.ccaa) {
+      const match = profile.ccaa_scope.includes(item.ccaa);
+      puntos.push(
+        match
+          ? { tipo: "cumple", texto: `Zona (${item.ccaa}) dentro de tu ámbito declarado.` }
+          : { tipo: "revisar", texto: `Zona (${item.ccaa}) fuera de las comunidades que marcaste.` }
+      );
+    }
+    const noCumple = puntos.filter((p) => p.tipo === "no_cumple").length;
+    const revisar = puntos.filter((p) => p.tipo === "revisar").length;
+    const veredicto = puntos.length === 0 ? "sin_datos_suficientes" : noCumple > 0 ? "no_apto" : revisar > 0 ? "apto_con_dudas" : "apto";
+    return { veredicto, puntos };
+  }
+
+  function renderPliegoSummary(container, data) {
+    const r = data.resumen || {};
+    const citas = r.citas || {};
+    const campo = (label, key, render) => {
+      const val = r[key];
+      if (val == null || (Array.isArray(val) && val.length === 0)) return "";
+      const cita = citas[key] ? `<div class="cita">${escapeHtml(citas[key])}</div>` : "";
+      return `<div class="campo"><div class="campo-label">${escapeHtml(label)}</div>${render(val)}${cita}</div>`;
+    };
+    let html = `<div class="pliego-summary">`;
+    html += `<h4>Evaluación para tu empresa</h4><div class="pliego-verdict"></div>`;
+    html += `<h4>Resumen del pliego</h4>`;
+    html += campo("Objeto", "objeto", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campo("Importe de licitación", "importe_licitacion", (v) => `<p>${money.format(v)} €</p>`);
+    html += campo("Duración", "duracion", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campo("Lotes", "lotes", (v) => `<ul>${v.map((l) => `<li>${escapeHtml(l.numero || "")}: ${escapeHtml(l.descripcion || "")}${l.importe ? ` — ${money.format(l.importe)} €` : ""}</li>`).join("")}</ul>`);
+    html += campo("Solvencia económica", "solvencia_economica", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
+    html += campo("Solvencia técnica", "solvencia_tecnica", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
+    html += campo("Clasificación exigida", "clasificacion_exigida", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campo("Garantías", "garantias", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campo("Criterios de adjudicación", "criterios_adjudicacion", (v) => `<ul>${v.map((c) => `<li>${escapeHtml(c.criterio || "")} — ${escapeHtml(c.peso || "")}</li>`).join("")}</ul>`);
+    html += campo("Forma de presentación", "forma_presentacion", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campo("Fecha límite", "fecha_limite", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campo("Riesgos / puntos a vigilar", "riesgos", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
+    html += `<p class="cache-note">${data.desde_cache ? "Resumen ya generado antes para esta licitación (caché compartida entre usuarios)." : "Resumen generado ahora mismo por IA a partir del pliego oficial."} Verifica siempre contra el PDF original antes de decidir.</p>`;
+    html += `</div>`;
+    container.innerHTML = html;
+    const ev = data.evaluacion || {};
+    renderVerdict(container.querySelector(".pliego-verdict"), ev.veredicto || "sin_datos_suficientes", ev.puntos, ev.explicacion);
+  }
+
+  async function pedirAyudaPliego(item, container) {
+    container.innerHTML = `<p class="spinner-line">Leyendo el pliego y generando el resumen… puede tardar hasta un minuto la primera vez que se pide para esta licitación.</p>`;
+    try {
+      const { data: sess } = await sb.auth.getSession();
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/ayuda-pliego`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sess.session.access_token}`,
+          apikey: SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify({ external_id: item.external_id, documentos: item.documentos, tender: item }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || "Error del servidor");
+      renderPliegoSummary(container, data);
+    } catch (err) {
+      container.innerHTML = `<p class="modal-error" style="margin:0">${escapeHtml(err.message || "No se pudo generar la ayuda")}</p>`;
+    }
+  }
+
+  function renderEmpresaTools(item, container) {
+    if (!supabaseConfigured) { container.innerHTML = ""; return; }
+    if (!currentUser) {
+      container.innerHTML = `<div class="prompt">Inicia sesión para evaluar GO/NO-GO y pedir ayuda con el pliego de esta licitación. <button type="button" class="btn small" data-open="modal-auth">Iniciar sesión</button></div>`;
+      container.querySelector("[data-open]").addEventListener("click", () => openModal("#modal-auth"));
+      return;
+    }
+    if (!currentProfile) {
+      container.innerHTML = `<div class="prompt">Completa el perfil de tu empresa para usar estas herramientas. <button type="button" class="btn small" data-open="modal-empresa">Mi empresa</button></div>`;
+      container.querySelector("[data-open]").addEventListener("click", () => openEmpresaModal());
+      return;
+    }
+    const hasPliego = item.documentos && item.documentos.length > 0;
+    container.innerHTML = `
+      <div class="empresa-actions">
+        <button type="button" class="btn small" data-action="gonogo">Evaluar GO/NO-GO rápido</button>
+        ${hasPliego ? `<button type="button" class="btn small primary" data-action="pliego">Ayuda con el pliego (IA)</button>` : `<span class="cache-note">Esta fuente no tiene pliego enlazado para analizar.</span>`}
+      </div>
+      <div class="tool-result"></div>
+    `;
+    const resultDiv = container.querySelector(".tool-result");
+    container.querySelector('[data-action="gonogo"]').addEventListener("click", () => {
+      const { veredicto, puntos } = quickGoNoGo(item, currentProfile);
+      renderVerdict(resultDiv, veredicto, puntos, 'Evaluación rápida sin leer el pliego — usa "Ayuda con el pliego" para un análisis completo.');
+    });
+    const pliegoBtn = container.querySelector('[data-action="pliego"]');
+    if (pliegoBtn) {
+      pliegoBtn.addEventListener("click", () => {
+        pliegoBtn.disabled = true;
+        pedirAyudaPliego(item, resultDiv).finally(() => { pliegoBtn.disabled = false; });
+      });
+    }
+  }
+
+  document.addEventListener("empresa:changed", () => {
+    document.querySelectorAll("details.expediente[open]").forEach((det) => {
+      const toolsDiv = det.querySelector(".empresa-tools");
+      if (toolsDiv && det.__item) renderEmpresaTools(det.__item, toolsDiv);
+    });
+  });
+
+  async function loadProfile() {
+    const { data } = await sb.from("company_profiles").select("*").eq("user_id", currentUser.id).maybeSingle();
+    currentProfile = data || null;
+  }
+
+  async function onAuthChange(session) {
+    currentUser = session ? session.user : null;
+    $("#btn-login").hidden = !!currentUser;
+    $("#auth-email").hidden = !currentUser;
+    $("#auth-email").textContent = currentUser ? currentUser.email : "";
+    $("#btn-empresa").hidden = !currentUser;
+    $("#btn-logout").hidden = !currentUser;
+    currentProfile = null;
+    if (currentUser) await loadProfile();
+    document.dispatchEvent(new CustomEvent("empresa:changed"));
+  }
+
+  function openEmpresaModal() {
+    $("#emp-error").textContent = "";
+    if (currentProfile) {
+      $("#emp-nombre").value = currentProfile.company_name || "";
+      $("#emp-nif").value = currentProfile.nif || "";
+      $("#emp-clasificacion").value = currentProfile.clasificacion_empresarial || "";
+      $("#emp-cpv").value = (currentProfile.cpv_codes || []).join(", ");
+      $("#emp-ccaa").value = (currentProfile.ccaa_scope || []).join(", ");
+      $("#emp-importe-min").value = currentProfile.importe_min ?? "";
+      $("#emp-importe-max").value = currentProfile.importe_max ?? "";
+      $("#emp-facturacion").value = currentProfile.facturacion_anual ?? "";
+      $("#emp-certificaciones").value = currentProfile.certificaciones || "";
+    } else {
+      $("#form-empresa").reset();
+    }
+    openModal("#modal-empresa");
+  }
+
+  async function saveEmpresa(e) {
+    e.preventDefault();
+    $("#emp-error").textContent = "";
+    $("#emp-submit").disabled = true;
+    try {
+      const row = {
+        user_id: currentUser.id,
+        company_name: $("#emp-nombre").value.trim(),
+        nif: $("#emp-nif").value.trim() || null,
+        clasificacion_empresarial: $("#emp-clasificacion").value.trim() || null,
+        cpv_codes: splitList($("#emp-cpv").value),
+        ccaa_scope: splitList($("#emp-ccaa").value),
+        importe_min: numOrNull($("#emp-importe-min").value),
+        importe_max: numOrNull($("#emp-importe-max").value),
+        facturacion_anual: numOrNull($("#emp-facturacion").value),
+        certificaciones: $("#emp-certificaciones").value.trim() || null,
+      };
+      const { error } = await sb.from("company_profiles").upsert(row);
+      if (error) throw error;
+      currentProfile = row;
+      closeModal("#modal-empresa");
+      document.dispatchEvent(new CustomEvent("empresa:changed"));
+    } catch (err) {
+      $("#emp-error").textContent = err.message || "No se pudo guardar";
+    } finally {
+      $("#emp-submit").disabled = false;
+    }
+  }
+
+  async function initAuth() {
+    document.querySelectorAll("[data-close]").forEach((btn) => {
+      btn.addEventListener("click", () => closeModal("#" + btn.dataset.close));
+    });
+    document.querySelectorAll(".modal-backdrop").forEach((bd) => {
+      bd.addEventListener("click", (e) => { if (e.target === bd) bd.hidden = true; });
+    });
+
+    if (!supabaseConfigured) {
+      $("#btn-login").hidden = false;
+      $("#btn-login").textContent = "Cuentas no configuradas todavía";
+      $("#btn-login").disabled = true;
+      return;
+    }
+
+    const { data: { session } } = await sb.auth.getSession();
+    await onAuthChange(session);
+    sb.auth.onAuthStateChange((_event, session) => onAuthChange(session));
+
+    $("#btn-login").addEventListener("click", () => { $("#auth-error").textContent = ""; openModal("#modal-auth"); });
+    $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
+    $("#btn-empresa").addEventListener("click", openEmpresaModal);
+
+    let authMode = "login";
+    $("#auth-switch-mode").addEventListener("click", () => {
+      authMode = authMode === "login" ? "signup" : "login";
+      $("#modal-auth-title").textContent = authMode === "login" ? "Iniciar sesión" : "Crear cuenta";
+      $("#auth-submit").textContent = authMode === "login" ? "Entrar" : "Crear cuenta";
+      $("#auth-switch-mode").textContent = authMode === "login" ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión";
+    });
+
+    $("#form-auth").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = $("#auth-input-email").value.trim();
+      const password = $("#auth-input-password").value;
+      $("#auth-error").style.color = "";
+      $("#auth-error").textContent = "";
+      $("#auth-submit").disabled = true;
+      try {
+        const { error } = authMode === "login"
+          ? await sb.auth.signInWithPassword({ email, password })
+          : await sb.auth.signUp({ email, password });
+        if (error) throw error;
+        if (authMode === "signup") {
+          $("#auth-error").style.color = "var(--ok)";
+          $("#auth-error").textContent = "Cuenta creada. Si pide confirmación, revisa tu email.";
+        } else {
+          closeModal("#modal-auth");
+          $("#form-auth").reset();
+        }
+      } catch (err) {
+        $("#auth-error").style.color = "";
+        $("#auth-error").textContent = err.message || "Error de autenticación";
+      } finally {
+        $("#auth-submit").disabled = false;
+      }
+    });
+
+    $("#form-empresa").addEventListener("submit", saveEmpresa);
   }
 
   // ---- Motor de filtros/orden genérico --------------------------------
@@ -534,6 +992,7 @@
 
   async function boot() {
     setupTabs();
+    initAuth();
     const [licPayload, adjPayload] = await Promise.all([licitacionesTab.boot(), adjudicacionesTab.boot()]);
     const licData = licPayload ? licPayload.licitaciones || [] : [];
     const adjData = adjPayload ? adjPayload.adjudicaciones || [] : [];
@@ -548,3 +1007,5 @@
   boot();
 })();
 </script>
+</body>
+</html>
