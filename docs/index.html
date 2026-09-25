@@ -865,7 +865,7 @@
       try {
         const { error } = authMode === "login"
           ? await sb.auth.signInWithPassword({ email, password })
-          : await sb.auth.signUp({ email, password });
+          : await sb.auth.signUp({ email, password, options: { emailRedirectTo: window.location.href } });
         if (error) throw error;
         if (authMode === "signup") {
           $("#auth-error").style.color = "var(--ok)";
