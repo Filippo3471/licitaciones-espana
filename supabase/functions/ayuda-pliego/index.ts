@@ -22,6 +22,7 @@ const ANTHROPIC_WORKSPACE_ID = Deno.env.get("ANTHROPIC_WORKSPACE_ID");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const DAILY_LIMIT = 15;
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -94,6 +95,22 @@ Deno.serve(async (req) => {
     if (cached?.resumen) {
       resumen = cached.resumen as Record<string, unknown>;
     } else {
+      // Límite diario de análisis NUEVOS por usuario (los servidos desde
+      // caché no cuentan: no llaman al LLM, no cuestan nada extra).
+      const today = new Date().toISOString().slice(0, 10);
+      const { data: usage } = await adminClient
+        .from("pliego_usage")
+        .select("count")
+        .eq("user_id", userData.user.id)
+        .eq("day", today)
+        .maybeSingle();
+      if ((usage?.count ?? 0) >= DAILY_LIMIT) {
+        return jsonResponse(
+          { error: `Has alcanzado el límite de ${DAILY_LIMIT} análisis nuevos de pliegos por día. Vuelve mañana, o pide ayuda en una licitación que ya tenga resumen (no cuenta para el límite).` },
+          429
+        );
+      }
+
       const pcap = documentos.find((d: any) => /PCAP/i.test(d.categoria));
       const ppt = documentos.find((d: any) => /PPT/i.test(d.categoria));
       const targets = [pcap, ppt].filter(Boolean);
@@ -160,6 +177,8 @@ Deno.serve(async (req) => {
         resumen,
         model: "claude-sonnet-5",
       });
+
+      await adminClient.rpc("increment_pliego_usage", { p_user_id: userData.user.id, p_day: today });
     }
 
     const evaluacion = evaluarEncaje(resumen, profile, tender);

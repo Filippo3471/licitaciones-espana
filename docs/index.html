@@ -364,6 +364,10 @@
         <label for="auth-input-password">Contraseña</label>
         <input type="password" id="auth-input-password" required autocomplete="current-password" minlength="6">
       </div>
+      <div class="field" id="auth-invite-field" hidden>
+        <label for="auth-input-invite">Código de invitación</label>
+        <input type="text" id="auth-input-invite" autocomplete="off">
+      </div>
       <div class="modal-actions">
         <button type="button" class="switch-mode" id="auth-switch-mode">¿No tienes cuenta? Regístrate</button>
         <button type="submit" class="btn primary" id="auth-submit">Entrar</button>
@@ -848,13 +852,32 @@
     $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
     $("#btn-empresa").addEventListener("click", openEmpresaModal);
 
+    const inviteFromUrl = new URLSearchParams(location.search).get("invite") || "";
+    if (inviteFromUrl) $("#auth-input-invite").value = inviteFromUrl;
+
     let authMode = "login";
     $("#auth-switch-mode").addEventListener("click", () => {
       authMode = authMode === "login" ? "signup" : "login";
       $("#modal-auth-title").textContent = authMode === "login" ? "Iniciar sesión" : "Crear cuenta";
       $("#auth-submit").textContent = authMode === "login" ? "Entrar" : "Crear cuenta";
       $("#auth-switch-mode").textContent = authMode === "login" ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión";
+      $("#auth-invite-field").hidden = authMode !== "signup";
     });
+
+    async function checkInvite(code) {
+      if (!code) return false;
+      try {
+        const resp = await fetch(`${SUPABASE_URL}/functions/v1/check-invite`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+          body: JSON.stringify({ code }),
+        });
+        const data = await resp.json();
+        return !!data.valid;
+      } catch {
+        return false;
+      }
+    }
 
     $("#form-auth").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -864,17 +887,19 @@
       $("#auth-error").textContent = "";
       $("#auth-submit").disabled = true;
       try {
+        if (authMode === "signup") {
+          const ok = await checkInvite($("#auth-input-invite").value.trim());
+          if (!ok) throw new Error("El registro es solo por invitación. Necesitas un enlace con un código de invitación válido.");
+        }
         const { error } = authMode === "login"
           ? await sb.auth.signInWithPassword({ email, password })
           : await sb.auth.signUp({ email, password, options: { emailRedirectTo: window.location.href } });
         if (error) throw error;
-        if (authMode === "signup") {
-          $("#auth-error").style.color = "var(--ok)";
-          $("#auth-error").textContent = "Cuenta creada. Si pide confirmación, revisa tu email.";
-        } else {
-          closeModal("#modal-auth");
-          $("#form-auth").reset();
-        }
+        // Con confirmación de email desactivada, signUp() ya deja sesión
+        // iniciada al momento — se trata igual que un login correcto.
+        closeModal("#modal-auth");
+        $("#form-auth").reset();
+        $("#auth-invite-field").hidden = true;
       } catch (err) {
         $("#auth-error").style.color = "";
         $("#auth-error").textContent = err.message || "Error de autenticación";
