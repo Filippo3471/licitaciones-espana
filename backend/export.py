@@ -135,7 +135,7 @@ def run(
         for nombre, fn in (
             ("Catalunya (Generalitat)", catalunya.fetch),
             ("TED (UE)", ted.fetch),
-            ("Bilbao", bilbao.fetch),
+            ("Ayuntamiento de Bilbao", bilbao.fetch),
             ("TendersGuru", tenders_guru.fetch),
         ):
             try:
@@ -145,6 +145,23 @@ def run(
                 extra = []
             conteo[nombre] = len(extra)
             registros.extend(extra)
+
+    # Filtro de seguridad: una "licitación abierta" con el plazo ya pasado
+    # no es abierta. Esto pasa sobre todo con TED, que sigue indexando como
+    # "cn-standard" avisos de acuerdos marco plurianuales (p.ej. ferroviarios)
+    # mucho después de que el plazo original haya vencido — el tipo de aviso
+    # no garantiza que siga aceptando ofertas. También cubre el pequeño
+    # rezago normal de PLACSP/Catalunya entre ejecuciones del cron (12h).
+    hoy = dt.date.today().isoformat()
+    antes = len(registros)
+    registros = [r for r in registros if not r.get("plazo_fecha") or r["plazo_fecha"] >= hoy]
+    descartadas = antes - len(registros)
+    if descartadas:
+        print(f"Descartadas {descartadas} licitaciones con plazo ya vencido (no son 'abiertas' de verdad)")
+    conteo_final = {nombre: 0 for nombre in conteo}
+    for r in registros:
+        conteo_final[r["fuente"]] = conteo_final.get(r["fuente"], 0) + 1
+    conteo = conteo_final
 
     payload = {
         "generado_en": dt.datetime.now().isoformat(timespec="seconds"),
