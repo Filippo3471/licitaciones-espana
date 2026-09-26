@@ -889,7 +889,7 @@
       try {
         if (authMode === "signup") {
           const ok = await checkInvite($("#auth-input-invite").value.trim());
-          if (!ok) throw new Error("El registro es solo por invitación. Necesitas un enlace con un código de invitación válido.");
+          if (!ok) throw new Error("El registro es solo por invitación. Escríbeme a filippodinola3471@gmail.com si quieres acceso.");
         }
         const { error } = authMode === "login"
           ? await sb.auth.signInWithPassword({ email, password })
