@@ -909,10 +909,13 @@
     if (up.reason === "not_built") {
       html += `<span class="cache-note">Está en nuestro roadmap — te avisaremos cuando esté lista.</span>`;
     } else if (planSugerido) {
-      html += `<span class="cache-note">Tu plan actual: ${escapeHtml(planActual)}. Disponible desde: <strong>${escapeHtml(planSugerido)}</strong> — página de precios en camino.</span>`;
+      html += `<span class="cache-note">Tu plan actual: ${escapeHtml(planActual)}. Disponible desde: <strong>${escapeHtml(planSugerido)}</strong></span>`;
+      html += `<button type="button" class="btn small primary" data-open="modal-precios">Ver planes</button>`;
     }
     html += `</div>`;
     container.innerHTML = html;
+    const upgradeBtn = container.querySelector("[data-open]");
+    if (upgradeBtn) upgradeBtn.addEventListener("click", () => openPreciosModal());
   }
 
   async function onAuthChange(session) {
@@ -922,8 +925,9 @@
     $("#auth-email").textContent = currentUser ? currentUser.email : "";
     $("#btn-empresa").hidden = !currentUser;
     $("#btn-logout").hidden = !currentUser;
+    $("#btn-precios").hidden = !currentUser;
     currentProfile = null;
-    if (!currentUser) $("#plan-badge").hidden = true;
+    if (!currentUser) { $("#plan-badge").hidden = true; $("#btn-gestionar-plan").hidden = true; }
     if (currentUser) await loadProfile();
     document.dispatchEvent(new CustomEvent("empresa:changed"));
   }
@@ -983,8 +987,7 @@
       currentProfile = data.company;
       currentCompanyId = data.company.id;
       currentPlan = data.plan || "free";
-      const badge = $("#plan-badge");
-      if (badge) { badge.textContent = PLAN_NAMES[currentPlan] || currentPlan; badge.hidden = false; }
+      updatePlanBadge();
       closeModal("#modal-empresa");
       document.dispatchEvent(new CustomEvent("empresa:changed"));
     } catch (err) {
@@ -1018,6 +1021,20 @@
     $("#btn-login").addEventListener("click", () => { $("#auth-error").textContent = ""; openModal("#modal-auth"); });
     $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
     $("#btn-empresa").addEventListener("click", openEmpresaModal);
+    $("#btn-precios").addEventListener("click", openPreciosModal);
+    $("#btn-gestionar-plan").addEventListener("click", abrirPortalSuscripcion);
+    document.querySelectorAll('input[name="precios-interval"]').forEach((r) => {
+      r.addEventListener("change", () => { if (plansConfig) renderPrecios(); });
+    });
+
+    const checkoutStatus = new URLSearchParams(location.search).get("checkout");
+    if (checkoutStatus === "success") {
+      window.history.replaceState({}, "", location.pathname + location.search.replace(/[?&]checkout=success/, "").replace(/^&/, "?"));
+      setTimeout(async () => { if (currentUser) { await loadProfile(); document.dispatchEvent(new CustomEvent("empresa:changed")); } }, 2500);
+      alert("¡Pago completado! Tu plan se actualizará en unos segundos.");
+    } else if (checkoutStatus === "cancel") {
+      window.history.replaceState({}, "", location.pathname + location.search.replace(/[?&]checkout=cancel/, "").replace(/^&/, "?"));
+    }
 
     const inviteFromUrl = new URLSearchParams(location.search).get("invite") || "";
     if (inviteFromUrl) $("#auth-input-invite").value = inviteFromUrl;

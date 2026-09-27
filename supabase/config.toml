@@ -370,6 +370,11 @@ authorization_url_path = "/oauth/consent"
 # Allow dynamic client registration
 allow_dynamic_registration = false
 
+[functions.stripe-webhook]
+# Stripe no manda un JWT de Supabase — la autenticidad se verifica con la
+# firma stripe-signature + STRIPE_WEBHOOK_SECRET dentro de la función.
+verify_jwt = false
+
 [edge_runtime]
 enabled = true
 # Supported request policies: `oneshot`, `per_worker`.

@@ -274,6 +274,20 @@
   .spinner-line { font-size: 0.85rem; color: var(--ink-muted); }
   .cache-note { font-size: 0.72rem; color: var(--ink-muted); margin-top: 6px; }
 
+  .modal.modal-wide { max-width: 820px; }
+  .precios-toggle { display: flex; gap: 16px; font-size: 0.85rem; margin-bottom: 16px; }
+  .precios-toggle label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .precios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .precio-card {
+    border: 1px solid var(--line-strong); border-radius: 10px; padding: 14px; display: flex;
+    flex-direction: column; gap: 8px; background: var(--paper);
+  }
+  .precio-card.actual { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .precio-card h4 { font-size: 1rem; margin: 0; }
+  .precio-card .precio-cifra { font-size: 1.4rem; font-weight: 700; }
+  .precio-card .precio-cifra span { font-size: 0.75rem; font-weight: 400; color: var(--ink-muted); }
+  .precio-card ul { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; color: var(--ink-muted); display: flex; flex-direction: column; gap: 4px; }
+
   @media (max-width: 560px) {
     .modal { padding: 18px; }
   }
@@ -291,6 +305,8 @@
         <button type="button" class="btn" id="btn-login" hidden>Iniciar sesión</button>
         <span class="email" id="auth-email" hidden></span>
         <span class="chip ok" id="plan-badge" hidden></span>
+        <button type="button" class="btn small" id="btn-precios" hidden>Precios</button>
+        <button type="button" class="btn small" id="btn-gestionar-plan" hidden>Gestionar suscripción</button>
         <button type="button" class="btn small" id="btn-empresa" hidden>Mi empresa</button>
         <button type="button" class="btn small" id="btn-logout" hidden>Cerrar sesión</button>
       </div>
@@ -432,6 +448,22 @@
       </div>
       <p class="modal-error" id="emp-error"></p>
     </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-precios" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="modal-precios-title">
+    <h3 id="modal-precios-title">Planes</h3>
+    <p class="modal-sub">Prueba PRO 14 días gratis, sin tarjeta. Cancela cuando quieras.</p>
+    <div class="precios-toggle">
+      <label><input type="radio" name="precios-interval" value="mes" checked> Mensual</label>
+      <label><input type="radio" name="precios-interval" value="anio"> Anual (2 meses gratis)</label>
+    </div>
+    <div id="precios-grid" class="precios-grid"></div>
+    <p class="modal-error" id="precios-error"></p>
+    <div class="modal-actions">
+      <button type="button" class="modal-close" data-close="modal-precios">Cerrar</button>
+    </div>
   </div>
 </div>
 
@@ -610,6 +642,7 @@
   let currentProfile = null;
   let currentCompanyId = null;
   let currentPlan = "free";
+  let plansConfig = null;
   const PLAN_NAMES = { free: "Free", basico: "Básico", pro: "Pro", equipo: "Equipo" };
 
   function openModal(sel) { $(sel).hidden = false; }
@@ -765,6 +798,12 @@
     });
   });
 
+  function updatePlanBadge() {
+    const badge = $("#plan-badge");
+    if (badge) { badge.textContent = PLAN_NAMES[currentPlan] || currentPlan; badge.hidden = false; }
+    $("#btn-gestionar-plan").hidden = currentPlan === "free";
+  }
+
   async function loadProfile() {
     const { data: { user } } = await sb.auth.getUser();
     if (!user) { currentProfile = null; currentCompanyId = null; currentPlan = "free"; return; }
@@ -775,8 +814,90 @@
     currentProfile = company || null;
     const { data: sub } = await sb.from("subscriptions").select("plan, status").eq("company_id", currentCompanyId).maybeSingle();
     currentPlan = (sub && (sub.status === "active" || sub.status === "trialing")) ? sub.plan : "free";
-    const badge = $("#plan-badge");
-    if (badge) { badge.textContent = PLAN_NAMES[currentPlan] || currentPlan; badge.hidden = false; }
+    updatePlanBadge();
+  }
+
+  async function loadPlansConfig() {
+    if (plansConfig) return plansConfig;
+    const r = await fetch("plans.json");
+    plansConfig = await r.json();
+    return plansConfig;
+  }
+
+  function renderPrecios() {
+    const interval = document.querySelector('input[name="precios-interval"]:checked').value;
+    const grid = $("#precios-grid");
+    const order = ["basico", "pro", "equipo"];
+    grid.innerHTML = order.map((planId) => {
+      const p = plansConfig.planes[planId];
+      const precio = interval === "mes" ? p.precio_mes : p.precio_anio;
+      const esActual = currentPlan === planId;
+      const trialTag = planId === "pro" ? `<div class="cache-note">${plansConfig.trial_dias_pro} días gratis, sin tarjeta</div>` : "";
+      const limites = p.limites;
+      const items = [
+        limites.cpv_max == null ? "Sectores CPV ilimitados" : `Hasta ${limites.cpv_max} sector(es) CPV`,
+        limites.ccaa_max == null ? "Toda España" : `Hasta ${limites.ccaa_max} comunidad(es) autónoma(s)`,
+        limites.pliego_summaries_mes == null ? "Ayuda con el pliego ilimitada" : `${limites.pliego_summaries_mes} análisis de pliego/mes`,
+        limites.usuarios_max > 1 ? `Hasta ${limites.usuarios_max} usuarios` : "1 usuario",
+      ];
+      return `
+        <div class="precio-card ${esActual ? "actual" : ""}">
+          <h4>${escapeHtml(p.nombre)}</h4>
+          <div class="precio-cifra">${money.format(precio)}€<span> /${interval === "mes" ? "mes" : "año"}</span></div>
+          ${trialTag}
+          <ul>${items.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>
+          <button type="button" class="btn ${esActual ? "" : "primary"} small" data-plan="${planId}" ${esActual ? "disabled" : ""}>
+            ${esActual ? "Tu plan actual" : "Suscribirse"}
+          </button>
+        </div>
+      `;
+    }).join("");
+    grid.querySelectorAll("[data-plan]").forEach((btn) => {
+      btn.addEventListener("click", () => iniciarCheckout(btn.dataset.plan, interval));
+    });
+  }
+
+  async function openPreciosModal() {
+    $("#precios-error").textContent = "";
+    await loadPlansConfig();
+    renderPrecios();
+    openModal("#modal-precios");
+  }
+
+  async function iniciarCheckout(plan, billing_interval) {
+    $("#precios-error").textContent = "";
+    if (!currentUser) { closeModal("#modal-precios"); openModal("#modal-auth"); return; }
+    try {
+      const { data: sess } = await sb.auth.getSession();
+      if (!sess.session) throw new Error("Tu sesión ha caducado. Inicia sesión de nuevo.");
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sess.session.access_token}`, apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({ plan, billing_interval }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.url) throw new Error(data.error || "No se pudo iniciar el pago");
+      window.location.href = data.url;
+    } catch (err) {
+      $("#precios-error").textContent = err.message || "No se pudo iniciar el pago";
+    }
+  }
+
+  async function abrirPortalSuscripcion() {
+    try {
+      const { data: sess } = await sb.auth.getSession();
+      if (!sess.session) throw new Error("Tu sesión ha caducado. Inicia sesión de nuevo.");
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/create-portal-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sess.session.access_token}`, apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({}),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.url) throw new Error(data.error || "No se pudo abrir el portal de suscripción");
+      window.location.href = data.url;
+    } catch (err) {
+      alert(err.message || "No se pudo abrir el portal de suscripción");
+    }
   }
 
   function renderUpsell(container, data) {
@@ -788,10 +909,13 @@
     if (up.reason === "not_built") {
       html += `<span class="cache-note">Está en nuestro roadmap — te avisaremos cuando esté lista.</span>`;
     } else if (planSugerido) {
-      html += `<span class="cache-note">Tu plan actual: ${escapeHtml(planActual)}. Disponible desde: <strong>${escapeHtml(planSugerido)}</strong> — página de precios en camino.</span>`;
+      html += `<span class="cache-note">Tu plan actual: ${escapeHtml(planActual)}. Disponible desde: <strong>${escapeHtml(planSugerido)}</strong></span>`;
+      html += `<button type="button" class="btn small primary" data-open="modal-precios">Ver planes</button>`;
     }
     html += `</div>`;
     container.innerHTML = html;
+    const upgradeBtn = container.querySelector("[data-open]");
+    if (upgradeBtn) upgradeBtn.addEventListener("click", () => openPreciosModal());
   }
 
   async function onAuthChange(session) {
@@ -801,8 +925,9 @@
     $("#auth-email").textContent = currentUser ? currentUser.email : "";
     $("#btn-empresa").hidden = !currentUser;
     $("#btn-logout").hidden = !currentUser;
+    $("#btn-precios").hidden = !currentUser;
     currentProfile = null;
-    if (!currentUser) $("#plan-badge").hidden = true;
+    if (!currentUser) { $("#plan-badge").hidden = true; $("#btn-gestionar-plan").hidden = true; }
     if (currentUser) await loadProfile();
     document.dispatchEvent(new CustomEvent("empresa:changed"));
   }
@@ -862,8 +987,7 @@
       currentProfile = data.company;
       currentCompanyId = data.company.id;
       currentPlan = data.plan || "free";
-      const badge = $("#plan-badge");
-      if (badge) { badge.textContent = PLAN_NAMES[currentPlan] || currentPlan; badge.hidden = false; }
+      updatePlanBadge();
       closeModal("#modal-empresa");
       document.dispatchEvent(new CustomEvent("empresa:changed"));
     } catch (err) {
@@ -897,6 +1021,20 @@
     $("#btn-login").addEventListener("click", () => { $("#auth-error").textContent = ""; openModal("#modal-auth"); });
     $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
     $("#btn-empresa").addEventListener("click", openEmpresaModal);
+    $("#btn-precios").addEventListener("click", openPreciosModal);
+    $("#btn-gestionar-plan").addEventListener("click", abrirPortalSuscripcion);
+    document.querySelectorAll('input[name="precios-interval"]').forEach((r) => {
+      r.addEventListener("change", () => { if (plansConfig) renderPrecios(); });
+    });
+
+    const checkoutStatus = new URLSearchParams(location.search).get("checkout");
+    if (checkoutStatus === "success") {
+      window.history.replaceState({}, "", location.pathname + location.search.replace(/[?&]checkout=success/, "").replace(/^&/, "?"));
+      setTimeout(async () => { if (currentUser) { await loadProfile(); document.dispatchEvent(new CustomEvent("empresa:changed")); } }, 2500);
+      alert("¡Pago completado! Tu plan se actualizará en unos segundos.");
+    } else if (checkoutStatus === "cancel") {
+      window.history.replaceState({}, "", location.pathname + location.search.replace(/[?&]checkout=cancel/, "").replace(/^&/, "?"));
+    }
 
     const inviteFromUrl = new URLSearchParams(location.search).get("invite") || "";
     if (inviteFromUrl) $("#auth-input-invite").value = inviteFromUrl;

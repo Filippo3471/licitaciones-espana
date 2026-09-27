@@ -28,6 +28,16 @@ export GIT_AUTHOR_EMAIL="filippodinola@Filippos-MacBook-Pro.local"
 export GIT_COMMITTER_NAME="Filippo Di Nola"
 export GIT_COMMITTER_EMAIL="filippodinola@Filippos-MacBook-Pro.local"
 
+# El credential helper osxkeychain (usado por el remote HTTPS de origin) no
+# es accesible desde un proceso cron sin sesión interactiva — el push
+# fallaba con "could not read Username... Device not configured". En vez de
+# tocar el remote guardado en .git/config, se hace push por SSH a una URL
+# explícita usando una deploy key dedicada de solo este repo (sin passphrase,
+# permisos 600), sin depender del Keychain.
+DEPLOY_KEY="$HOME/.ssh/licitaciones_deploy_key"
+export GIT_SSH_COMMAND="ssh -i $DEPLOY_KEY -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+PUSH_URL="git@github.com:Filippo3471/licitaciones-espana.git"
+
 cd "$(dirname "$0")/.."
 LOG="data/refresh.log"
 mkdir -p data
@@ -62,7 +72,7 @@ fi
 
 git add docs/ >>"$LOG" 2>&1
 git commit -q -m "Actualización automática de datos ($(date -u +%Y-%m-%dT%H:%M:%SZ))" >>"$LOG" 2>&1
-if git push origin master >>"$LOG" 2>&1; then
+if git push "$PUSH_URL" HEAD:master >>"$LOG" 2>&1; then
   echo "OK: publicado en GitHub Pages (total=$TOTAL)." >>"$LOG"
 else
   echo "FALLO: git push falló (total=$TOTAL, commit local sí se creó)." >>"$LOG"
