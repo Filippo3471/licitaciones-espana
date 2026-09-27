@@ -1,0 +1,94 @@
+{
+  "persona_label": "07_construccion_fuera_de_foco",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 11,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar, cuéntame: ¿a qué se dedica tu empresa y qué papel juegas tú en las decisiones sobre a qué licitaciones presentaros?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Buenas. Somos una constructora mediana, unas 80 personas, centrada en obra civil —carreteras y edificación pública— en varias provincias. Yo dirijo el departamento de licitaciones, dos personas a tiempo completo, y soy quien decide finalmente a qué concursos nos presentamos tras el análisis de viabilidad técnica y económica que hacemos internamente."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, muy claro. Cuéntame, ¿cuál fue la última licitación concreta a la que os presentasteis? ¿Cómo la encontrasteis, cuál fue el proceso paso a paso desde que os enterasteis hasta que decidisteis presentaros?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Fue una licitación de rehabilitación de firme en una carretera provincial, publicada hace unas seis semanas. La detectamos, como todo, a través del boletín oficial al que estamos suscritos, que revisamos a diario junto con las plataformas de contratación del Estado y de la comunidad autónoma correspondiente. A partir de ahí seguimos el proceso habitual: mi compañera hace una primera criba técnica del pliego, yo reviso solvencia y plazos, y en un par de días decidimos en comité interno si compensa destinar recursos a la propuesta, teniendo en cuenta carga de trabajo actual y márgenes previstos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, un proceso bastante estructurado. ¿Cuánto tiempo dedicáis en total, a la semana, entre las dos personas, solo a la parte de buscar y revisar boletines/plataformas (sin contar la elaboración de la propuesta en sí)?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Solo en la fase de vigilancia y cribado, sin contar redacción de propuestas, dedicamos entre 6 y 8 horas semanales entre las dos personas. Es un proceso maduro que llevamos rodando años, así que raramente se nos escapa algo relevante, aunque reconozco que es una parte del trabajo que consume tiempo de forma constante."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Dices que \"raramente\" se os escapa algo. Pensando en el último año, ¿recuerdas algún caso concreto que se os pasara o que os enterarais tarde? ¿Qué pasó exactamente?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, hubo un caso hace unos meses: una licitación de un ayuntamiento mediano que publicó el anuncio previo en su propio perfil del contratante antes de que apareciera en el boletín agregado, y nos enteramos con solo cuatro días para presentar oferta, insuficiente para nosotros dado el volumen del pliego. Fue más un despiste por un perfil municipal poco habitual que un fallo estructural, pero sí nos hizo revisar si merecía la pena ampliar el radar a ciertos portales locales menores."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, eso tiene sentido. Cambiando de tema: en el último año, ¿a cuántas licitaciones os presentasteis en total, y a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nos presentamos a unas 45 licitaciones a lo largo del año y ganamos 9, un ratio que se mueve en la línea habitual para nosotros, entre el 18 y el 20%. Es una cifra que consideramos razonable dado el nivel de competencia en obra civil pública, sobre todo cuando entran grandes constructoras en concursos de cierto volumen."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "¿Qué herramienta o servicio usáis hoy, si usáis alguno, para la vigilancia de boletines y plataformas (aparte de la revisión manual que me contabas)? Y si pagáis por algo, ¿cuánto?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Usamos nuestro ERP interno, desarrollado a medida hace años, que centraliza el seguimiento de cada expediente y los plazos, y pagamos una suscripción a un boletín oficial especializado en contratación pública, que ronda los 3.000-4.000 euros anuales. Es una combinación que nos funciona bien para nuestro volumen y tipo de obra, así que no sé si una herramienta genérica pensada para pymes más pequeñas aportaría gran cosa a un proceso que ya tenemos bastante maduro."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido. Y en el caso de que valorarais contratar una herramienta nueva para esto, ¿quién tomaría esa decisión dentro de la empresa: tú, dirección general, o sería algo conjunto?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "La decisión final la tomaría dirección general, aunque yo tendría un peso importante en la recomendación técnica dado que es mi área. Para algo así, tendría que ver un caso de uso muy concreto y un ahorro claro de tiempo o mejora en la detección temprana, no una herramienta genérica más; quizás para tareas puntuales, como ampliar el radar a portales locales menores que comentaba antes, sí le vería recorrido."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Genial, muchas gracias por el detalle. Con esto tengo una idea bastante clara de vuestro proceso.\n\nTe voy a enseñar un informe de licitaciones abiertas ahora mismo para vuestro sector, para que veas un ejemplo real.\n\n\n\nAhora mismo hay 481 licitaciones abiertas de \"Servicios de arquitectura, ingeniería y construcción\" en toda España, por un importe total de 317.945.361€.\n\nAlgunos ejemplos (las de mayor importe):\n- Servicios de mantenimiento y conservación de los espacios verdes, áreas caninas y arbolado urbano de Las Palmas de Gran Canaria con criterios sociales y ambientales para contribuir al desarrollo sostenible, incluyendo asistencia técnica especializada para el control de calidad del servicio — Junta de Gobierno del Ayuntamiento de Las Palmas de Gran Canaria — 96.590.525€ — plazo: 2026-10-05\n- Asistencia Técnica De Pm Y Atdocv Para Las Actuaciones Del Aeropuerto De Bilbao — Aena. Consejo de Administración — 27.780.657€ — plazo: 2026-10-21\n- Asistencia Técnica De Pm Y Atdocv Para Las Actuaciones Del Aeropuerto De Valencia — Aena. Consejo de Administración — 23.896.672€ — plazo: 2026-10-21\n- Contracte de serveis per a la direcció de les obres del projecte constructiu. Variant de les Preses i d’Olot. Des del PK 172+200 dela C-37 fins a la connexió amb l’A-26. La Vall d’en Bas - Les Preses – Olot. Clau: NG-02083 — Infraestructures de la Generalitat de Catalunya, SAU — 10.926.633€ — plazo: 2026-10-19\n- España – Servicios de cartografía digital – Framework contract for the supply of geospatial products for the Copernicus Security Service component on support to EU external and security actions — European Union Satellite Centre — 6.090.000€ — plazo: 2026-10-29\n\n¿Qué te parece, del 1 al 5, lo útil que te resulta este informe? Y cuéntame por qué le pones esa nota."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Le pongo un 2. El volumen total suena bien, pero de los ejemplos que me enseñas casi ninguno encaja con nuestro perfil real: mantenimiento de espacios verdes, asistencia técnica de aeropuertos o cartografía por satélite no son licitaciones a las que nos presentaríamos nunca, y eso me hace desconfiar de que el filtrado esté bien ajustado a \"obra civil, carreteras y edificación pública\" que es lo nuestro. Para sernos útil, necesitaría ver que el ruido está filtrado y que aparecen expedientes de nuestro rango de importe y tipología concreta, si no, es información que ya tenemos mejor segmentada con nuestro propio sistema."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo perfectamente, es un feedback muy valioso, gracias por la sinceridad.\n\nTe cuento brevemente: estamos lanzando este producto y ahora mismo ofrecemos un precio especial de fundador a las primeras empresas que se comprometan, con filtros ajustados a tipología e importe real como el que describes. El precio exacto te lo confirmaría el equipo por email.\n\n¿Te interesaría que te lo pasáramos, aunque sea solo para valorarlo con calma?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Puedo dejaros mi email para revisarlo con calma, sin compromiso, pero sinceramente parto de bastante escepticismo dado lo que os comentaba: con nuestro proceso interno y volumen actual, la barra para que esto nos aporte valor real está bastante alta. Si el filtrado es tan preciso como decís y hay margen para probarlo en algo puntual, como esos portales locales menores que se nos escapan a veces, sí le echaría un vistazo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, tiene mucho sentido, gracias por la sinceridad y por darle una oportunidad.\n\n¿Me pasas el email para que el equipo te escriba con los detalles y el precio?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Claro, escríbeme a licitaciones@[nombreempresa].es y lo comentamos con el equipo cuando tengáis los detalles cerrados."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, apuntado. Muchas gracias por tu tiempo y por la sinceridad en todas las respuestas, ha sido muy útil para entender vuestro proceso real y dónde estaría el valor de verdad. Te escribiremos pronto con los detalles.\n\n¡Que vaya bien el resto del día!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Construcción y obra civil"
+}

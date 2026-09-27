@@ -1,0 +1,86 @@
+{
+  "persona_label": "03_ti_barcelona_bajo_dolor",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 10,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar, cuéntame: ¿a qué se dedica tu empresa y qué papel juegas tú en las decisiones sobre licitaciones públicas?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Somos una consultora de TI pequeña, 3 personas, y la mayoría de lo que hacemos es para clientes privados de siempre. Yo soy el fundador y básicamente decido si nos presentamos o no a alguna licitación puntual que nos llega de rebote por algún cliente público, pero vamos, no es algo que gestionemos activamente ni nada parecido."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, gracias. ¿Me cuentas la última vez que os llegó una licitación así \"de rebote\"? ¿Qué pasó exactamente, cómo os enterasteis y qué hicisteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues hace unos meses un cliente público con el que ya trabajábamos nos avisó de que iban a sacar un concurso para algo que ya les hacíamos, así que nos presentamos casi por inercia porque ya conocíamos el pliego de antemano. Tampoco le dimos muchas vueltas, era básicamente formalizar algo que ya estábamos haciendo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, tiene sentido. Fuera de ese caso puntual, ¿dedicáis algo de tiempo a buscar activamente licitaciones nuevas (por ejemplo en algún portal o plataforma), o directamente no buscáis nada si no os avisan?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "No, la verdad es que no buscamos nada activamente, ni miramos portales ni nada de eso; si no nos avisa alguien directamente no nos enteramos y tampoco es algo que nos quite el sueño."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido. En el último año, ¿sabes de alguna licitación pública a la que os hubiera interesado presentaros pero que se os pasó o no llegasteis a tiempo?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "La verdad es que no sabría decirte ninguna, y como no las perseguimos activamente pues tampoco sé qué me estoy perdiendo, pero no me quita el sueño."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Tiene sentido. En el último año, ¿a cuántas licitaciones públicas os habéis presentado en total, y a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues creo que fueron un par, quizá dos o tres, y ganamos la mayoría porque en el fondo ya eran clientes conocidos, no competíamos mucho a ciegas."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, entendido. Y hoy en día, ¿usáis alguna herramienta, alertas o servicio de pago para el tema de licitaciones, o gestionáis esto solo con el boletín/aviso del cliente y punto?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nada de eso, ni herramientas ni alertas ni servicios de pago, simplemente si el cliente nos avisa vamos mirando el pliego cuando toca y ya está."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, gracias por la claridad. Con esto ya tengo una idea bastante clara de cómo os movéis hoy.\n\nTe voy a enseñar un informe de licitaciones abiertas para tu sector, a ver qué te parece.\n\n\n\nAhora mismo hay 249 licitaciones abiertas de \"Servicios de tecnologías de la información (TI)\" en toda España, por un importe total de 7.070.404.607€.\n\nAlgunos ejemplos (las de mayor importe):\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 2.161.950.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 2.161.950.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 362.274.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 362.274.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 288.024.000€ — plazo: 2030-06-23"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Uf, son cifras enormes pero para nosotros esos macro-contratos tipo CTTI ni pintan, son de otra liga; nos iría más mirar si entre esas 249 hay alguna más pequeñita y de andar por casa, aunque tampoco es que me vaya a poner ahora a bucear en el listado."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Tiene mucho sentido, gracias por la sinceridad. Ese tipo de informe con macro-contratos no te sirve tal cual.\n\nDel 1 al 5, ¿qué tan útil te ha parecido este informe tal y como te lo he enseñado, y por qué?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Un 2, porque tal cual me lo enseñas es puro ruido para nosotros: contratos gigantes de otra liga que no vamos a poder ni queremos abordar, así que no me aporta nada accionable."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo perfectamente, gracias por decírmelo tan claro. Es justo el tipo de feedback que necesitamos.\n\nEstamos preparando un producto de pago que filtre y avise solo de licitaciones que encajen realmente con el tamaño y perfil de empresas como la tuya, sin ruido de macro-contratos. Ahora mismo tenemos un precio especial de lanzamiento para los primeros clientes que se comprometan.\n\n¿Te interesaría que te pasáramos más info y un enlace de pago con ese precio de fundador?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Mira, te agradezco la propuesta, pero honestamente no es una prioridad para nosotros ahora mismo: las licitaciones son algo tan puntual y marginal en nuestro negocio que no creo que pagar por una herramienta así nos compense, aunque filtre bien."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Lo entiendo perfectamente, gracias por la honestidad, es información muy valiosa para nosotros.\n\nMuchas gracias por tu tiempo y por contarme todo esto con tanta claridad. ¡Te deseo mucho éxito con la consultora!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de tecnologías de la información (TI)"
+}

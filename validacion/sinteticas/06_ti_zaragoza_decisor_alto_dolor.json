@@ -1,0 +1,78 @@
+{
+  "persona_label": "06_ti_zaragoza_decisor_alto_dolor",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 9,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicar unos minutos a esto.\n\nPara empezar: ¿a qué se dedica tu empresa y qué papel juegas tú cuando se trata de buscar o decidir a qué licitaciones presentarse?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "¡Hola! Somos una empresa de desarrollo de software a medida en Zaragoza, 6 personas, y como único socio-fundador decido absolutamente todo, incluidas las licitaciones: entre un compañero y yo nos pasamos 5-6 horas a la semana rastreando plataformas a mano, sin ningún sistema. Es un follón tal que el año pasado se nos escaparon al menos 4-5 licitaciones que ni vimos hasta que ya estaban adjudicadas, y de las 8 a las que sí llegamos a presentarnos solo ganamos 2."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vaya, eso son bastantes datos ya de golpe, gracias. Vamos por partes.\n\nCuéntame la última vez concreta que os pusisteis a buscar licitaciones: ¿qué día fue más o menos, y qué hiciste paso a paso (qué plataformas abriste, qué buscaste)?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues fue el lunes pasado: entré a la Plataforma de Contratación del Estado y también al perfil de contratante de la DGA, filtré por \"desarrollo de software\" y \"servicios informáticos\", y me tocó ir abriendo uno a uno como 15 expedientes para ver si encajaban con lo nuestro, perdiendo casi dos horas solo en eso. Encima varias búsquedas las repito en Licitaciones Aragón y a veces en algún portal municipal, así que al final es un cóctel de pestañas y PDFs sin ningún criterio claro de priorización."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Menudo lío de pestañas, sí. Ya me has dicho que dedicáis 5-6 horas semanales entre los dos, con eso me quedo claro.\n\nDe esas 4-5 licitaciones que se os escaparon el año pasado, ¿me cuentas el caso concreto de una que recuerdes bien? ¿Qué era, y por qué no la visteis a tiempo?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Recuerdo bien una de un ayuntamiento mediano de la provincia, un desarrollo de gestión de expedientes que nos hubiera encajado como un guante: salió publicada en su propio perfil de contratante, no en la Plataforma del Estado, y como ese portal no lo revisamos con regularidad, nos enteramos mes y medio después cuando ya estaba adjudicada a otro proveedor. Ese tipo de despiste, multiplicado por 4 o 5 veces al año, es justo lo que más rabia me da porque sé que perdemos oportunidades reales por pura falta de sistema, no por falta de capacidad."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Eso de perderla por no mirar el portal correcto, y no por falta de capacidad, tiene que doler especialmente. Lo entiendo.\n\nYa me contaste que os presentasteis a 8 y ganasteis 2 el año pasado. Vamos al último punto: ¿usáis hoy alguna herramienta o servicio (de pago o gratis) que os avise de licitaciones, tipo alertas por email o algún buscador especializado? ¿O es todo manual como me has contado?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Todo manual, cero herramientas de pago ni de gratis configuradas en serio. Sí que he mirado activamente varias veces opciones tipo alertas o buscadores especializados de licitaciones, pero nunca me he decidido a contratar nada, será que ninguna me terminó de convencer o el precio no me cuadraba con lo que realmente necesitaba."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Interesante que lo miraras varias veces pero no dieras el paso. ¿Recuerdas el nombre de alguna herramienta concreta que llegaste a mirar, y qué fue lo último que te hizo descartarla?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Miré Licitanet y también Vortal en su momento, pero me echaron para atrás porque parecía que pagaba por un volumen de licitaciones de toda España que no necesito, sin poder afinar bien solo lo de Aragón y desarrollo de software, y el precio no terminaba de justificarse para lo específico de mi caso."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Muy útil saber eso, gracias por el detalle.\n\nCon todo lo que me cuentas, te voy a enseñar un informe de licitaciones abiertas ahora mismo para tu sector y zona, a ver qué te parece.\n\n\n\nAhora mismo hay 2 licitaciones abiertas de \"Servicios de tecnologías de la información (TI)\" en Aragón, por un importe total de 82.868€.\n\nAlgunos ejemplos (las de mayor importe):\n- Servicio de alojamiento gestionado y modernización de la plataforma tecnológica de la Cámara de Cuentas de Aragón. — Consejo de la Cámara de Cuentas de Aragón — 79.964€ — plazo: 2026-10-07\n- Servicio de mantenimiento, asesoramiento y soporte en materia de seguridad y protección de datos personales, incluyendo el servicio de Delegado/a de Protección de Datos. — Presidente de la Comarca de la Litera — 2904€ — plazo: 2026-10-01\n\nÉchale un ojo y dime: del 1 al 5, ¿qué tan útil te parece este informe para lo que necesitas? Cuéntame también el porqué de la nota."
+    },
+    {
+      "hablante": "persona",
+      "texto": "¡Esto ya es justo lo que necesito ver, un 4 sobre 5! Me ahorra el paseo por cinco portales distintos y me da el importe y plazo de un vistazo, que es oro puro; le quitaría medio punto porque me gustaría que afinara aún más el tipo de servicio (que \"software a medida\" no se me mezcle con cosas de infraestructura o protección de datos que no son lo mío)."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Un 4 con esa razón tiene todo el sentido, gracias por la sinceridad.\n\nEstamos justo ahora en fase de lanzamiento, ofreciendo un precio especial de fundador a las primeras empresas que se comprometan. Si te interesa, el equipo te confirmaría el precio exacto por email y te pasaría el enlace de pago.\n\n¿Te gustaría que te contactáramos con esa oferta?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "¡Sí, totalmente interesado, contactadme! Pagaría sin pensarlo mucho unos 40-60€/mes por esto, y si además afináis bien el filtro por tipo de servicio y me cubrís también portales municipales como el que me hizo perder aquella licitación, hasta pagaría algo más porque el valor está clarísimo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Genial, me quedo con esa referencia de precio, gracias por la sinceridad.\n\n¿Me dejas tu email para que el equipo te escriba con la oferta de fundador y el enlace de pago?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Claro, sin problema: fundador@[tuempresa].es — quedo atento al correo, ¡gracias a vosotros por el curro!"
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Genial, muchas gracias a ti por tu tiempo y por contarme todo con tanto detalle! Justo esas cosas concretas —lo del ayuntamiento, lo de Licitanet y Vortal— son las que nos ayudan a construir algo que de verdad valga la pena. En breve tendrás noticias nuestras con la oferta de fundador. ¡Que vaya bien! 👋"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de tecnologías de la información (TI)"
+}

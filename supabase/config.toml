@@ -375,6 +375,16 @@ allow_dynamic_registration = false
 # firma stripe-signature + STRIPE_WEBHOOK_SECRET dentro de la función.
 verify_jwt = false
 
+[functions.validacion-simular-entrevista]
+# Función de testing interno (Fase 2 de validación), sin usuario real
+# detrás — se protege con un secreto compartido (x-test-secret), no JWT.
+verify_jwt = false
+
+[functions.entrevista-validacion]
+# Se accede por un token no adivinable en la URL, no por sesión de
+# Supabase Auth — la empresa entrevistada nunca inicia sesión.
+verify_jwt = false
+
 [edge_runtime]
 enabled = true
 # Supported request policies: `oneshot`, `per_worker`.

@@ -1,0 +1,110 @@
+{
+  "persona_label": "08_consultoria_gestoria_externa",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 13,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar, cuéntame: ¿a qué se dedica tu empresa y qué papel tienes tú a la hora de buscar o decidir a qué licitaciones os presentáis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "¡Hola! Somos una consultora de gestión, diez personas, aquí en Murcia. Yo soy el gerente y soy quien decide finalmente a qué licitaciones nos presentamos: nos apoyamos en una gestoría externa que nos manda cada semana un listado con lo que encaja con nuestro perfil, y a partir de ahí filtro y decido junto con el equipo a cuáles merece la pena ir."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Qué interesante, gracias. Cuéntame la última vez que te llegó ese listado de la gestoría: ¿cuándo fue y qué hiciste con él exactamente?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues me llegó el viernes pasado, como cada semana, un correo con un Excel de unas quince licitaciones. Le eché un vistazo el mismo día por encima y el lunes por la mañana me senté con calma a mirar cuáles encajaban de verdad con nuestra capacidad y plazos, descartando varias que claramente no eran para nosotros."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo. De esas quince, ¿cuántas acabasteis marcando como candidatas serias para presentaros, y cuánto tiempo te llevó en total ese proceso de revisión el lunes?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "De las quince, nos quedamos con tres o cuatro que realmente tenían sentido para nosotros. El proceso de revisión en sí, entre leer los pliegos por encima y comentarlo con el equipo, me llevó una mañana entera, unas tres horas más o menos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Ok, tres horas ese lunes solo revisando ese listado. Pensando en una semana normal completa (revisar el listado, leer pliegos, preparar propuestas, etc.), ¿cuánto tiempo dirías que dedicas tú en total a licitaciones?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Contando la revisión inicial, el seguimiento de plazos y el rato que dedico a repasar las propuestas antes de que salgan, diría que entre seis y ocho horas semanales, según haya o no algo en preparación esa semana."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, seis-ocho horas semanales, entendido. Pensando en el último año, ¿recuerdas alguna licitación que os interesara pero que se os escapara, por ejemplo por no enteraros a tiempo o por llegar tarde al plazo?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, un par de veces la gestoría nos pasó algo interesante ya casi al límite del plazo, y no nos dio tiempo a prepararlo como es debido, así que las descartamos. No fue nada dramático, pero sí me quedó la sensación de que si nos hubiera llegado unos días antes, probablemente nos habríamos presentado."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, esa sensación de \"si hubiera llegado antes\" es importante. ¿Recuerdas alguna de esas dos concretamente? ¿De qué tipo de licitación se trataba y cuántos días de margen os faltaron?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Recuerdo una de asesoramiento para un ayuntamiento de la Región, creo que era sobre planificación estratégica, y nos llegó con menos de una semana para presentar toda la documentación cuando normalmente necesitamos dos o tres. La otra ya la recuerdo más vaga, pero también fue algo similar, de administración pública, donde nos faltaron esos mismos tres o cuatro días de margen."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, tiene sentido. Ahora una de cifras: en el último año, ¿a cuántas licitaciones os presentasteis en total y a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nos presentamos a 12 licitaciones y ganamos 3. No está mal, pero siempre pienso que con un poco más de margen en esos casos límite quizá el número hubiera sido algo mejor."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Tiene sentido. Última pregunta de esta parte: aparte de la gestoría que os manda el listado semanal, ¿usáis alguna otra herramienta o servicio (de pago o gratuito) para buscar licitaciones, tipo alguna plataforma o alerta?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "No, ahora mismo solo contamos con la gestoría y su listado semanal. De vez en cuando alguien del equipo mira algo suelto por su cuenta si le llega algún aviso, pero no es algo sistemático ni usamos ninguna plataforma propia."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Y ese servicio de la gestoría, ¿sabes cuánto pagáis por él, aproximadamente al mes o al año?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pagamos alrededor de 150€ al mes, así que unos 1.800€ al año más o menos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, muy útil todo esto. Con esto ya tengo una buena foto.\n\nAhora te voy a enseñar un informe de licitaciones abiertas para tu sector y zona, a ver qué te parece.\n\n\n\nAhora mismo hay 0 licitaciones abiertas de \"Otros servicios profesionales, científicos y técnicos\" en Región de Murcia, por un importe total de 0€.\n\n¿Qué te parece este informe? Del 1 al 5, ¿qué tan útil te resulta, y por qué?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues la verdad, si me dices que ahora mismo hay 0 licitaciones abiertas en nuestro sector y zona, me chirría un poco, porque sé que normalmente hay algo de movimiento. Le doy un 1 o un 2, porque tal como está no me aporta nada y hasta me generaría dudas de si la herramienta está filtrando bien o le falta cobertura."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Totalmente entendible, gracias por la sinceridad. Tienes razón, con 0 resultados no aporta valor y hasta genera desconfianza en el filtrado — es un feedback muy útil para nosotros, tenlo por seguro.\n\nTe cuento igualmente: estamos lanzando un producto para automatizar justo esto (detección temprana y alertas de licitaciones) y ahora mismo tenemos un precio especial de fundador para los primeros clientes que se comprometan. Si te interesa, el equipo te confirmaría el precio exacto por email.\n\n¿Te gustaría que te pasáramos esa información?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Claro, no hay problema en que me paséis la información por email. Eso sí, para plantearme un cambio necesitaría ver que el filtrado funciona de verdad y que cubre lo que la gestoría ya nos da, más ese margen de anticipación que nos falta ahora mismo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Totalmente lógico, es justo lo que tiene que demostrar antes de que os planteéis nada. ¿Me pasas tu email para que el equipo te escriba con los detalles y el precio de fundador?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Claro, es gerente@[nuestraconsultora].es. Quedo atento al correo, aunque como te decía, lo primero será ver datos reales de cobertura y anticipación antes de valorar cualquier cambio."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, anotado. Y totalmente de acuerdo: sin cobertura y anticipación demostradas, no tiene sentido dar el paso. Se lo trasladaré al equipo para que os lo muestren con datos reales.\n\nMuchísimas gracias por tu tiempo y por la sinceridad en todas las respuestas, nos ayuda muchísimo a saber qué construir. ¡Un saludo y hasta pronto!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad"
+}

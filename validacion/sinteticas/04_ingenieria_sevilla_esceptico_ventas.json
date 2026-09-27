@@ -1,0 +1,86 @@
+{
+  "persona_label": "04_ingenieria_sevilla_esceptico_ventas",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 10,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar: ¿a qué se dedica tu empresa y qué papel juegas tú a la hora de decidir a qué licitaciones os presentáis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Somos una ingeniería industrial, 12 personas, en Sevilla. Yo decido a qué licitaciones nos presentamos y qué compramos si es algo pequeño, así que si viene a venderme algo, vaya al grano."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido, tranquilo, no vendo nada por ahora. Solo quiero entender cómo trabajáis hoy.\n\nCuéntame: ¿cuál fue la última licitación a la que os presentasteis? ¿Cómo os enterasteis de que existía?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "La última fue una de mantenimiento de instalaciones para un ayuntamiento de la provincia, la vimos en el perfil del contratante porque tocaba revisarlo, como hacemos casi a diario entre dos personas, unas 4 horas a la semana repartidas. Nada sofisticado: entramos, miramos, y si encaja con lo que hacemos, nos la apuntamos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, eso ya me da una idea clara. ¿Ese perfil del contratante lo revisáis solo del ayuntamiento en cuestión, o entráis en varias plataformas distintas (estatal, autonómica, varios ayuntamientos)?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Miramos el perfil del contratante en general y un par de boletines provinciales, no nos vamos a poner a rebuscar en veinte plataformas distintas con el tiempo que tenemos. Y aun así el año pasado se nos escaparon 3 o 4 licitaciones que nos hubieran interesado, sencillamente por no dar abasto revisando todo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Ese dato de las 3-4 que se escaparon es importante. ¿Me cuentas el caso concreto de una de ellas? ¿Cómo os enterasteis de que existía y de que se os había pasado?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Una nos enteramos porque un colega de otra ingeniería nos comentó \"oye, ¿no os presentasteis a la del polígono tal?\" y ni sabíamos que existía. Otra la vimos publicada pero ya con el plazo casi cerrado, no nos dio tiempo a montar la oferta bien. Un palo, la verdad, porque encajaban de lleno con lo nuestro."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, un palo de verdad perderse encajes así de buenos.\n\nDel último año, ¿a cuántas licitaciones os presentasteis en total y a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nos presentamos a 15 y ganamos 4. Un ratio que tampoco está mal para lo artesanal que es el proceso, pero seguro que mejoraría si no se nos escaparan oportunidades por falta de tiempo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Buen ratio, sí. ¿Usáis hoy alguna herramienta, alerta o servicio de pago para vigilar licitaciones (tipo alertas por email, buscador de boletines, consultora), o es todo manual como me has contado?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nada, todo manual, no pagamos ni un euro en eso. Y si ahora me va a decir que tiene la solución milagrosa, ya le aviso que necesito verlo funcionar primero, no me venga con demos bonitas y promesas, que esto siempre acaba siendo un timo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Totalmente de acuerdo, mejor ver algo real que promesas. Precisamente por eso, antes de nada, te voy a enseñar un informe con licitaciones abiertas ahora mismo para vuestro sector y zona, con datos reales, no una demo bonita.\n\n\n\nAhora mismo hay 35 licitaciones abiertas de \"Servicios de arquitectura, ingeniería y construcción\" en Andalucía, por un importe total de 12.190.490€.\n\nAlgunos ejemplos (las de mayor importe):\n- Contrato de servicios para la operación y mantenimiento del Centro Español de Vigilancia y Seguimiento Espacial (S3TOC) para la Agencia Espacial Española, mediante procedimiento abierto — Dirección de la Agencia Espacial Española — 4.817.770€ — plazo: 2026-09-29\n- Es objeto de la presente licitación, la contratación del servicio para la redacción del Plan General de Ordenación \r\nMunicipal y del Plan de Ordenación Urbana de El Ejido, en los términos que se concretan en el presente pliego y en el \r\nPliego de Prescripciones Técnicas. — Junta de Gobierno Local del Ayuntamiento de El Ejido — 1.350.620€ — plazo: 2026-10-09\n- 30.805/26; RE-GR-26002 Redacción de proyecto de trazado y construcción. Mejora de la funcionalidad y de la seguridad viaria del enlace de la autovía de circunvalación GR-30, con las avenidas Fernando de los Ríos y San Rafael. Provincia de Granada. — Dirección General de Carreteras — 819.393€ — plazo: 2026-10-09\n- Contratación de un laboratorio para la realización de análisis en aguas de consumo humano, en cumplimiento del R.D. 3/2023, de 10 de febrero, por el que se establecen los criterios sanitarios de la calidad de las aguas de consumo humano, su control y suministro, y del programa de Vigilancia Sanitaria de aguas de consumo de Andalucía. — Consejería delegada de ACOSOL, S.A.U. — 726.000€ — plazo: 2026-10-07\n- Servicio para los estudios de consultoría para la licitación de la concesión del servicio de gestión de los residuos municipales en el ámbito de la Mancomunidad de Los Alcores. — Presidencia de la Mancomunidad de los Alcores para la gestión de los RSU — 596.018€ — plazo: 2026-10-13\n\nÉchale un ojo. Del 1 al 5, ¿qué tan útil te parece esto para vuestro día a día? Y cuéntame por qué esa nota."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Un 3, porque los datos parecen reales y algunos encajarían, pero esto de \"Agencia Espacial\" o \"concesión de residuos\" no es lo nuestro, así que habría que filtrar bien por tamaño y sector para que no sea otro Excel gigante que nadie mira. Si esto lo genera automático y de verdad me avisa antes de que se cierre el plazo, ahí ya hablamos de algo útil; si no, es un PDF bonito más."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Muy útil ese feedback, justo lo que necesito saber: filtrado fino y alertas antes de cierre de plazo, no un listado gigante.\n\nEstamos dando acceso anticipado a un precio especial de lanzamiento para los primeros clientes que se comprometan ahora, con filtros por tamaño y sector como dices. Si te interesa, el equipo te confirma el precio exacto por email y te pasa el enlace de pago. ¿Quieres que te lo mande?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Espera, espera, un momento. Antes de hablar de precios ni de enlaces de pago quiero probarlo con datos reales de nuestro sector durante un tiempo, ver que las alertas llegan a tiempo y que el filtro funciona de verdad, y luego hablamos de dinero. Mándame algo para probar sin compromiso, que lo de \"precio de lanzamiento si te comprometes ya\" me suena a prisa metida con calzador."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Totalmente comprensible, tiene sentido probarlo antes. Se lo traslado tal cual al equipo: prueba con datos reales de vuestro sector antes de hablar de precio.\n\n¿Me dejas tu email para que te contacten con eso?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, apunta: [email dejaría aquí en una conversación real, pero antes de dártelo quiero dejar claro una cosa]. Que la prueba sea de verdad, con licitaciones reales de ingeniería en Andalucía, con plazo suficiente para ver si el aviso llega a tiempo, no una demo de tres días con capturas de pantalla."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Queda clarísimo, se lo paso tal cual: prueba real, con licitaciones de ingeniería en Andalucía, y plazo suficiente para comprobar que los avisos llegan a tiempo, nada de capturas de pantalla.\n\nCuando quieras me pasas el email y con eso ya lo dejamos en manos del equipo.\n\nMuchísimas gracias por tu tiempo y por la sinceridad, ha sido una conversación muy útil. ¡Un saludo!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de arquitectura, ingeniería y construcción"
+}

@@ -1,0 +1,94 @@
+{
+  "persona_label": "10_ti_malaga_usa_competidor_pregunta_precio",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 11,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar: ¿a qué se dedica tu empresa y qué papel juegas tú cuando se trata de buscar o decidir sobre licitaciones públicas?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Somos una empresa de TI en Málaga, unas 20 personas, hacemos desarrollo de software y algo de consultoría. Yo llevo el desarrollo de negocio, así que soy quien revisa las licitaciones que nos llegan filtradas y decido a cuáles nos presentamos.\n\nOye, antes de seguir, por curiosidad: ¿cuánto cuesta esto que estáis montando vosotros?"
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Buena pregunta, pero prefiero no hablar de precio todavía, para que las respuestas que me des no se vean condicionadas por eso. Si al final te parece interesante, te cuento cómo funciona la parte de preventa.\n\nSigamos: dices que revisas licitaciones \"que os llegan filtradas\". ¿Me cuentas cómo fue la última vez que te llegó una licitación, paso a paso, desde que apareció hasta que decidiste presentaros o no?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Vale, lo entiendo, luego retomo el tema del precio.\n\nPues mira, LicitaFacil nos manda la alerta por email cuando detecta algo que encaja con nuestros CPVs y palabras clave, eso nos ahorra bastante tiempo de búsqueda manual. El problema viene después: abro el pliego en PDF y tengo que leérmelo yo entero para sacar los requisitos técnicos, solvencia, plazos... ahí la herramienta no ayuda nada, es puro ojo y experiencia mía."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, eso ya es concreto, gracias. ¿Me cuentas de la última licitación que revisaste así, cuánto tiempo te llevó leerte el pliego entero hasta decidir si os presentabais o no?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Diría que un par de horas repartidas en dos sesiones, entre pliego administrativo y técnico, para una licitación de desarrollo de una app para un ayuntamiento. LicitaFacil me la detectó bien y rápido, pero de ahí en adelante fue yo solo con el PDF, subrayando y tomando notas para ver si cumplíamos solvencia y plazos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido. Pensando en una semana normal, ¿cuántas horas dedicas en total a todo esto de licitaciones —desde revisar alertas hasta leer pliegos y preparar la propuesta— aproximadamente?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Entre semanas hay variación, pero de media unas 4-5 horas: 1 hora es repasar las alertas de LicitaFacil, que va rápido porque el filtrado ya está hecho, y el resto se va en leer pliegos a fondo y montar la propuesta cuando decidimos presentarnos. En 12 meses nos presentamos a 12 licitaciones y ganamos 4, así que tampoco es que sea un volumen bestial, pero cada pliego que merece la pena analizar se come su tiempo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Genial, dato útil. Ahora pensando en el último año: ¿hubo alguna licitación que os interesara pero que se os escapara —por ejemplo, por no llegar a tiempo, o por descubrir tarde un requisito que no cumplíais? Cuéntame el caso concreto si recuerdas alguno."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, hubo una de servicios de consultoría para una diputación donde nos metimos ya con el pliego bastante avanzado y descubrimos casi al final que pedían una certificación ISO específica que no teníamos, así que perdimos el tiempo invertido y encima nos quedamos fuera. Si hubiéramos visto ese requisito en la primera página en vez de en el anexo técnico, nos habríamos ahorrado esas horas para meterlas en otra licitación."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Qué bueno tener ese detalle, gracias. Sobre LicitaFacil: ¿cuánto pagáis por el servicio actualmente, y quién tomó la decisión de contratarlo en su momento?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pagamos 50€/mes, la decisión la tomé yo mismo hace un año porque necesitábamos dejar de perder tiempo buscando manualmente en plataformas públicas, y para ese precio el filtrado de alertas nos compensa de sobra.\n\nPor cierto, ya que estamos con precios: ¿ahora sí me puedes decir cuánto costaría lo vuestro, aunque sea una horquilla?"
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Ya casi, te lo prometo — antes déjame enseñarte algo concreto que te puede interesar. Voy a mostrarte un informe de licitaciones abiertas ahora mismo para tu sector y zona.\n\n\n\nAhora mismo hay 9 licitaciones abiertas de \"Servicios de tecnologías de la información (TI)\" en Andalucía, por un importe total de 7.514.620€.\n\nAlgunos ejemplos (las de mayor importe):\n- Implementación y puesta en marcha de la Fase I del Proyecto \"Guadaltwin-Gemelo Digital de la Eurovía del Guadalquivir\", cofinanciado por el Fondo Europeo de Desarrollo Regional (FEDER) a través de la Línea de Fomento de la Innovación desde la Demanda (FID) — Autoridad Portuaria de Sevilla — 6.413.000€ — plazo: 2026-10-01\n- Suministro, implementación y operación del sistema gestión de tráfico marítimo del Puerto de Sevilla — Autoridad Portuaria de Sevilla — 574.750€ — plazo: 2026-09-28\n- Prestación del servicio de prestación de los servicios de soporte, mantenimiento y atención técnica de las infraestructuras TIC de la Excma. Diputación Provincial de Huelva y sus municipios — Junta de Gobierno de la Diputación Provincial de Huelva — 290.000€ — plazo: 2026-10-21\n- Servicio de implantación del sistema de autenticación única (Single Sign-On) basada en software de código abierto, con gestión de contraseñas y doble factor de autenticación. — Rectorado de la Universidad de Huelva — 177.822€ — plazo: 2026-10-06\n- Asistencia técnica para la elaboración del estudio de impacto económico del Puerto de Sevilla — Autoridad Portuaria de Sevilla — 54.450€ — plazo: 2026-10-06"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Interesante, aunque la de la Autoridad Portuaria de Sevilla se nos queda grande para 20 personas; la de soporte TIC de Huelva o el SSO de la Universidad de Huelva sí encajarían más en nuestro perfil. Esto en el fondo es lo mismo que ya me manda LicitaFacil por alerta, la pregunta es si luego me analizáis el pliego de la de Huelva para decirme si cumplimos solvencia antes de que me lea las 80 páginas."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Muy buena observación, gracias por la sinceridad.\n\nDel 1 al 5, ¿qué tan útil te parece este informe tal y como lo has visto (solo la parte de listado, sin el análisis del pliego que comentas)? ¿Y por qué esa nota?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Un 2, sinceramente, porque como listado de alertas es prácticamente lo que ya tengo con LicitaFacil por 50€/mes; el valor real para mí empezaría cuando me dijeras si cumplimos los requisitos de solvencia y detectaras esa cláusula tipo ISO escondida en el anexo antes de que yo me coma las dos horas leyendo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Totalmente justo, y es justo lo que necesitaba saber. El listado por sí solo no os aporta frente a lo que ya tenéis; el dolor real está en el análisis del pliego y detectar esos requisitos escondidos.\n\nAhora mismo estamos montando justo esa parte —el análisis automático de pliegos para sacar requisitos de solvencia, plazos y cláusulas clave como esa ISO— y estamos dando un precio especial de lanzamiento a los primeros clientes que se comprometan ahora. Si te interesa, te paso un enlace de pago y el equipo te confirma el precio exacto por email.\n\n¿Te interesaría que te lo mandáramos?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Antes de comprometerme a nada, necesito un número, aunque sea orientativo: ¿estamos hablando de sumar 20-30€ al mes sobre lo que ya pago por LicitaFacil, o es un salto mayor tipo triplicar el gasto? No voy a dar el paso ni compartir más datos a ciegas sin saber si esto encaja en nuestro presupuesto de 50€/mes actual."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Lo entiendo perfectamente, es razonable no dar el paso a ciegas. No te voy a inventar un número aquí para no comprometerte con algo que luego no cuadre — eso te lo confirma el equipo por email con precisión, ajustado a lo que necesitas.\n\nSi quieres, me dejas tu email y en cuanto te escriban con la horquilla real decides con calma si te encaja o no. ¿Te parece?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Vale, te dejo el email, pero que conste que si el \"precio de lanzamiento\" acaba siendo más que los 50€/mes de LicitaFacil, va a costarme justificarlo internamente salvo que el análisis de pliegos nos ahorre esas 2-3 horas semanales de lectura de forma clara y evite otro caso como el de la ISO. Mi correo es [email]@empresa.com, quedo a la espera de la horquilla de precio."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, anotado — y muy claro el criterio: que el ahorro de horas y evitar sustos tipo la ISO justifique el coste frente a lo que ya pagáis. Se lo traslado al equipo tal cual para que te den una horquilla ajustada a eso.\n\nMuchísimas gracias por tu tiempo y por la sinceridad en todas las respuestas, me ha servido mucho para entender dónde está el dolor real. ¡Un saludo y hasta pronto!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de tecnologías de la información (TI)"
+}

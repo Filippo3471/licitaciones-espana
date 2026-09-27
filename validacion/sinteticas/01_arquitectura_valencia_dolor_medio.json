@@ -1,0 +1,86 @@
+{
+  "persona_label": "01_arquitectura_valencia_dolor_medio",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 10,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar: ¿a qué se dedica tu empresa, y qué papel tienes tú en las decisiones sobre a qué licitaciones os presentáis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "¡Hola! Somos un estudio de arquitectura en Valencia, 8 personas, hacemos proyectos y dirección de obra sobre todo para administraciones públicas. Yo llevo la administración y hago el rastreo semanal de licitaciones, pero la decisión de a cuáles presentarnos la toma el socio, sobre todo si son de cierto volumen; yo puedo decidir cosas pequeñas del día a día."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, muy claro. Cuéntame: ¿cuál fue la última vez que hiciste ese rastreo semanal? ¿Qué día fue y qué pasos seguiste exactamente, de principio a fin?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "El lunes pasado, como siempre. Entro al perfil del contratante de la Generalitat y del Ayuntamiento de Valencia, reviso los anuncios nuevos filtrando por \"arquitectura\" o \"servicios técnicos\", y voy anotando en un Excel las que parecen encajar con nuestro perfil. Además tengo alertas de Google con esas palabras clave, así que también reviso el correo por si algo se me ha escapado."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo. ¿Cuánto tiempo dirías que te lleva en total esa tarea, entre revisar las webs, el Excel y las alertas de correo, en una semana normal?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Unas 3 horas a la semana más o menos, contando revisar las webs, cruzar con las alertas del correo y actualizar el Excel."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, 3 horas semanales. Ahora, pensando en el último año: ¿hubo alguna licitación interesante para vosotros que se os escapara o llegarais tarde? Cuéntame el caso concreto que recuerdes."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, se nos escaparon dos el año pasado. Una era un concurso de un ayuntamiento pequeño de la provincia que no está en los portales que solemos mirar, y nos enteramos cuando ya había cerrado el plazo; la otra fue de la Generalitat pero salió en agosto, con mucha gente de vacaciones, y para cuando la vimos ya quedaban tres días y no nos dio tiempo a montar la documentación."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, entendido. Ahora dime: en el último año, ¿a cuántas licitaciones os presentasteis en total, y a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nos presentamos a 6 y ganamos 1."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Gracias. Última pregunta sobre esto: ¿usáis hoy alguna herramienta o servicio de pago para buscar licitaciones (tipo alertas premium, plataforma de licitaciones, etc.), o todo lo hacéis con el Excel y las alertas de Google que me comentabas? Y si pagáis algo, ¿cuánto?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "No, nada de pago, todo con el Excel y las alertas gratuitas de Google. Si en algún momento quisiéramos contratar algo, eso ya sería decisión del socio por el importe."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Genial, muy útil todo esto. Te voy a enseñar un informe de licitaciones abiertas ahora mismo para vuestro sector y zona.\n\n\n\nAhora mismo hay 36 licitaciones abiertas de \"Servicios de arquitectura, ingeniería y construcción\" en Comunidad Valenciana, por un importe total de 33.882.899€.\n\nAlgunos ejemplos (las de mayor importe):\n- Asistencia Técnica De Pm Y Atdocv Para Las Actuaciones Del Aeropuerto De Valencia — Aena. Consejo de Administración — 23.896.672€ — plazo: 2026-10-21\n- España – Servicios de ingeniería – Servicios de consultoría y asistencia técnica para el seguimiento y control de las obras del proyecto constructivo de instalaciones de seguridad y comunicaciones para la adaptación al tercer carril y ampliación a 750 metros del tramo la Encina-Alicante. — Administrador de Infraestructuras Ferroviarias — 4.195.502€ — plazo: 2026-10-13\n- Servicio de dirección de obra, asistencia técnica y coordinación de seguridad y salud, para el  proyecto de adaptación del Espigón del Turia para mejora del área de pasaje en el Puerto de Valencia. — Presidencia de la Autoridad Portuaria de Valencia — 1.310.461€ — plazo: 2026-10-19\n- España – Elaboración de proyectos y diseños, presupuestos – Servicio de redacción de los planes integrales de gestión de los sistemas de saneamiento de las aglomeraciones urbanas de más de 50.000 habitantes equivalentes gestionadas por la EPSAR. — Vicepresidencia del Consejo de Administración de la Entidad Pública de Saneamiento de Aguas Residuales de la Comunidad Valenciana — 1.143.737€ — plazo: 2026-11-11\n- Servicios de honorarios técnicos para redacción de proyecto básico y ejecución, estudios de seguridad y salud, dirección facultativa y coordinación de seguridad y salud, de las obras de remodelación y ampliación del Complejo Deportivo Municipal — Alcaldía del Ayuntamiento de Quart de Poblet — 555.832€ — plazo: 2026-10-16\n\n¿Qué te parece este informe? Del 1 al 5, ¿cómo de útil te resulta, y por qué le pones esa nota?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Le pongo un 4. Está muy bien tener todo esto centralizado y ver de un vistazo importes y plazos, nos ahorraría bastante del rastreo manual; le quito un punto porque necesitaría ver si cubre también esos ayuntamientos pequeños que se nos escapan, que es justo nuestro punto débil."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Muy buen feedback, gracias, y tiene todo el sentido dado lo que os pasó con el ayuntamiento pequeño.\n\nJusto por eso estamos lanzando esto: ahora mismo tenemos un precio especial de fundador para los primeros clientes que se comprometan ahora. Si te interesa, os pasaríamos un enlace de pago y el equipo os confirmaría el precio exacto por email.\n\n¿Te encaja que te contactemos con esa oferta?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nosotros las decisiones de compra grandes las toma el socio, no yo; si me pasáis información y precios por email se lo traslado y él decide si seguimos adelante."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, tiene mucho sentido. ¿Me dejas tu email para que os enviemos la información y el precio de fundador, y así se lo puedas trasladar al socio?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Claro, mejor mandadlo a administracion@[nombredelestudio].es, así lo tengo centralizado y se lo reenvío directamente al socio."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Perfecto, anotado! Muchas gracias por tu tiempo y por contarme con tanto detalle vuestro día a día, ha sido muy útil. Os escribiremos a esa dirección con la información y el precio de fundador para que se lo podáis trasladar al socio. ¡Que vaya muy bien el resto del día!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de arquitectura, ingeniería y construcción"
+}

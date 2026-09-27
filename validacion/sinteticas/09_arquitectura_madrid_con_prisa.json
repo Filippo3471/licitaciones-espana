@@ -1,0 +1,38 @@
+{
+  "persona_label": "09_arquitectura_madrid_con_prisa",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 4,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme un momento.\n\nPara empezar: ¿a qué se dedica tu empresa y qué papel tienes tú a la hora de buscar o decidir a qué licitaciones os presentáis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Hola, sí, dime rápido que ahora entro en reunión. Somos estudio de arquitectura, 5 personas, y yo soy socio, decido bastante yo lo de licitaciones."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido, seré rápido. Cuéntame: ¿cuándo fue la última vez que buscasteis una licitación para presentaros? ¿Qué hiciste exactamente ese día?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues mira, no tenemos un día fijo, lo miramos así medio suelto, alguna hora a la semana más o menos, entrando a las plataformas típicas a ver qué hay."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, entiendo que no hay un día fijo. Pero pensando en la última vez concreta que entraste a mirar, ¿qué plataforma usaste y qué buscaste exactamente?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Uy, no te sé decir cuál fue la última exacta, entramos en las de siempre, contratación del estado y algo de comunidad... y mira, te tengo que dejar, me están esperando ahora mismo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, no te robo más tiempo. Antes de irte, una última cosa rápida: te voy a enseñar un informe de licitaciones abiertas para arquitectura, para que le eches un vistazo cuando puedas.\n\n\n\nAhora mismo hay 481 licitaciones abiertas de \"Servicios de arquitectura, ingeniería y construcción\" en toda España, por un importe total de 317.945.361€.\n\nAlgunos ejemplos (las de mayor importe):\n- Servicios de mantenimiento y conservación de los espacios verdes, áreas caninas y arbolado urbano de Las Palmas de Gran Canaria con criterios sociales y ambientales para contribuir al desarrollo sostenible, incluyendo asistencia técnica especializada para el control de calidad del servicio — Junta de Gobierno del Ayuntamiento de Las Palmas de Gran Canaria — 96.590.525€ — plazo: 2026-10-05\n- Asistencia Técnica De Pm Y Atdocv Para Las Actuaciones Del Aeropuerto De Bilbao — Aena. Consejo de Administración — 27.780.657€ — plazo: 2026-10-21\n- Asistencia Técnica De Pm Y Atdocv Para Las Actuaciones Del Aeropuerto De Valencia — Aena. Consejo de Administración — 23.896.672€ — plazo: 2026-10-21\n- Contracte de serveis per a la direcció de les obres del projecte constructiu. Variant de les Preses i d’Olot. Des del PK 172+200 dela C-37 fins a la connexió amb l’A-26. La Vall d’en Bas - Les Preses – Olot. Clau: NG-02083 — Infraestructures de la Generalitat de Catalunya, SAU — 10.926.633€ — plazo: 2026-10-19\n- España – Servicios de cartografía digital – Framework contract for the supply of geospatial products for the Copernicus Security Service component on support to EU external and security actions — European Union Satellite Centre — 6.090.000€ — plazo: 2026-10-29\n\nCuando tengas 30 segundos, dime del 1 al 5 qué tan útil te parece y por qué. Y si te interesa, tenemos un precio especial de lanzamiento para los primeros clientes — si quieres, me dejas tu email y te paso los detalles. ¡Gracias por el rato, suerte en la reunión!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de arquitectura, ingeniería y construcción"
+}

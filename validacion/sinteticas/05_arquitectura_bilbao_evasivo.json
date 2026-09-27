@@ -1,0 +1,158 @@
+{
+  "persona_label": "05_arquitectura_bilbao_evasivo",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 19,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Muchas gracias por dedicarme unos minutos.\n\nPara empezar, cuéntame: ¿a qué se dedica tu empresa y qué papel juegas tú en las decisiones sobre a qué licitaciones presentaros?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "¡Hola! Pues somos un estudio de arquitectura, hacemos de todo un poco, proyectos y demás. Yo en el tema de licitaciones ayudo a ver cuáles miramos, digamos que estoy ahí en medio."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, gracias. Así que participas en la decisión de a cuáles presentaros, aunque no seas el único.\n\nCuéntame, ¿cuándo fue la última vez que buscasteis licitaciones activas? ¿Qué hicisteis exactamente, paso a paso?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues no hace mucho, un rato de estos que te pones a mirar por encima las plataformas de siempre y vas viendo qué hay. Nada muy metódico, la verdad, se mira y ya está."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo. ¿Podrías decirme qué día fue eso, más o menos, y qué plataformas concretas abriste esa vez?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Uy, el día exacto no te sabría decir, fue hace poco, esta semana o la pasada... y miramos lo típico, el perfil del contratante y esas webs de siempre."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale. Cuando dices \"perfil del contratante y esas webs de siempre\", ¿te refieres a la Plataforma de Contratación del Estado, o hay alguna autonómica o de un ayuntamiento en concreto que mires también?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, esa sobre todo, la de contratación del Estado, y luego alguna autonómica también, de por aquí, del País Vasco."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Genial, ya tengo más claro el cuadro. ¿Cuánto tiempo dirías que dedicáis a la semana, entre tú y quien te ayude, a esto de buscar y revisar licitaciones?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues no sé, un rato... lo normal, de vez en cuando le echamos un ojo, no es que estemos todo el día en eso."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo que no es diario. Si tuvieras que ponerle una cifra aproximada, ¿dirías que es menos de 1 hora a la semana, entre 1 y 3 horas, o más?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues así, echando cuentas, diría que unas 2 horas a la semana más o menos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, 2 horas a la semana. Ahora pensando en el último año: ¿recuerdas alguna licitación interesante para vosotros que se os pasara, que os enterarais tarde o directamente no la vierais?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Uy, sí, alguna vez pasa... se nos escapó una hace unos meses, un ayuntamiento pequeño, nos enteramos cuando ya casi estaba el plazo cerrado."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vaya, mala suerte. ¿Recuerdas cómo te enteraste de esa licitación, ya con el plazo casi cerrado? ¿Alguien te avisó, la viste por casualidad...?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Creo que nos comentó algo un conocido del sector, que le sonaba que había algo así, y ya fuimos a mirarlo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Ya veo, por el boca a boca. Pensando en todo el último año, ¿dirías que fue la única que se os escapó, o hubo alguna más que recuerdes?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Puede que alguna más hubiera, pero esa es la que más se me quedó, las demás no las recuerdo así con detalle."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, tiene sentido. Cambiando un poco de tema: en el último año, ¿a cuántas licitaciones os presentasteis en total, aproximadamente?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues no sé, unas cuantas, no fueron muchísimas pero tampoco pocas... así a ojo, unas 6 o 7 quizás."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "¿Y de esas 6 o 7, a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Ganamos alguna, creo que un par de ellas, no muchas la verdad."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido, 2 de 7 más o menos. Ahora, ¿usáis hoy alguna herramienta, alerta por email o servicio de pago que os ayude a encontrar licitaciones, o es todo manual mirando las webs?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "No, herramientas de pago no, es todo manual, mirando directamente en las webs de siempre."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido. Y si en algún momento os plantearais contratar una herramienta o servicio para esto, ¿quién tomaría esa decisión en el estudio, tú o alguien más?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Eso lo decidiría más el socio, el que lleva la dirección, yo como mucho le comentaría la idea."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, gracias por la claridad. Con todo lo que me has contado, te voy a enseñar un informe de licitaciones abiertas ahora mismo para vuestro sector y zona.\n\n\n\nAhora mismo hay 15 licitaciones abiertas de \"Servicios de arquitectura, ingeniería y construcción\" en País Vasco, por un importe total de 29.377.785€.\n\nAlgunos ejemplos (las de mayor importe):\n- Asistencia Técnica De Pm Y Atdocv Para Las Actuaciones Del Aeropuerto De Bilbao — Aena. Consejo de Administración — 27.780.657€ — plazo: 2026-10-21\n- España – Servicios de ensayo, análisis y consultoría técnicos – Acuerdo Marco para la contratación de los servicios de asistencia técnica para la realización de los ensayos previstos en el Plan de Control de Calidad de las promociones de vivienda de VISESA — VISESA - Vivienda y Suelo de Euskadi, S.A. - Departamento Técnico — 1.549.080€ — plazo: 2026-10-19\n- España – Servicios de control técnico – Contratación de la prestación de los servicios de Entidad de Control de Calidad (ECCE) en la edificación para varias promociones de Visesa. — VISESA - Vivienda y Suelo de Euskadi, S.A. - Departamento Técnico — 48.048€ — plazo: 2026-10-19\n\n¿Qué te parece este informe? Del 1 al 5, ¿qué tan útil te resulta, y por qué?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues visto así, la verdad es que impresiona un poco, no sabía que hubiera tanto abierto ahora mismo. Le pondría un 4, porque nos vendría bien tenerlo así claro y ordenado, sin tener que estar buscando nosotros por separado."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Me alegra que te sea útil, ¡un 4 está muy bien!\n\nTe cuento: estamos ofreciendo un precio especial de lanzamiento, tipo \"fundador\", a las primeras empresas que se animen a probarlo ahora. Sería un acceso a este tipo de informes y alertas de licitaciones para vuestro sector y zona, sin tener que estar mirando las webs manualmente.\n\n¿Te interesaría que os pasáramos más info y un enlace de pago con esas condiciones especiales?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues suena bien, pero eso ya sería decisión del socio, así que mejor pásame la info y se la comento yo a él."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, tiene todo el sentido. ¿Me pasas tu email para enviaros la información y las condiciones especiales de fundador? Así lo comentas con calma con tu socio."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, claro, pásalo al correo del estudio, el de info, que ese lo miramos entre todos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, ¿me confirmas la dirección completa del correo del estudio para enviarlo?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Es info@ (el del estudio), arroba, bueno, el dominio de nuestra web, ese mismo."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, pero necesito la dirección completa con el dominio para poder enviarlo correctamente. ¿Me la escribes tal cual, por favor?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Uy, perdona, ahora mismo no te lo sé decir de memoria tal cual, mejor te lo confirmo luego que lo miro."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "No pasa nada, sin problema. Cuando lo tengas, nos lo puedes confirmar y os enviamos toda la info con las condiciones de fundador.\n\nMuchísimas gracias por tu tiempo y por contarme con tanto detalle cómo trabajáis esto. Nos ha sido de mucha ayuda. ¡Que vaya muy bien con el estudio!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de arquitectura, ingeniería y construcción"
+}

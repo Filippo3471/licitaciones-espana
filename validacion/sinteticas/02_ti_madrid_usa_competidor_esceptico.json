@@ -1,0 +1,102 @@
+{
+  "persona_label": "02_ti_madrid_usa_competidor_esceptico",
+  "etiqueta": "SINTÉTICA",
+  "finalizada_por_guion": true,
+  "turnos_entrevistador": 12,
+  "transcript": [
+    {
+      "hablante": "entrevistador",
+      "texto": "¡Hola! Gracias por dedicarme unos minutos.\n\nPara empezar: ¿a qué se dedica tu empresa y qué papel juegas tú cuando se trata de decidir a qué licitaciones públicas presentaros?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Somos una consultora de TI, 15 personas, hacemos proyectos de desarrollo e integración sobre todo para administraciones y algún cliente privado. Yo soy el CTO y soy quien decide qué licitaciones miramos y qué herramientas usamos para ello, así que si vienes a venderme algo, al grano."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido, al grano. Antes de nada: no vengo a vender nada todavía, solo quiero entender cómo trabajáis hoy. Si al final ves algo útil, ya hablamos.\n\nVamos con lo concreto: ¿cuál fue la última vez que buscasteis licitaciones activas? Cuéntame qué hiciste paso a paso, ese día."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pues la semana pasada, como siempre: entro a Quiero Licitar por la mañana, reviso las alertas por CPV que me llegan por email, descarto un par que no encajan y las relevantes las paso a un canal de Slack para que el equipo las vea. Es un rato, 10-15 minutos, no mucho más."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Vale, eso es un buen detalle. Y esa rutina de 10-15 minutos, ¿la haces todos los días laborables, o solo algunos días concretos?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sobre todo lunes y jueves, que es cuando suelen entrar más avisos nuevos; el resto de días le echo un ojo rápido si tengo el email abierto, pero no le dedico tiempo aparte. En total será lo que te dije, media hora a la semana más o menos."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Media hora a la semana, apuntado.\n\nAhora pensando en el último año: ¿hubo alguna licitación que os interesara pero que se os escapara — por descubrirla tarde, por falta de tiempo para preparar la oferta, o cualquier otro motivo? Cuéntame el caso concreto que mejor recuerdes."
+    },
+    {
+      "hablante": "persona",
+      "texto": "Sí, hubo una de consultoría de procesos que iba con un CPV genérico y no nos saltó la alerta hasta que un colega la vio de refilón en la plataforma de contratación del Estado; para cuando la vimos ya quedaban seis días y no nos dio tiempo a montar la oferta bien. Pero son casos puntuales, uno o dos al año, no es que sea un problema recurrente."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entiendo, uno o dos al año por ese tipo de desajuste en el CPV.\n\nCambiando de tema: en el último año, ¿a cuántas licitaciones os presentasteis en total, más o menos, y a cuántas ganasteis?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Nos presentamos a 10 y ganamos 3, un ratio que no está mal para nuestro tamaño la verdad."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Un 30% de éxito, nada mal.\n\nY sobre las herramientas: además de las alertas de Quiero Licitar y el email, ¿usáis algún otro servicio o plataforma de pago para esto? Si es así, ¿cuánto pagáis por él más o menos?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "No, solo Quiero Licitar, 49€ al mes. Y con eso más el repaso manual que te comentaba nos vamos apañando, no tenemos nada más contratado para esto."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Perfecto, ya tengo un buen retrato de cómo trabajáis.\n\nAntes de seguir, una última cosa sobre esa herramienta: ¿la decisión de contratar Quiero Licitar la tomaste tú solo, o tuviste que consultarlo con alguien más (socio, dirección)?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "La tomé yo solo, es un gasto pequeño y dentro de mi margen de decisión, no hace falta consultarlo con nadie para algo así."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Genial, gracias por la claridad.\n\nAhora te voy a enseñar un informe de licitaciones abiertas para tu sector y zona, para que me des tu opinión sincera.\n\n\n\nAhora mismo hay 249 licitaciones abiertas de \"Servicios de tecnologías de la información (TI)\" en toda España, por un importe total de 7.070.404.607€.\n\nAlgunos ejemplos (las de mayor importe):\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 2.161.950.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 2.161.950.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 362.274.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 362.274.000€ — plazo: 2030-06-23\n- SDA serveis de definició, gestió, construcció, manteniment i operació, i el suport a les solucions TIC pel CTTI — Centre de Telecomunicacions i Tecnologies de la Informació de la Generalitat de Catalunya — 288.024.000€ — plazo: 2030-06-23"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Eso son macro-contratos catalanes de miles de millones que no pintan nada para una consultora de 15 personas como la nuestra, ni de coña vamos a competir ahí; para saber si el dato es útil necesitaría ver el filtro real de tamaño y CPV que nos aplica a nosotros, no una lista genérica de los importes más gordos del país."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Totalmente justo, es una lista genérica de los más gordos, no filtrada a tu tamaño real.\n\nCon eso en mente, y sabiendo que la versión buena sería con filtro de importe y CPV ajustado a vosotros: del 1 al 5, ¿qué tan útil te parece esto tal como lo has visto, y por qué?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Un 2, porque tal cual está no me dice nada nuevo ni me ahorra trabajo respecto a lo que ya tengo con Quiero Licitar; si me lo filtras de verdad por importe (pongamos hasta 500K-1M) y CPV afinado, podría subir la nota, pero eso ya es lo que se supone que hace mi herramienta actual."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Entendido, muy útil el matiz, gracias por la sinceridad.\n\nTe cuento brevemente: estamos lanzando el producto con precio especial de founder para los primeros clientes que se comprometan ahora, con filtros reales de importe y CPV ajustados a tu perfil. El precio concreto te lo confirmaría el equipo por email, no te lo invento yo aquí.\n\n¿Te interesa que te pasemos ese enlace y condiciones, o prefieres quedarte con lo que ya tienes?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Pásame el enlace si quieres, lo miro cuando tenga un rato, pero te soy sincero: ya tengo algo que funciona y me cuesta poco, así que la barra para que cambie está bastante alta."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Lo entiendo perfectamente, y valoro mucho tu sinceridad.\n\n¿Me dejas tu email para que el equipo te mande esas condiciones y puedas valorarlo con calma?"
+    },
+    {
+      "hablante": "persona",
+      "texto": "Vale, [email protected], pero que no me llenen de emails de seguimiento cada dos días, que ya sabéis cómo va esto."
+    },
+    {
+      "hablante": "entrevistador",
+      "texto": "Anotado, sin spam, un único email con la info y ya está.\n\nMuchísimas gracias por tu tiempo y por la franqueza en todas las respuestas, me ha servido mucho para entender cómo trabajáis. ¡Que vaya bien con las licitaciones!"
+    }
+  ],
+  "_etiqueta": "SINTÉTICA",
+  "_sector_real_asignado": "Servicios de tecnologías de la información (TI)"
+}

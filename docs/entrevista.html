@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrevista · Licitaciones España</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    --paper: #f6f5f1; --paper-raised: #ffffff; --ink: #1b1b18; --ink-muted: #6b6b63;
+    --line: #e4e1d8; --line-strong: #cfccc0; --accent: #1b5e4f; --accent-ink: #ffffff;
+    --shadow: 0 8px 28px rgba(20,20,15,0.10);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .shell { max-width: 640px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-size: 1.2rem; margin: 0 0 4px; }
+  .sub { color: var(--ink-muted); font-size: 0.88rem; margin: 0 0 20px; }
+  .card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: var(--shadow); padding: 20px;
+  }
+  .aviso { font-size: 0.88rem; line-height: 1.6; }
+  .aviso ul { padding-left: 1.2em; margin: 10px 0; }
+  .consentimiento { display: flex; gap: 10px; align-items: flex-start; margin: 18px 0; font-size: 0.88rem; }
+  .consentimiento input { margin-top: 3px; }
+  .btn {
+    background: var(--accent); color: var(--accent-ink); border: none; border-radius: 8px;
+    padding: 10px 18px; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .chat { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; max-height: 60vh; overflow-y: auto; }
+  .msg { padding: 10px 13px; border-radius: 10px; font-size: 0.92rem; white-space: pre-wrap; max-width: 88%; }
+  .msg.entrevistador { background: var(--paper); border: 1px solid var(--line); align-self: flex-start; }
+  .msg.persona { background: var(--accent); color: var(--accent-ink); align-self: flex-end; }
+  .input-row { display: flex; gap: 8px; }
+  .input-row input {
+    flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line-strong);
+    font-size: 0.92rem; font-family: inherit;
+  }
+  .estado-final { font-size: 0.88rem; color: var(--ink-muted); margin-top: 10px; }
+  .error { color: #a1372f; font-size: 0.88rem; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>Entrevista sobre licitaciones públicas</h1>
+  <p class="sub">Licitaciones España — 10-15 minutos</p>
+  <div class="card" id="card"></div>
+</div>
+
+<script>
+(function () {
+  const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+  const token = new URLSearchParams(location.search).get("t");
+  const card = document.getElementById("card");
+
+  function escapeHtml(s) {
+    return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  async function llamar(accion, extra) {
+    const resp = await fetch(`${SUPABASE_URL}/functions/v1/entrevista-validacion`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, accion, ...extra }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || "Error de conexión");
+    return data;
+  }
+
+  function renderAviso() {
+    card.innerHTML = `
+      <div class="aviso">
+        <p><strong>Antes de empezar:</strong> quien te va a hacer las preguntas a continuación es un
+        <strong>asistente de inteligencia artificial</strong> de Licitaciones España, no una persona.</p>
+        <p>Es una entrevista de investigación sobre cómo buscáis licitaciones hoy — dura entre 10 y 15
+        minutos (máximo 20 minutos o 25 preguntas). No es una venta: al final te enseñamos un informe
+        gratuito de licitaciones abiertas para tu sector y zona.</p>
+        <p><strong>Qué guardamos:</strong> el texto de esta conversación, tu sector/provincia/tamaño de
+        empresa aproximado, y tu respuesta sobre el informe final. Nunca guardamos tu nombre en la
+        tabla de análisis. Se conserva mientras dure el estudio de validación. Puedes borrar tu
+        conversación en cualquier momento con el enlace "Borrar mis datos" que aparecerá abajo del
+        chat, sin tener que esperar a nadie.</p>
+        <label class="consentimiento">
+          <input type="checkbox" id="chk-consent">
+          <span>He leído lo anterior y doy mi consentimiento para que se registre esta conversación.</span>
+        </label>
+        <button type="button" class="btn" id="btn-empezar" disabled>Empezar entrevista</button>
+        <p class="error" id="error-aviso"></p>
+      </div>
+    `;
+    const chk = document.getElementById("chk-consent");
+    const btn = document.getElementById("btn-empezar");
+    chk.addEventListener("change", () => { btn.disabled = !chk.checked; });
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      try {
+        const data = await llamar("consentir");
+        renderChat(data.transcript, data.estado);
+      } catch (err) {
+        document.getElementById("error-aviso").textContent = err.message;
+        btn.disabled = false;
+      }
+    });
+  }
+
+  function renderChat(transcript, estado) {
+    const terminada = estado !== "en_curso";
+    card.innerHTML = `
+      <div class="chat" id="chat"></div>
+      ${terminada
+        ? `<p class="estado-final">Entrevista finalizada. Gracias por tu tiempo.</p>`
+        : `<div class="input-row">
+             <input type="text" id="input-respuesta" placeholder="Escribe tu respuesta..." autocomplete="off">
+             <button type="button" class="btn" id="btn-enviar">Enviar</button>
+           </div>
+           <p class="error" id="error-chat"></p>`
+      }
+      <p class="estado-final"><a href="#" id="link-borrar">Borrar mis datos de esta entrevista</a></p>
+    `;
+    document.getElementById("link-borrar").addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (!confirm("¿Seguro que quieres borrar toda esta conversación? No se puede deshacer.")) return;
+      try {
+        await llamar("borrar");
+        card.innerHTML = `<p class="estado-final">Tu conversación se ha borrado. Gracias por tu tiempo.</p>`;
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+    const chat = document.getElementById("chat");
+    transcript.forEach((t) => {
+      const div = document.createElement("div");
+      div.className = `msg ${t.hablante}`;
+      div.textContent = t.texto;
+      chat.appendChild(div);
+    });
+    chat.scrollTop = chat.scrollHeight;
+
+    if (!terminada) {
+      const input = document.getElementById("input-respuesta");
+      const btn = document.getElementById("btn-enviar");
+      const enviar = async () => {
+        const texto = input.value.trim();
+        if (!texto) return;
+        btn.disabled = true; input.disabled = true;
+        try {
+          const data = await llamar("responder", { texto });
+          renderChat(data.transcript, data.estado);
+        } catch (err) {
+          document.getElementById("error-chat").textContent = err.message;
+          btn.disabled = false; input.disabled = false;
+        }
+      };
+      btn.addEventListener("click", enviar);
+      input.addEventListener("keydown", (e) => { if (e.key === "Enter") enviar(); });
+      input.focus();
+    }
+  }
+
+  async function init() {
+    if (!token) {
+      card.innerHTML = `<p class="error">Enlace no válido: falta el identificador de invitación.</p>`;
+      return;
+    }
+    try {
+      const data = await llamar("iniciar");
+      if (data.consentimiento_dado) {
+        renderChat(data.transcript, data.estado);
+      } else {
+        renderAviso();
+      }
+    } catch (err) {
+      card.innerHTML = `<p class="error">${escapeHtml(err.message)}</p>`;
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
