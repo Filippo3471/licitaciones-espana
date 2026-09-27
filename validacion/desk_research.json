@@ -1,0 +1,1290 @@
+{
+  "generado_en": "2026-09-27T22:09:38",
+  "nota_metodologica": "Lectura de solo-lectura de data/licitaciones.db. 'Abiertas' es un snapshot del momento de ejecución. 'Adjudicadas últimos 12 meses' usa fecha_adjudicacion del feed de PLACSP, que está sesgado hacia meses recientes (no es un archivo histórico completo) — la frecuencia mensual es orientativa, no una serie temporal fiable mes a mes. 'Pocos licitadores' = <= 3 ofertas recibidas, umbral propio.",
+  "por_sector": [
+    {
+      "sector": "Construcción y obra civil",
+      "licitaciones_abiertas": 842,
+      "importe_total_abiertas_eur": 1560928213.43,
+      "importe_medio_abiertas_eur": 1858247.87,
+      "adjudicadas_ultimos_12m": 1764,
+      "frecuencia_mensual_aprox": 147.0,
+      "pct_pocos_licitadores": 74.4,
+      "n_adjudicadas_con_dato_licitadores": 1748
+    },
+    {
+      "sector": "Servicios de transporte",
+      "licitaciones_abiertas": 41,
+      "importe_total_abiertas_eur": 1086356668.35,
+      "importe_medio_abiertas_eur": 26496504.11,
+      "adjudicadas_ultimos_12m": 377,
+      "frecuencia_mensual_aprox": 31.4,
+      "pct_pocos_licitadores": 87.5,
+      "n_adjudicadas_con_dato_licitadores": 375
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "licitaciones_abiertas": 174,
+      "importe_total_abiertas_eur": 745175089.19,
+      "importe_medio_abiertas_eur": 4357749.06,
+      "adjudicadas_ultimos_12m": 430,
+      "frecuencia_mensual_aprox": 35.8,
+      "pct_pocos_licitadores": 80.0,
+      "n_adjudicadas_con_dato_licitadores": 425
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "licitaciones_abiertas": 174,
+      "importe_total_abiertas_eur": 343424719.7,
+      "importe_medio_abiertas_eur": 1996655.35,
+      "adjudicadas_ultimos_12m": 473,
+      "frecuencia_mensual_aprox": 39.4,
+      "pct_pocos_licitadores": 85.8,
+      "n_adjudicadas_con_dato_licitadores": 471
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "licitaciones_abiertas": 102,
+      "importe_total_abiertas_eur": 341534927.48,
+      "importe_medio_abiertas_eur": 3381533.94,
+      "adjudicadas_ultimos_12m": 374,
+      "frecuencia_mensual_aprox": 31.2,
+      "pct_pocos_licitadores": 84.9,
+      "n_adjudicadas_con_dato_licitadores": 370
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "licitaciones_abiertas": 211,
+      "importe_total_abiertas_eur": 229240002.89,
+      "importe_medio_abiertas_eur": 1091619.06,
+      "adjudicadas_ultimos_12m": 451,
+      "frecuencia_mensual_aprox": 37.6,
+      "pct_pocos_licitadores": 68.5,
+      "n_adjudicadas_con_dato_licitadores": 444
+    },
+    {
+      "sector": "Materiales de construcción",
+      "licitaciones_abiertas": 96,
+      "importe_total_abiertas_eur": 195154339.74,
+      "importe_medio_abiertas_eur": 2032857.71,
+      "adjudicadas_ultimos_12m": 304,
+      "frecuencia_mensual_aprox": 25.3,
+      "pct_pocos_licitadores": 83.1,
+      "n_adjudicadas_con_dato_licitadores": 296
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "licitaciones_abiertas": 61,
+      "importe_total_abiertas_eur": 177718566.96,
+      "importe_medio_abiertas_eur": 2961976.12,
+      "adjudicadas_ultimos_12m": 160,
+      "frecuencia_mensual_aprox": 13.3,
+      "pct_pocos_licitadores": 85.4,
+      "n_adjudicadas_con_dato_licitadores": 158
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "licitaciones_abiertas": 85,
+      "importe_total_abiertas_eur": 167111733.69,
+      "importe_medio_abiertas_eur": 2013394.38,
+      "adjudicadas_ultimos_12m": 309,
+      "frecuencia_mensual_aprox": 25.8,
+      "pct_pocos_licitadores": 71.6,
+      "n_adjudicadas_con_dato_licitadores": 303
+    },
+    {
+      "sector": "Equipos de seguridad, defensa",
+      "licitaciones_abiertas": 44,
+      "importe_total_abiertas_eur": 149941549.91,
+      "importe_medio_abiertas_eur": 3407762.5,
+      "adjudicadas_ultimos_12m": 117,
+      "frecuencia_mensual_aprox": 9.8,
+      "pct_pocos_licitadores": 86.3,
+      "n_adjudicadas_con_dato_licitadores": 117
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "licitaciones_abiertas": 122,
+      "importe_total_abiertas_eur": 137385880.3,
+      "importe_medio_abiertas_eur": 1126113.77,
+      "adjudicadas_ultimos_12m": 213,
+      "frecuencia_mensual_aprox": 17.8,
+      "pct_pocos_licitadores": 68.2,
+      "n_adjudicadas_con_dato_licitadores": 211
+    },
+    {
+      "sector": "Servicios postales y de telecomunicaciones",
+      "licitaciones_abiertas": 15,
+      "importe_total_abiertas_eur": 118611779.77,
+      "importe_medio_abiertas_eur": 7907451.98,
+      "adjudicadas_ultimos_12m": 48,
+      "frecuencia_mensual_aprox": 4.0,
+      "pct_pocos_licitadores": 95.8,
+      "n_adjudicadas_con_dato_licitadores": 48
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "licitaciones_abiertas": 128,
+      "importe_total_abiertas_eur": 93001516.52,
+      "importe_medio_abiertas_eur": 732295.41,
+      "adjudicadas_ultimos_12m": 280,
+      "frecuencia_mensual_aprox": 23.3,
+      "pct_pocos_licitadores": 86.3,
+      "n_adjudicadas_con_dato_licitadores": 278
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "licitaciones_abiertas": 197,
+      "importe_total_abiertas_eur": 81221821.36,
+      "importe_medio_abiertas_eur": 418669.18,
+      "adjudicadas_ultimos_12m": 547,
+      "frecuencia_mensual_aprox": 45.6,
+      "pct_pocos_licitadores": 68.4,
+      "n_adjudicadas_con_dato_licitadores": 541
+    },
+    {
+      "sector": "Servicios financieros y de seguros",
+      "licitaciones_abiertas": 52,
+      "importe_total_abiertas_eur": 73859372.4,
+      "importe_medio_abiertas_eur": 1571476.01,
+      "adjudicadas_ultimos_12m": 127,
+      "frecuencia_mensual_aprox": 10.6,
+      "pct_pocos_licitadores": 82.5,
+      "n_adjudicadas_con_dato_licitadores": 126
+    },
+    {
+      "sector": "Paquetes de software y sistemas de información",
+      "licitaciones_abiertas": 73,
+      "importe_total_abiertas_eur": 43535493.46,
+      "importe_medio_abiertas_eur": 596376.62,
+      "adjudicadas_ultimos_12m": 192,
+      "frecuencia_mensual_aprox": 16.0,
+      "pct_pocos_licitadores": 79.4,
+      "n_adjudicadas_con_dato_licitadores": 189
+    },
+    {
+      "sector": "Productos petrolíferos, combustibles, electricidad y energía",
+      "licitaciones_abiertas": 42,
+      "importe_total_abiertas_eur": 42293189.02,
+      "importe_medio_abiertas_eur": 1084440.74,
+      "adjudicadas_ultimos_12m": 136,
+      "frecuencia_mensual_aprox": 11.3,
+      "pct_pocos_licitadores": 78.7,
+      "n_adjudicadas_con_dato_licitadores": 136
+    },
+    {
+      "sector": "Máquinas de oficina, informática",
+      "licitaciones_abiertas": 71,
+      "importe_total_abiertas_eur": 38043485.61,
+      "importe_medio_abiertas_eur": 551354.86,
+      "adjudicadas_ultimos_12m": 266,
+      "frecuencia_mensual_aprox": 22.2,
+      "pct_pocos_licitadores": 73.4,
+      "n_adjudicadas_con_dato_licitadores": 263
+    },
+    {
+      "sector": "Servicios agrícolas, forestales, jardinería",
+      "licitaciones_abiertas": 37,
+      "importe_total_abiertas_eur": 31512653.89,
+      "importe_medio_abiertas_eur": 851693.35,
+      "adjudicadas_ultimos_12m": 51,
+      "frecuencia_mensual_aprox": 4.2,
+      "pct_pocos_licitadores": 72.5,
+      "n_adjudicadas_con_dato_licitadores": 51
+    },
+    {
+      "sector": "Mobiliario, artículos del hogar, limpieza",
+      "licitaciones_abiertas": 108,
+      "importe_total_abiertas_eur": 29975800.19,
+      "importe_medio_abiertas_eur": 277553.71,
+      "adjudicadas_ultimos_12m": 242,
+      "frecuencia_mensual_aprox": 20.2,
+      "pct_pocos_licitadores": 68.5,
+      "n_adjudicadas_con_dato_licitadores": 238
+    },
+    {
+      "sector": "Prendas de vestir, calzado",
+      "licitaciones_abiertas": 29,
+      "importe_total_abiertas_eur": 29502853.58,
+      "importe_medio_abiertas_eur": 1053673.34,
+      "adjudicadas_ultimos_12m": 102,
+      "frecuencia_mensual_aprox": 8.5,
+      "pct_pocos_licitadores": 76.5,
+      "n_adjudicadas_con_dato_licitadores": 102
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "licitaciones_abiertas": 98,
+      "importe_total_abiertas_eur": 25176229.56,
+      "importe_medio_abiertas_eur": 340219.32,
+      "adjudicadas_ultimos_12m": 164,
+      "frecuencia_mensual_aprox": 13.7,
+      "pct_pocos_licitadores": 88.9,
+      "n_adjudicadas_con_dato_licitadores": 162
+    },
+    {
+      "sector": "Equipos de radio, TV, comunicaciones",
+      "licitaciones_abiertas": 62,
+      "importe_total_abiertas_eur": 25023052.17,
+      "importe_medio_abiertas_eur": 410213.97,
+      "adjudicadas_ultimos_12m": 140,
+      "frecuencia_mensual_aprox": 11.7,
+      "pct_pocos_licitadores": 81.3,
+      "n_adjudicadas_con_dato_licitadores": 139
+    },
+    {
+      "sector": "Servicios públicos (agua, energía)",
+      "licitaciones_abiertas": 6,
+      "importe_total_abiertas_eur": 23673558.36,
+      "importe_medio_abiertas_eur": 4734711.67,
+      "adjudicadas_ultimos_12m": 13,
+      "frecuencia_mensual_aprox": 1.1,
+      "pct_pocos_licitadores": 69.2,
+      "n_adjudicadas_con_dato_licitadores": 13
+    },
+    {
+      "sector": "Maquinaria y aparatos eléctricos",
+      "licitaciones_abiertas": 81,
+      "importe_total_abiertas_eur": 23383451.97,
+      "importe_medio_abiertas_eur": 288684.59,
+      "adjudicadas_ultimos_12m": 217,
+      "frecuencia_mensual_aprox": 18.1,
+      "pct_pocos_licitadores": 76.7,
+      "n_adjudicadas_con_dato_licitadores": 215
+    },
+    {
+      "sector": "Servicios recreativos, culturales y deportivos",
+      "licitaciones_abiertas": 67,
+      "importe_total_abiertas_eur": 22702325.41,
+      "importe_medio_abiertas_eur": 349266.54,
+      "adjudicadas_ultimos_12m": 385,
+      "frecuencia_mensual_aprox": 32.1,
+      "pct_pocos_licitadores": 89.1,
+      "n_adjudicadas_con_dato_licitadores": 377
+    },
+    {
+      "sector": "Servicios inmobiliarios",
+      "licitaciones_abiertas": 31,
+      "importe_total_abiertas_eur": 17444401.17,
+      "importe_medio_abiertas_eur": 581480.04,
+      "adjudicadas_ultimos_12m": 29,
+      "frecuencia_mensual_aprox": 2.4,
+      "pct_pocos_licitadores": 86.2,
+      "n_adjudicadas_con_dato_licitadores": 29
+    },
+    {
+      "sector": "Servicios de educación y formación",
+      "licitaciones_abiertas": 43,
+      "importe_total_abiertas_eur": 13299661.44,
+      "importe_medio_abiertas_eur": 316658.61,
+      "adjudicadas_ultimos_12m": 139,
+      "frecuencia_mensual_aprox": 11.6,
+      "pct_pocos_licitadores": 74.8,
+      "n_adjudicadas_con_dato_licitadores": 139
+    },
+    {
+      "sector": "Otros servicios comunitarios, sociales y personales",
+      "licitaciones_abiertas": 29,
+      "importe_total_abiertas_eur": 13023579.61,
+      "importe_medio_abiertas_eur": 482354.8,
+      "adjudicadas_ultimos_12m": 58,
+      "frecuencia_mensual_aprox": 4.8,
+      "pct_pocos_licitadores": 82.5,
+      "n_adjudicadas_con_dato_licitadores": 57
+    },
+    {
+      "sector": "Servicios de administración pública y defensa",
+      "licitaciones_abiertas": 7,
+      "importe_total_abiertas_eur": 9633641.6,
+      "importe_medio_abiertas_eur": 1376234.51,
+      "adjudicadas_ultimos_12m": 20,
+      "frecuencia_mensual_aprox": 1.7,
+      "pct_pocos_licitadores": 65.0,
+      "n_adjudicadas_con_dato_licitadores": 20
+    },
+    {
+      "sector": "Productos químicos",
+      "licitaciones_abiertas": 15,
+      "importe_total_abiertas_eur": 8702076.49,
+      "importe_medio_abiertas_eur": 621576.89,
+      "adjudicadas_ultimos_12m": 55,
+      "frecuencia_mensual_aprox": 4.6,
+      "pct_pocos_licitadores": 87.3,
+      "n_adjudicadas_con_dato_licitadores": 55
+    },
+    {
+      "sector": "Cuero y textil",
+      "licitaciones_abiertas": 5,
+      "importe_total_abiertas_eur": 8077759.89,
+      "importe_medio_abiertas_eur": 1615551.98,
+      "adjudicadas_ultimos_12m": 22,
+      "frecuencia_mensual_aprox": 1.8,
+      "pct_pocos_licitadores": 77.3,
+      "n_adjudicadas_con_dato_licitadores": 22
+    },
+    {
+      "sector": "Instrumentos musicales, deportivos, juegos",
+      "licitaciones_abiertas": 34,
+      "importe_total_abiertas_eur": 6974665.83,
+      "importe_medio_abiertas_eur": 205137.23,
+      "adjudicadas_ultimos_12m": 61,
+      "frecuencia_mensual_aprox": 5.1,
+      "pct_pocos_licitadores": 62.7,
+      "n_adjudicadas_con_dato_licitadores": 59
+    },
+    {
+      "sector": "Alimentación, bebidas, tabaco",
+      "licitaciones_abiertas": 32,
+      "importe_total_abiertas_eur": 6600876.77,
+      "importe_medio_abiertas_eur": 212931.51,
+      "adjudicadas_ultimos_12m": 80,
+      "frecuencia_mensual_aprox": 6.7,
+      "pct_pocos_licitadores": 92.4,
+      "n_adjudicadas_con_dato_licitadores": 79
+    },
+    {
+      "sector": "Equipos de laboratorio, óptica, precisión",
+      "licitaciones_abiertas": 38,
+      "importe_total_abiertas_eur": 6008920.66,
+      "importe_medio_abiertas_eur": 158129.49,
+      "adjudicadas_ultimos_12m": 95,
+      "frecuencia_mensual_aprox": 7.9,
+      "pct_pocos_licitadores": 90.4,
+      "n_adjudicadas_con_dato_licitadores": 94
+    },
+    {
+      "sector": "Impresión y artes gráficas",
+      "licitaciones_abiertas": 16,
+      "importe_total_abiertas_eur": 5959794.84,
+      "importe_medio_abiertas_eur": 397319.66,
+      "adjudicadas_ultimos_12m": 90,
+      "frecuencia_mensual_aprox": 7.5,
+      "pct_pocos_licitadores": 76.1,
+      "n_adjudicadas_con_dato_licitadores": 88
+    },
+    {
+      "sector": "Servicios de apoyo al transporte, agencias de viaje",
+      "licitaciones_abiertas": 26,
+      "importe_total_abiertas_eur": 5474925.7,
+      "importe_medio_abiertas_eur": 228121.9,
+      "adjudicadas_ultimos_12m": 61,
+      "frecuencia_mensual_aprox": 5.1,
+      "pct_pocos_licitadores": 78.7,
+      "n_adjudicadas_con_dato_licitadores": 61
+    },
+    {
+      "sector": "Servicios de instalación",
+      "licitaciones_abiertas": 7,
+      "importe_total_abiertas_eur": 4008643.46,
+      "importe_medio_abiertas_eur": 572663.35,
+      "adjudicadas_ultimos_12m": 24,
+      "frecuencia_mensual_aprox": 2.0,
+      "pct_pocos_licitadores": 91.7,
+      "n_adjudicadas_con_dato_licitadores": 24
+    },
+    {
+      "sector": "Sin clasificar",
+      "licitaciones_abiertas": 28,
+      "importe_total_abiertas_eur": 3874023.4,
+      "importe_medio_abiertas_eur": 258268.23,
+      "adjudicadas_ultimos_12m": 42,
+      "frecuencia_mensual_aprox": 3.5,
+      "pct_pocos_licitadores": 92.9,
+      "n_adjudicadas_con_dato_licitadores": 42
+    },
+    {
+      "sector": "Agricultura, ganadería, pesca, silvicultura",
+      "licitaciones_abiertas": 35,
+      "importe_total_abiertas_eur": 3303459.62,
+      "importe_medio_abiertas_eur": 103233.11,
+      "adjudicadas_ultimos_12m": 78,
+      "frecuencia_mensual_aprox": 6.5,
+      "pct_pocos_licitadores": 85.9,
+      "n_adjudicadas_con_dato_licitadores": 78
+    },
+    {
+      "sector": "Servicios de investigación y desarrollo (I+D)",
+      "licitaciones_abiertas": 8,
+      "importe_total_abiertas_eur": 2875896.31,
+      "importe_medio_abiertas_eur": 575179.26,
+      "adjudicadas_ultimos_12m": 21,
+      "frecuencia_mensual_aprox": 1.8,
+      "pct_pocos_licitadores": 66.7,
+      "n_adjudicadas_con_dato_licitadores": 21
+    },
+    {
+      "sector": "Maquinaria de minería, construcción",
+      "licitaciones_abiertas": 21,
+      "importe_total_abiertas_eur": 2858799.47,
+      "importe_medio_abiertas_eur": 136133.31,
+      "adjudicadas_ultimos_12m": 30,
+      "frecuencia_mensual_aprox": 2.5,
+      "pct_pocos_licitadores": 76.7,
+      "n_adjudicadas_con_dato_licitadores": 30
+    },
+    {
+      "sector": "Maquinaria agrícola",
+      "licitaciones_abiertas": 12,
+      "importe_total_abiertas_eur": 1364831.47,
+      "importe_medio_abiertas_eur": 124075.59,
+      "adjudicadas_ultimos_12m": 24,
+      "frecuencia_mensual_aprox": 2.0,
+      "pct_pocos_licitadores": 75.0,
+      "n_adjudicadas_con_dato_licitadores": 24
+    },
+    {
+      "sector": "Minería y minerales",
+      "licitaciones_abiertas": 11,
+      "importe_total_abiertas_eur": 1314648.31,
+      "importe_medio_abiertas_eur": 119513.48,
+      "adjudicadas_ultimos_12m": 52,
+      "frecuencia_mensual_aprox": 4.3,
+      "pct_pocos_licitadores": 86.3,
+      "n_adjudicadas_con_dato_licitadores": 51
+    },
+    {
+      "sector": "Servicios relacionados con el sector del petróleo y gas",
+      "licitaciones_abiertas": 0,
+      "importe_total_abiertas_eur": 0.0,
+      "importe_medio_abiertas_eur": null,
+      "adjudicadas_ultimos_12m": 1,
+      "frecuencia_mensual_aprox": 0.1,
+      "pct_pocos_licitadores": 0.0,
+      "n_adjudicadas_con_dato_licitadores": 1
+    },
+    {
+      "sector": "Agua",
+      "licitaciones_abiertas": 0,
+      "importe_total_abiertas_eur": 0.0,
+      "importe_medio_abiertas_eur": null,
+      "adjudicadas_ultimos_12m": 5,
+      "frecuencia_mensual_aprox": 0.4,
+      "pct_pocos_licitadores": 100.0,
+      "n_adjudicadas_con_dato_licitadores": 5
+    }
+  ],
+  "por_sector_y_ccaa_top_candidatos": [
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 137,
+      "importe_total_eur": 319237038.31
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 100,
+      "importe_total_eur": 271652397.78
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 95,
+      "importe_total_eur": 403423247.14
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 91,
+      "importe_total_eur": 33245861.97
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 69,
+      "importe_total_eur": 114623974.33
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 67,
+      "importe_total_eur": 36740205.33
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 62,
+      "importe_total_eur": 60715693.08
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 50,
+      "importe_total_eur": 26882085.06
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 34,
+      "importe_total_eur": 11731189.92
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 27,
+      "importe_total_eur": 31778400.33
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 24,
+      "importe_total_eur": 160851819.26
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 21,
+      "importe_total_eur": 2834396.47
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 18,
+      "importe_total_eur": 14321125.92
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 16,
+      "importe_total_eur": 14357327.7
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 14,
+      "importe_total_eur": 3291395.7
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 48180519.43
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Ciudad Autónoma de Melilla",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 5543181.53
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "Comunidad Foral de Navarra",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 204033.38
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 1193954.31
+    },
+    {
+      "sector": "Construcción y obra civil",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 120366.48
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 15,
+      "importe_total_eur": 53302728.81
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 13,
+      "importe_total_eur": 1801972.14
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 10,
+      "importe_total_eur": 2345935.06
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 292130.91
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 95415065.57
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 5917519.77
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 122175721.24
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 6399853.26
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 525981.24
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 469874.08
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 1861149.57
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 1974415.18
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 138061.0
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Ciudad Autónoma de Ceuta",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 1612437.7
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 1094460.97
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Ciudad Autónoma de Melilla",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 773267.5
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 22583.12
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 389567.86
+    },
+    {
+      "sector": "Equipos médicos, farmacia, cosmética",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 45022202.5
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 13,
+      "importe_total_eur": 160288890.82
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 1144033.65
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 12098460.18
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 667455.8
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 668908.1
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 474565.13
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 1113032.65
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 118366.02
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 207152.0
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 468875.0
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 223963.35
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 26188.03
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 80752.58
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Ciudad Autónoma de Ceuta",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 21376.45
+    },
+    {
+      "sector": "Maquinaria industrial",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 116547.2
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 31,
+      "importe_total_eur": 16743592.52
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 13,
+      "importe_total_eur": 2161537.39
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 1195910.87
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 2245696.61
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 4770506.12
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 159526799.97
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 713187.6
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 6200080.95
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 425666.38
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 203145.0
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 677675.91
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 233622.72
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 12000.0
+    },
+    {
+      "sector": "Materiales de construcción",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 44917.7
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 40,
+      "importe_total_eur": 13864111.97
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 35,
+      "importe_total_eur": 35775604.84
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 35,
+      "importe_total_eur": 29232504.11
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 16,
+      "importe_total_eur": 99056574.2
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 13,
+      "importe_total_eur": 701169.37
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 12,
+      "importe_total_eur": 1617007.45
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 11,
+      "importe_total_eur": 11055467.26
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 913462.86
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 1708440.26
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 1619207.73
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 2330531.3
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 815652.25
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 915122.77
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 604153.44
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 639356.74
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Ciudad Autónoma de Melilla",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 31859.0
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 14520.0
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Ciudad Autónoma de Ceuta",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 64152.0
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Comunidad Foral de Navarra",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 45000.0
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 455448.43
+    },
+    {
+      "sector": "Servicios de arquitectura, ingeniería y construcción",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 27780656.91
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 48,
+      "importe_total_eur": 89337066.25
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 23,
+      "importe_total_eur": 200274783.78
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 20,
+      "importe_total_eur": 6070712.95
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 13,
+      "importe_total_eur": 3391876.62
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 10,
+      "importe_total_eur": 18079477.76
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 1020237.27
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 2970623.33
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 2687990.39
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 549224.44
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 253187.26
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 1490096.95
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 394688.93
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 13049167.4
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 360800.38
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 323296.25
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Ciudad Autónoma de Melilla",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 312240.62
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 2846769.12
+    },
+    {
+      "sector": "Servicios de reparación y mantenimiento",
+      "ccaa": "Ciudad Autónoma de Ceuta",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 12480.0
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 215536314.69
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 1040911.36
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 836098066.87
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 1275030.36
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 430651.17
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 3263547.54
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 650733.08
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 214840.08
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 26085384.79
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 349350.0
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 602491.4
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 148500.0
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 70815.14
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 257149.86
+    },
+    {
+      "sector": "Servicios de transporte",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 332882.01
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 42,
+      "importe_total_eur": 40562132.52
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 30,
+      "importe_total_eur": 602459124.04
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 18,
+      "importe_total_eur": 69815312.62
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 17,
+      "importe_total_eur": 4113640.59
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 15,
+      "importe_total_eur": 2965234.69
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 10,
+      "importe_total_eur": 2835001.04
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 1287810.82
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 702438.53
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 1851855.58
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 2173211.78
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 556485.05
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 10666954.58
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 447700.0
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 4656824.15
+    },
+    {
+      "sector": "Vehículos, transporte",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 81363.2
+    }
+  ]
+}
