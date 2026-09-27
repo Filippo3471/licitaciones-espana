@@ -16,13 +16,13 @@
 // (SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY los inyecta la plataforma sola)
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { can, recordUsage, getUserCompanyId } from "../_shared/can.ts";
 
 const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
 const ANTHROPIC_WORKSPACE_ID = Deno.env.get("ANTHROPIC_WORKSPACE_ID");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const DAILY_LIMIT = 15;
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -76,14 +76,26 @@ Deno.serve(async (req) => {
     const { data: userData, error: userErr } = await userClient.auth.getUser();
     if (userErr || !userData?.user) return jsonResponse({ error: "Sesión inválida" }, 401);
 
-    const { data: profile } = await userClient
-      .from("company_profiles")
-      .select("*")
-      .eq("user_id", userData.user.id)
-      .maybeSingle();
+    const companyId = await getUserCompanyId(userClient, userData.user.id);
+    const { data: profile } = companyId
+      ? await userClient.from("companies").select("*").eq("id", companyId).maybeSingle()
+      : { data: null };
 
     // Cliente con service role (bypassa RLS) para leer/escribir la caché compartida.
     const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // Gating de ACCESO a la función: se comprueba siempre, tenga o no
+    // caché la licitación — un plan Free no puede leer resúmenes ni
+    // aunque otro usuario ya los haya generado. El límite de USO mensual
+    // (más abajo) es distinto y solo aplica a generaciones nuevas, porque
+    // servir desde caché no cuesta nada extra.
+    if (!companyId) {
+      return jsonResponse({ error: "No se encontró tu empresa. Cierra sesión y vuelve a entrar." }, 400);
+    }
+    const veredictoAcceso = await can(adminClient, companyId, "pliego_summary");
+    if (!veredictoAcceso.allowed) {
+      return jsonResponse({ error: veredictoAcceso.message, upsell: veredictoAcceso }, 402);
+    }
 
     let resumen: Record<string, unknown>;
     const { data: cached } = await adminClient
@@ -95,20 +107,9 @@ Deno.serve(async (req) => {
     if (cached?.resumen) {
       resumen = cached.resumen as Record<string, unknown>;
     } else {
-      // Límite diario de análisis NUEVOS por usuario (los servidos desde
-      // caché no cuentan: no llaman al LLM, no cuestan nada extra).
-      const today = new Date().toISOString().slice(0, 10);
-      const { data: usage } = await adminClient
-        .from("pliego_usage")
-        .select("count")
-        .eq("user_id", userData.user.id)
-        .eq("day", today)
-        .maybeSingle();
-      if ((usage?.count ?? 0) >= DAILY_LIMIT) {
-        return jsonResponse(
-          { error: `Has alcanzado el límite de ${DAILY_LIMIT} análisis nuevos de pliegos por día. Vuelve mañana, o pide ayuda en una licitación que ya tenga resumen (no cuenta para el límite).` },
-          429
-        );
+      const veredictoUso = await can(adminClient, companyId, "pliego_summary", { usageLimitKey: "pliego_summaries" });
+      if (!veredictoUso.allowed) {
+        return jsonResponse({ error: veredictoUso.message, upsell: veredictoUso }, 402);
       }
 
       // El PCAP/PPT no siempre es un PDF: a veces el técnico se sube como
@@ -187,7 +188,7 @@ Deno.serve(async (req) => {
         model: "claude-sonnet-5",
       });
 
-      await adminClient.rpc("increment_pliego_usage", { p_user_id: userData.user.id, p_day: today });
+      await recordUsage(adminClient, companyId, "pliego_summaries");
     }
 
     const evaluacion = evaluarEncaje(resumen, profile, tender);

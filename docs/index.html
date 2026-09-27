@@ -290,6 +290,7 @@
       <div class="auth-bar" id="auth-bar">
         <button type="button" class="btn" id="btn-login" hidden>Iniciar sesión</button>
         <span class="email" id="auth-email" hidden></span>
+        <span class="chip ok" id="plan-badge" hidden></span>
         <button type="button" class="btn small" id="btn-empresa" hidden>Mi empresa</button>
         <button type="button" class="btn small" id="btn-logout" hidden>Cerrar sesión</button>
       </div>
@@ -607,6 +608,9 @@
 
   let currentUser = null;
   let currentProfile = null;
+  let currentCompanyId = null;
+  let currentPlan = "free";
+  const PLAN_NAMES = { free: "Free", basico: "Básico", pro: "Pro", equipo: "Equipo" };
 
   function openModal(sel) { $(sel).hidden = false; }
   function closeModal(sel) { $(sel).hidden = true; }
@@ -710,7 +714,10 @@
         body: JSON.stringify({ external_id: item.external_id, documentos: item.documentos, tender: item }),
       });
       const data = await resp.json();
-      if (!resp.ok) throw new Error(data.error || "Error del servidor");
+      if (!resp.ok) {
+        if (data.upsell) { renderUpsell(container, data); return; }
+        throw new Error(data.error || "Error del servidor");
+      }
       renderPliegoSummary(container, data);
     } catch (err) {
       container.innerHTML = `<p class="modal-error" style="margin:0">${escapeHtml(err.message || "No se pudo generar la ayuda")}</p>`;
@@ -760,9 +767,31 @@
 
   async function loadProfile() {
     const { data: { user } } = await sb.auth.getUser();
-    if (!user) { currentProfile = null; return; }
-    const { data } = await sb.from("company_profiles").select("*").eq("user_id", user.id).maybeSingle();
-    currentProfile = data || null;
+    if (!user) { currentProfile = null; currentCompanyId = null; currentPlan = "free"; return; }
+    const { data: membership } = await sb.from("company_members").select("company_id").eq("user_id", user.id).limit(1).maybeSingle();
+    currentCompanyId = membership?.company_id || null;
+    if (!currentCompanyId) { currentProfile = null; currentPlan = "free"; return; }
+    const { data: company } = await sb.from("companies").select("*").eq("id", currentCompanyId).maybeSingle();
+    currentProfile = company || null;
+    const { data: sub } = await sb.from("subscriptions").select("plan, status").eq("company_id", currentCompanyId).maybeSingle();
+    currentPlan = (sub && (sub.status === "active" || sub.status === "trialing")) ? sub.plan : "free";
+    const badge = $("#plan-badge");
+    if (badge) { badge.textContent = PLAN_NAMES[currentPlan] || currentPlan; badge.hidden = false; }
+  }
+
+  function renderUpsell(container, data) {
+    const up = data.upsell || {};
+    const planActual = PLAN_NAMES[up.plan] || up.plan || "Free";
+    const planSugerido = up.upgrade_to ? (PLAN_NAMES[up.upgrade_to] || up.upgrade_to) : null;
+    let html = `<div class="prompt" style="flex-direction:column;align-items:flex-start;gap:6px">`;
+    html += `<strong>${escapeHtml(data.error || "Esta función no está disponible en tu plan.")}</strong>`;
+    if (up.reason === "not_built") {
+      html += `<span class="cache-note">Está en nuestro roadmap — te avisaremos cuando esté lista.</span>`;
+    } else if (planSugerido) {
+      html += `<span class="cache-note">Tu plan actual: ${escapeHtml(planActual)}. Disponible desde: <strong>${escapeHtml(planSugerido)}</strong> — página de precios en camino.</span>`;
+    }
+    html += `</div>`;
+    container.innerHTML = html;
   }
 
   async function onAuthChange(session) {
@@ -773,6 +802,7 @@
     $("#btn-empresa").hidden = !currentUser;
     $("#btn-logout").hidden = !currentUser;
     currentProfile = null;
+    if (!currentUser) $("#plan-badge").hidden = true;
     if (currentUser) await loadProfile();
     document.dispatchEvent(new CustomEvent("empresa:changed"));
   }
@@ -800,11 +830,9 @@
     $("#emp-error").textContent = "";
     $("#emp-submit").disabled = true;
     try {
-      const { data: { user } } = await sb.auth.getUser();
-      if (!user) throw new Error("Tu sesión ha caducado. Cierra este formulario, inicia sesión de nuevo y vuelve a intentarlo.");
-      currentUser = user;
-      const row = {
-        user_id: user.id,
+      const { data: sess } = await sb.auth.getSession();
+      if (!sess.session) throw new Error("Tu sesión ha caducado. Cierra este formulario, inicia sesión de nuevo y vuelve a intentarlo.");
+      const body = {
         company_name: $("#emp-nombre").value.trim(),
         nif: $("#emp-nif").value.trim() || null,
         clasificacion_empresarial: $("#emp-clasificacion").value.trim() || null,
@@ -815,9 +843,27 @@
         facturacion_anual: numOrNull($("#emp-facturacion").value),
         certificaciones: $("#emp-certificaciones").value.trim() || null,
       };
-      const { error } = await sb.from("company_profiles").upsert(row);
-      if (error) throw error;
-      currentProfile = row;
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/save-company-profile`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sess.session.access_token}`, apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify(body),
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        if (data.upsell) {
+          const tmp = document.createElement("div");
+          renderUpsell(tmp, data);
+          $("#emp-error").innerHTML = "";
+          $("#emp-error").appendChild(tmp.firstChild);
+          return;
+        }
+        throw new Error(data.error || "No se pudo guardar");
+      }
+      currentProfile = data.company;
+      currentCompanyId = data.company.id;
+      currentPlan = data.plan || "free";
+      const badge = $("#plan-badge");
+      if (badge) { badge.textContent = PLAN_NAMES[currentPlan] || currentPlan; badge.hidden = false; }
       closeModal("#modal-empresa");
       document.dispatchEvent(new CustomEvent("empresa:changed"));
     } catch (err) {

@@ -1,0 +1,121 @@
+{
+  "_nota": "Fuente única de verdad para planes, precios y límites. Precios son PLACEHOLDERS. Este archivo se copia sin modificar a docs/plans.json y artifact/plans.json (para el frontend) y a supabase/functions/_shared/plans.json (para las Edge Functions) — no reescribas límites en ningún otro sitio, cambia aquí y recopia.",
+  "moneda": "EUR",
+  "trial_dias_pro": 14,
+  "meses_gratis_anual": 2,
+  "cupon_fundador": {
+    "codigo": "FUNDADOR50",
+    "descuento_porcentaje": 50,
+    "max_usos": 20,
+    "aplica_a": ["basico", "pro", "equipo"]
+  },
+  "planes": {
+    "free": {
+      "nombre": "Free",
+      "precio_mes": 0,
+      "precio_anio": 0,
+      "stripe_price_id_mes": null,
+      "stripe_price_id_anio": null,
+      "limites": {
+        "cpv_max": 1,
+        "ccaa_max": 1,
+        "pliego_summaries_mes": 0,
+        "usuarios_max": 1,
+        "empresas_max": 1
+      },
+      "alertas": { "frecuencia": "semanal", "retraso_horas": 72 },
+      "funciones": {
+        "busqueda": true,
+        "go_no_go": true,
+        "pliego_summary": false,
+        "eligibilidad": false,
+        "inteligencia_adjudicaciones": false,
+        "prediccion": false,
+        "exportacion_api": false,
+        "multi_empresa": false
+      }
+    },
+    "basico": {
+      "nombre": "Básico",
+      "precio_mes": 49,
+      "precio_anio": 490,
+      "stripe_price_id_mes": "PLACEHOLDER_PRICE_BASICO_MES",
+      "stripe_price_id_anio": "PLACEHOLDER_PRICE_BASICO_ANIO",
+      "limites": {
+        "cpv_max": 3,
+        "ccaa_max": 1,
+        "pliego_summaries_mes": 10,
+        "usuarios_max": 1,
+        "empresas_max": 1
+      },
+      "alertas": { "frecuencia": "diaria", "retraso_horas": 0 },
+      "funciones": {
+        "busqueda": true,
+        "go_no_go": true,
+        "pliego_summary": true,
+        "eligibilidad": true,
+        "inteligencia_adjudicaciones": false,
+        "prediccion": false,
+        "exportacion_api": false,
+        "multi_empresa": false
+      }
+    },
+    "pro": {
+      "nombre": "Pro",
+      "precio_mes": 149,
+      "precio_anio": 1490,
+      "stripe_price_id_mes": "PLACEHOLDER_PRICE_PRO_MES",
+      "stripe_price_id_anio": "PLACEHOLDER_PRICE_PRO_ANIO",
+      "limites": {
+        "cpv_max": null,
+        "ccaa_max": null,
+        "pliego_summaries_mes": null,
+        "usuarios_max": 3,
+        "empresas_max": 1
+      },
+      "alertas": { "frecuencia": "tiempo_real", "retraso_horas": 0 },
+      "funciones": {
+        "busqueda": true,
+        "go_no_go": true,
+        "pliego_summary": true,
+        "eligibilidad": true,
+        "inteligencia_adjudicaciones": true,
+        "prediccion": false,
+        "exportacion_api": false,
+        "multi_empresa": false
+      }
+    },
+    "equipo": {
+      "nombre": "Equipo / Consultora",
+      "precio_mes": 399,
+      "precio_anio": 3990,
+      "stripe_price_id_mes": "PLACEHOLDER_PRICE_EQUIPO_MES",
+      "stripe_price_id_anio": "PLACEHOLDER_PRICE_EQUIPO_ANIO",
+      "limites": {
+        "cpv_max": null,
+        "ccaa_max": null,
+        "pliego_summaries_mes": null,
+        "usuarios_max": 10,
+        "empresas_max": null
+      },
+      "alertas": { "frecuencia": "tiempo_real", "retraso_horas": 0 },
+      "funciones": {
+        "busqueda": true,
+        "go_no_go": true,
+        "pliego_summary": true,
+        "eligibilidad": true,
+        "inteligencia_adjudicaciones": true,
+        "prediccion": false,
+        "exportacion_api": false,
+        "multi_empresa": true
+      }
+    }
+  },
+  "roadmap_no_construido_todavia": [
+    "prediccion",
+    "exportacion_api",
+    "envio_real_de_alertas_por_email",
+    "inteligencia_adjudicaciones (cruce de similares por CPV/órgano/región)"
+  ],
+  "_aviso_roadmap": "Las funciones listadas arriba están en 'funciones' de PRO/EQUIPO como lo que desbloquearán cuando existan, pero HOY no están construidas. can() debe devolver not_built (no allowed=true) si alguien las intenta usar, para no prometer algo que no funciona."
+}
