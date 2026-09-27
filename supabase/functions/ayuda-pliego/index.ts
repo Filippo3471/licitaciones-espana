@@ -111,18 +111,27 @@ Deno.serve(async (req) => {
         );
       }
 
-      const pcap = documentos.find((d: any) => /PCAP/i.test(d.categoria));
-      const ppt = documentos.find((d: any) => /PPT/i.test(d.categoria));
+      // El PCAP/PPT no siempre es un PDF: a veces el técnico se sube como
+      // .zip, .doc, etc. Claude solo puede leer PDFs como documento nativo,
+      // así que filtramos por nombre de archivo antes de intentar mandarlo.
+      const isPdfName = (nombre: string) => /\.pdf$/i.test((nombre || "").trim());
+      const pcap = documentos.find((d: any) => /PCAP/i.test(d.categoria) && isPdfName(d.nombre));
+      const ppt = documentos.find((d: any) => /PPT/i.test(d.categoria) && isPdfName(d.nombre));
       const targets = [pcap, ppt].filter(Boolean);
       if (targets.length === 0) {
-        return jsonResponse({ error: "Esta licitación no tiene PCAP/PPT enlazado en la fuente" }, 404);
+        return jsonResponse({ error: "Esta licitación no tiene ningún PCAP/PPT en formato PDF (puede estar en .zip, .doc u otro formato que todavía no se puede leer aquí)" }, 404);
       }
 
       const documentBlocks = [];
       for (const doc of targets) {
         const pdfResp = await fetch(doc.url);
         if (!pdfResp.ok) continue;
+        const contentType = pdfResp.headers.get("content-type") || "";
         const buf = await pdfResp.arrayBuffer();
+        // Comprobación adicional por si el nombre engaña: mirar la cabecera
+        // real y la firma %PDF- de los primeros bytes.
+        const looksLikePdf = contentType.includes("pdf") || new TextDecoder().decode(new Uint8Array(buf).slice(0, 5)) === "%PDF-";
+        if (!looksLikePdf) continue;
         const base64 = base64Encode(buf);
         documentBlocks.push({
           type: "document",
@@ -130,7 +139,7 @@ Deno.serve(async (req) => {
         });
       }
       if (documentBlocks.length === 0) {
-        return jsonResponse({ error: "No se pudo descargar ningún PDF de esta licitación" }, 502);
+        return jsonResponse({ error: "No se pudo descargar ningún PDF válido de esta licitación" }, 502);
       }
 
       const anthropicHeaders: Record<string, string> = {
