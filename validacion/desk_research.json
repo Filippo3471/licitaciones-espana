@@ -1,5 +1,5 @@
 {
-  "generado_en": "2026-09-28T08:34:49",
+  "generado_en": "2026-09-28T08:44:13",
   "nota_metodologica": "Lectura de solo-lectura de data/licitaciones.db. 'Abiertas' es un snapshot del momento de ejecución. 'Adjudicadas últimos 12 meses' usa fecha_adjudicacion del feed de PLACSP, que está sesgado hacia meses recientes (no es un archivo histórico completo) — la frecuencia mensual es orientativa, no una serie temporal fiable mes a mes. 'Pocos licitadores' = <= 3 ofertas recibidas, umbral propio.",
   "por_sector": [
     {
