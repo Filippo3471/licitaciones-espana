@@ -1,0 +1,25 @@
+# Licitaciones España
+
+> Buscador y agregador de licitaciones públicas abiertas en España. Agrega datos oficiales de PLACSP (Plataforma de Contratación del Sector Público), TED (Tenders Electronic Daily, Unión Europea), la Generalitat de Catalunya y el Ayuntamiento de Bilbao en un único sitio, actualizado dos veces al día (09:00 y 15:00 hora española).
+
+Nota: "Licitaciones España" es un nombre de trabajo provisional, todavía en fase de validación de producto — no es una marca comercial definitiva.
+
+## Qué hay en el sitio
+
+- Buscador de licitaciones públicas abiertas: objeto del contrato, órgano contratante, importe, plazo de presentación, comunidad autónoma, requisitos de solvencia técnica y económica, y enlace a los pliegos oficiales.
+- Histórico de adjudicaciones: quién ganó cada licitación, por cuánto importe y con cuántos competidores (dato clave para medir competencia real por sector).
+- Evaluación rápida (GO/NO-GO) de si una licitación encaja con el perfil de una empresa, y análisis asistido por IA del pliego completo (funciones de pago).
+
+## Datos y cifras (actualizado dos veces al día)
+
+- Más de 6.000 licitaciones públicas abiertas en España en un momento dado.
+- Fuentes: PLACSP, TED (UE), Generalitat de Catalunya, Ayuntamiento de Bilbao.
+- Datos en bruto disponibles en JSON: https://filippo3471.github.io/licitaciones-espana/licitaciones.json (licitaciones abiertas) y https://filippo3471.github.io/licitaciones-espana/adjudicaciones.json (histórico de adjudicaciones).
+
+## Páginas
+
+- [Buscador principal](https://filippo3471.github.io/licitaciones-espana/): búsqueda y filtrado de licitaciones abiertas, cuenta de empresa, planes.
+
+## Contacto
+
+Proyecto en fase de validación temprana (customer development), fundado por Filippo Di Nola.
