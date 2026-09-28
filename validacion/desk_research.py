@@ -168,6 +168,12 @@ def main():
             "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
             "Servicios medioambientales, saneamiento, residuos",
             "Servicios de reparación y mantenimiento",
+            # Añadidos el 29/09/2026: sectores donde el negocio suele
+            # depender de las licitaciones como ingreso recurrente (BAU),
+            # no como oportunidad puntual — ayuda a domicilio/residencias y
+            # catering colectivo casi siempre viven de contratos públicos.
+            "Servicios de salud y acción social",
+            "Servicios de hostelería y restauración",
         ]
         sectores_objetivo_candidatos = sorted(set(
             [s["sector"] for s in top_por_importe] + SECTORES_OBJETIVO + SECTORES_ADICIONALES_EXPLORADOS

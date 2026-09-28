@@ -1,5 +1,5 @@
 {
-  "generado_en": "2026-09-28T08:44:13",
+  "generado_en": "2026-09-28T08:58:06",
   "nota_metodologica": "Lectura de solo-lectura de data/licitaciones.db. 'Abiertas' es un snapshot del momento de ejecución. 'Adjudicadas últimos 12 meses' usa fecha_adjudicacion del feed de PLACSP, que está sesgado hacia meses recientes (no es un archivo histórico completo) — la frecuencia mensual es orientativa, no una serie temporal fiable mes a mes. 'Pocos licitadores' = <= 3 ofertas recibidas, umbral propio.",
   "por_sector": [
     {
@@ -999,6 +999,96 @@
       "importe_total_eur": 27780656.91
     },
     {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 25,
+      "importe_total_eur": 765923.35
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 15,
+      "importe_total_eur": 2238769.88
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 14,
+      "importe_total_eur": 17204446.09
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 2703434.08
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 252956.65
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 9000.01
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 23671.58
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 67735.8
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 0.0
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 257732.2
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 25200.0
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 171993.0
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 286503.2
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 128492.32
+    },
+    {
+      "sector": "Servicios de hostelería y restauración",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 1040371.4
+    },
+    {
       "sector": "Servicios de reparación y mantenimiento",
       "ccaa": "Comunidad de Madrid",
       "licitaciones_abiertas": 48,
@@ -1105,6 +1195,120 @@
       "ccaa": "Ciudad Autónoma de Ceuta",
       "licitaciones_abiertas": 1,
       "importe_total_eur": 12480.0
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 19,
+      "importe_total_eur": 9190232.09
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 17,
+      "importe_total_eur": 13002569.83
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 11,
+      "importe_total_eur": 40757295.71
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 11,
+      "importe_total_eur": 1315912.19
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 5689579.18
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 596985.0
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 1455037.9
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 7930648.03
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 3953480.07
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 1462662.99
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 1357098.39
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 674499.15
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 73857.64
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 3280420.29
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 230341.38
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Comunidad Foral de Navarra",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 84715.22
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 422802.8
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 52790.4
+    },
+    {
+      "sector": "Servicios de salud y acción social",
+      "ccaa": "Ciudad Autónoma de Melilla",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 1470588.26
     },
     {
       "sector": "Servicios de tecnologías de la información (TI)",
