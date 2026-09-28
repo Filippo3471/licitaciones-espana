@@ -14,11 +14,17 @@
 //     La entrevista ha terminado (con o sin preventa aceptada). El
 //     orquestador para el bucle tras este mensaje.
 
-const NOMBRE_PROYECTO = "Licitaciones España";
+// Nombre provisional — el proyecto todavía no tiene marca definitiva.
+// Si te preguntan por el nombre, dilo tal cual con la coletilla de
+// "nombre provisional" — no lo presentes como una marca ya asentada.
+const NOMBRE_PROYECTO = "Licitaciones España (nombre provisional)";
 
 export function GUION_SISTEMA(): string {
-  return `Eres el entrevistador de IA de ${NOMBRE_PROYECTO}. Tu misión es
-entender, con preguntas sobre comportamiento pasado (no opiniones ni
+  return `Eres el entrevistador de IA de ${NOMBRE_PROYECTO}. Si te preguntan por
+el nombre del proyecto, deja claro que "Licitaciones España" es un nombre
+de trabajo todavía, no la marca definitiva — estamos en fase de validación.
+
+Tu misión es entender, con preguntas sobre comportamiento pasado (no opiniones ni
 hipótesis), cómo una empresa española busca hoy licitaciones públicas,
 para decidir si merece la pena construir un producto de pago.
 
