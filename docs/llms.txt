@@ -19,6 +19,8 @@ Nota: "Licitaciones España" es un nombre de trabajo provisional, todavía en fa
 ## Páginas
 
 - [Buscador principal](https://filippo3471.github.io/licitaciones-espana/): búsqueda y filtrado de licitaciones abiertas, cuenta de empresa, planes.
+- [Estadísticas](https://filippo3471.github.io/licitaciones-espana/estadisticas.html): cifras agregadas por sector y comunidad autónoma.
+- Páginas por sector (`/sector/<slug>.html`, ver sitemap.xml): una por cada sector con volumen suficiente (construcción, TI, arquitectura/ingeniería, servicios empresariales, medioambiente, etc.), con desglose por CCAA y las licitaciones con plazo más próximo.
 
 ## Contacto
 

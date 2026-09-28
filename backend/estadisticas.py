@@ -122,12 +122,14 @@ def money(v: float) -> str:
 
 
 def render_html(stats: dict, generado_en: str) -> str:
+    from .paginas_sector import UMBRAL_MIN_LICITACIONES, slugify
+
     top_sectores = stats["por_sector"][:15]
     top_ccaa = stats["por_ccaa"][:20]
 
     filas_sector_html = "\n".join(
         f"""<tr>
-          <td>{s['sector']}</td>
+          <td>{f'<a href="sector/{slugify(s["sector"])}.html">{s["sector"]}</a>' if s['n_abiertas'] >= UMBRAL_MIN_LICITACIONES else s['sector']}</td>
           <td class="num">{s['n_abiertas']}</td>
           <td class="num">{money(s['importe_total'])}</td>
           <td class="num">{money(s['importe_medio']) if s['importe_medio'] else '—'}</td>

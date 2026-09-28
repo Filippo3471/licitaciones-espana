@@ -65,11 +65,14 @@ cp data/licitaciones.json artifact/licitaciones.json
 cp data/licitaciones.json docs/licitaciones.json
 [ -f data/adjudicaciones.json ] && cp data/adjudicaciones.json docs/adjudicaciones.json
 
-# Regenera la página de estadísticas (HTML estático, sin fetch por JS, para
-# que los rastreadores de IA que no ejecutan JavaScript puedan leerla) con
-# los datos recién exportados. Una página de estadísticas con cifras
+# Regenera las páginas de estadísticas y de sector (HTML estático, sin
+# fetch por JS, para que los rastreadores de IA que no ejecutan JavaScript
+# puedan leerlas) y el sitemap (el conjunto de sectores que cruza el umbral
+# de volumen puede cambiar de un ciclo a otro). Una página con cifras
 # desactualizadas es peor que no tenerla, así que se recalcula en cada ciclo.
+.venv/bin/python -m backend.paginas_sector >>"$LOG" 2>&1
 .venv/bin/python -m backend.estadisticas >>"$LOG" 2>&1
+.venv/bin/python -m backend.sitemap >>"$LOG" 2>&1
 
 if git diff --quiet -- docs/ && git diff --cached --quiet -- docs/; then
   echo "OK: sin cambios en los datos, no hace falta publicar (total=$TOTAL)." >>"$LOG"
