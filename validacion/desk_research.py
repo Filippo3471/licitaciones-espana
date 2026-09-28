@@ -160,7 +160,17 @@ def main():
             "Servicios de arquitectura, ingeniería y construcción",
             "Servicios de tecnologías de la información (TI)",
         ]
-        sectores_objetivo_candidatos = sorted(set([s["sector"] for s in top_por_importe] + SECTORES_OBJETIVO))
+        # Explorados el 28/09/2026 a petición explícita de ampliar el
+        # reclutamiento a otras industrias (Fase 4) — no son una redefinición
+        # de los 2 sectores objetivo de hipotesis.md, solo candidatos
+        # adicionales con el mismo criterio cuantitativo, no por intuición.
+        SECTORES_ADICIONALES_EXPLORADOS = [
+            "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+            "Servicios medioambientales, saneamiento, residuos",
+        ]
+        sectores_objetivo_candidatos = sorted(set(
+            [s["sector"] for s in top_por_importe] + SECTORES_OBJETIVO + SECTORES_ADICIONALES_EXPLORADOS
+        ))
         por_ccaa = analizar_por_ccaa(conn, sectores_objetivo_candidatos)
     finally:
         conn.close()

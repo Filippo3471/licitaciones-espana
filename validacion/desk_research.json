@@ -1,5 +1,5 @@
 {
-  "generado_en": "2026-09-28T08:21:34",
+  "generado_en": "2026-09-28T08:34:49",
   "nota_metodologica": "Lectura de solo-lectura de data/licitaciones.db. 'Abiertas' es un snapshot del momento de ejecución. 'Adjudicadas últimos 12 meses' usa fecha_adjudicacion del feed de PLACSP, que está sesgado hacia meses recientes (no es un archivo histórico completo) — la frecuencia mensual es orientativa, no una serie temporal fiable mes a mes. 'Pocos licitadores' = <= 3 ofertas recibidas, umbral propio.",
   "por_sector": [
     {
@@ -1285,6 +1285,228 @@
       "ccaa": "Cataluña",
       "licitaciones_abiertas": 1,
       "importe_total_eur": 332882.01
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 52,
+      "importe_total_eur": 43657134.19
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 30,
+      "importe_total_eur": 6430806.25
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 30,
+      "importe_total_eur": 7803384.8
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 17,
+      "importe_total_eur": 2493165.0
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 11,
+      "importe_total_eur": 5091800.4
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 9,
+      "importe_total_eur": 5187677.19
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 1513772.89
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 1560814.11
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 458641.55
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 5342857.89
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 532168.41
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 823168.89
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 117338.05
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 113200.4
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 28200.0
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 51114.34
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "España (otra zona)",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 6292.0
+    },
+    {
+      "sector": "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 10285.0
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 24,
+      "importe_total_eur": 6738013.07
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 20,
+      "importe_total_eur": 16085013.56
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 12,
+      "importe_total_eur": 15961666.16
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 12,
+      "importe_total_eur": 7495721.08
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 1150882.32
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 3873509.29
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Región de Murcia",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 3243196.76
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 37193801.65
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 405515.57
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 5,
+      "importe_total_eur": 4731057.64
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 417982.19
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 506204.19
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 16532250.9
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "La Rioja",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 2528343.96
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 7719085.72
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 155196.24
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Ciudad Autónoma de Ceuta",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 12108049.35
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "Ciudad Autónoma de Melilla",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 474310.25
+    },
+    {
+      "sector": "Servicios medioambientales, saneamiento, residuos",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 66080.4
     },
     {
       "sector": "Vehículos, transporte",

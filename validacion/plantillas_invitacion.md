@@ -81,13 +81,22 @@ Filippo — Licitaciones España
 - **Origen del contacto declarado**: adjudicación pública de contratos
   (PLACSP), filtrado por sector — cierto y verificable, no hay
   ambigüedad legal sobre "de dónde salió este email".
-- **Emails**: la columna `email_generico` en `validacion/lote_01_shortlist.csv`
-  está vacía todavía — antes de enviar nada hay que rellenarla con un
-  email corporativo genérico real de cada empresa (no personal). Puedo
-  buscarlos uno a uno (páginas de contacto públicas) en cuanto apruebes
-  seguir, o me los puedes pasar tú si ya los tienes.
-- **20 empresas, no 50**: recorté la shortlist a propósito a las que
-  tienen un hook geográfico claro y un tamaño de contrato ganado
-  compatible con pyme (excluí Accenture, Indra, Deloitte, NTT Data y
-  similares que aparecían en los datos brutos — mal encaje de ICP, ya
-  detectado en la Fase 1).
+- **`validacion/lote_01_shortlist.csv`** (20 empresas, sectores TI y
+  Arquitectura/Ingeniería) fue la primera pasada, sin emails — se dejó
+  como registro del proceso.
+- **`validacion/lote_02_verificado.csv` es el lote real, listo para
+  enviar**: 12 empresas con email genérico **verificado de verdad**
+  (encontrado en su propia web o en un directorio empresarial fiable, no
+  inventado ni adivinado por patrón), repartidas en **4 sectores**: TI
+  (Madrid), Arquitectura/Ingeniería (Canarias + C. Valenciana), Servicios
+  empresariales/consultoría (Madrid) y Medioambiente/residuos (Castilla y
+  León) — estos dos últimos añadidos el 28/09 con el mismo criterio
+  cuantitativo de la Fase 1, no por intuición.
+- De ~22 empresas revisadas una a una: 12 confirmadas, y el resto
+  descartadas explícitamente — no "email no encontrado, se envía igual a
+  lo que haya". Excluidas por ser en realidad grandes empresas pese al
+  contrato pequeño (Accenture, Indra, Deloitte, NTT Data, MathWorks, Auren
+  Auditores — red de 60+ oficinas en 11 países, Ecija Legal — 4º despacho
+  de España), por estar disuelta (Vivaticket Ibérica, extinguida en 2025),
+  o por no tener email público localizable (dejadas fuera de este lote,
+  no en la plantilla con hueco vacío).

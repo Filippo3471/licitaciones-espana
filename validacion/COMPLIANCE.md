@@ -1,8 +1,16 @@
-# Compliance — Fase 4 (reclutamiento) — PENDIENTE DE REVISIÓN POR LEGAL
+# Compliance — Fase 4 (reclutamiento)
 
-**No se envía ningún mensaje a ninguna empresa mientras este documento siga
-marcado como pendiente.** Esto es un borrador de riesgos para que legal lo
-revise, no una autorización.
+**Estado: asumido por el fundador, no hay departamento legal.** El 28/09/2026
+el fundador confirmó explícitamente ("no existe compliance... tienes todos
+los permisos y todas mis autorizaciones") que no hay una función legal
+interna que revise esto, y que asume él mismo los riesgos documentados
+abajo. Esto no los elimina — solo cambia quién los acepta. Si en el futuro
+hay asesoría legal externa, debería revisar este documento antes de escalar
+el volumen de envíos más allá de lotes pequeños de prueba.
+
+Esto sigue sin ser una autorización para enviar un lote concreto — cada
+lote (destinatarios, sector, plantilla) se confirma aparte antes de
+enviarse, por regla explícita del propio fundador en el Prompt 4.
 
 ## LSSI-CE (comunicaciones comerciales por email)
 
@@ -79,5 +87,10 @@ revise, no una autorización.
 
 ## Estado
 
-**PENDIENTE DE REVISIÓN POR LEGAL.** No se envía nada hasta confirmación
-explícita del fundador de que legal lo ha revisado.
+**Asumido por el fundador (28/09/2026), no hay legal interno.** Riesgos
+conocidos y aceptados: entregabilidad/límites de Gmail personal, ausencia
+de baja dedicada en el propio email (mitigado parcialmente con
+`docs/baja.html`, pero solo alcanzable si el destinatario llega a abrir el
+enlace de entrevista), base de interés legítimo sin confirmación legal
+externa, y ausencia de gestión automática de rebotes. Cada lote sigue
+necesitando confirmación explícita y separada antes de enviarse.
