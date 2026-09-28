@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baja · Licitaciones España</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  body { margin: 0; background: #f6f5f1; color: #1b1b18; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .shell { max-width: 480px; margin: 80px auto; padding: 0 16px; text-align: center; }
+  .card { background: #fff; border: 1px solid #e4e1d8; border-radius: 12px; padding: 28px; box-shadow: 0 8px 28px rgba(20,20,15,0.10); }
+</style>
+</head>
+<body>
+<div class="shell"><div class="card" id="card">Procesando...</div></div>
+<script>
+(function () {
+  const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+  const token = new URLSearchParams(location.search).get("t");
+  const card = document.getElementById("card");
+  if (!token) { card.textContent = "Enlace no válido."; return; }
+  fetch(`${SUPABASE_URL}/functions/v1/entrevista-validacion`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, accion: "baja_invitacion" }),
+  })
+    .then((r) => r.json())
+    .then((d) => {
+      card.textContent = d.baja
+        ? "Hecho. No recibirás más comunicaciones nuestras sobre esto."
+        : (d.error || "No se pudo procesar la baja.");
+    })
+    .catch(() => { card.textContent = "No se pudo procesar la baja. Inténtalo de nuevo más tarde."; });
+})();
+</script>
+</body>
+</html>

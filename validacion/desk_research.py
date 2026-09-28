@@ -152,7 +152,15 @@ def main():
     try:
         por_sector = analizar_por_sector(conn)
         top_por_importe = [s for s in por_sector if s["licitaciones_abiertas"] >= 20][:8]
-        sectores_objetivo_candidatos = [s["sector"] for s in top_por_importe]
+        # Los 2 sectores objetivo elegidos (hipotesis.md) deben ir siempre en el
+        # desglose por CCAA aunque no entren en el top-8 bruto por importe —
+        # si no, cualquier consumidor de este archivo (p.ej. la Fase 4) se
+        # queda sin datos de CCAA justo para los sectores que sí importan.
+        SECTORES_OBJETIVO = [
+            "Servicios de arquitectura, ingeniería y construcción",
+            "Servicios de tecnologías de la información (TI)",
+        ]
+        sectores_objetivo_candidatos = sorted(set([s["sector"] for s in top_por_importe] + SECTORES_OBJETIVO))
         por_ccaa = analizar_por_ccaa(conn, sectores_objetivo_candidatos)
     finally:
         conn.close()

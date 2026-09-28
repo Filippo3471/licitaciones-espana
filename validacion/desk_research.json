@@ -1,5 +1,5 @@
 {
-  "generado_en": "2026-09-27T22:09:38",
+  "generado_en": "2026-09-28T08:21:34",
   "nota_metodologica": "Lectura de solo-lectura de data/licitaciones.db. 'Abiertas' es un snapshot del momento de ejecución. 'Adjudicadas últimos 12 meses' usa fecha_adjudicacion del feed de PLACSP, que está sesgado hacia meses recientes (no es un archivo histórico completo) — la frecuencia mensual es orientativa, no una serie temporal fiable mes a mes. 'Pocos licitadores' = <= 3 ofertas recibidas, umbral propio.",
   "por_sector": [
     {
@@ -1105,6 +1105,96 @@
       "ccaa": "Ciudad Autónoma de Ceuta",
       "licitaciones_abiertas": 1,
       "importe_total_eur": 12480.0
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Comunidad de Madrid",
+      "licitaciones_abiertas": 41,
+      "importe_total_eur": 141203900.08
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "España (sin especificar)",
+      "licitaciones_abiertas": 8,
+      "importe_total_eur": 2916753.4
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Andalucía",
+      "licitaciones_abiertas": 7,
+      "importe_total_eur": 7627149.6
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Comunidad Valenciana",
+      "licitaciones_abiertas": 6,
+      "importe_total_eur": 792328.49
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Illes Balears",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 5426061.39
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Castilla y León",
+      "licitaciones_abiertas": 4,
+      "importe_total_eur": 3378107.71
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Cataluña",
+      "licitaciones_abiertas": 3,
+      "importe_total_eur": 876671.64
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Aragón",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 82868.06
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Canarias",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 106946.19
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "País Vasco",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 2231590.9
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Castilla-La Mancha",
+      "licitaciones_abiertas": 2,
+      "importe_total_eur": 788743.34
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Cantabria",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 16940.0
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Principado de Asturias",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 59290.0
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Galicia",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 574750.0
+    },
+    {
+      "sector": "Servicios de tecnologías de la información (TI)",
+      "ccaa": "Extremadura",
+      "licitaciones_abiertas": 1,
+      "importe_total_eur": 1029632.89
     },
     {
       "sector": "Servicios de transporte",
