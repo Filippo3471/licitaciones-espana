@@ -1,0 +1,42 @@
+# Buscadores generales: todo permitido salvo páginas privadas por token.
+User-agent: *
+Disallow: /entrevista.html
+Disallow: /baja.html
+Allow: /
+
+# Rastreadores de IA — permitidos explícitamente (GEO: queremos que los
+# asistentes de IA puedan leer e indexar los datos reales del sitio).
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+Sitemap: https://filippo3471.github.io/licitaciones-espana/sitemap.xml

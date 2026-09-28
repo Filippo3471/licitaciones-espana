@@ -2,8 +2,64 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Registro de Licitaciones</title>
+<title>Licitaciones Públicas Abiertas en España | PLACSP, TED y CCAA</title>
+<meta name="description" content="Busca entre más de 6.000 licitaciones públicas abiertas en España (PLACSP, TED, Generalitat de Catalunya y más), actualizadas dos veces al día. Filtra por CPV, comunidad autónoma e importe, y consulta el histórico de adjudicaciones: quién ganó, por cuánto y con cuánta competencia.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://filippo3471.github.io/licitaciones-espana/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Open Graph / redes sociales -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Licitaciones Públicas Abiertas en España | PLACSP, TED y CCAA">
+<meta property="og:description" content="Más de 6.000 licitaciones públicas abiertas en España, actualizadas dos veces al día. Filtra por sector CPV, comunidad autónoma e importe, y consulta el histórico de adjudicaciones.">
+<meta property="og:url" content="https://filippo3471.github.io/licitaciones-espana/">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Licitaciones Públicas Abiertas en España">
+<meta name="twitter:description" content="Más de 6.000 licitaciones públicas abiertas en España, actualizadas dos veces al día — PLACSP, TED, CCAA.">
+
+<!-- Datos estructurados (schema.org) para buscadores y asistentes de IA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Licitaciones España",
+  "alternateName": "Registro de Licitaciones Públicas de España",
+  "url": "https://filippo3471.github.io/licitaciones-espana/",
+  "description": "Buscador y agregador de licitaciones públicas abiertas en España, con datos de PLACSP, TED (Unión Europea), Generalitat de Catalunya y otras fuentes oficiales, actualizado dos veces al día.",
+  "inLanguage": "es-ES",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://filippo3471.github.io/licitaciones-espana/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Licitaciones públicas abiertas en España",
+  "description": "Conjunto de datos de licitaciones públicas abiertas en España agregadas de fuentes oficiales (PLACSP, TED, Generalitat de Catalunya, Ayuntamiento de Bilbao), incluyendo objeto, importe, plazo, órgano contratante, requisitos de solvencia y comunidad autónoma. Actualizado dos veces al día.",
+  "url": "https://filippo3471.github.io/licitaciones-espana/",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "creator": {
+    "@type": "Organization",
+    "name": "Licitaciones España"
+  },
+  "temporalCoverage": "2026-01-01/..",
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "España"
+  },
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "application/json",
+    "contentUrl": "https://filippo3471.github.io/licitaciones-espana/licitaciones.json"
+  },
+  "variableMeasured": ["importe", "cpv_codes", "ccaa", "plazo_fecha", "organo"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -320,7 +376,7 @@
 
   <div class="review-strip" id="review-strip">
     <span class="dot"></span>
-    <span>Revisión automática a las <b>09:00</b> y <b>15:00</b> — datos generados el <b id="generado-en">—</b></span>
+    <span>Revisión automática a las <b>09:00</b> y <b>15:00</b> — datos generados el <b id="generado-en">—</b> · <a href="estadisticas.html">ver estadísticas por sector y comunidad autónoma</a></span>
   </div>
 
   <nav class="tabs" role="tablist">

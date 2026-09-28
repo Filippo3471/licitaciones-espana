@@ -146,6 +146,27 @@ def run(
             conteo[nombre] = len(extra)
             registros.extend(extra)
 
+    # Deduplicado por external_id: PLACSP ya llega deduplicado desde el
+    # upsert de SQLite, pero Catalunya/TED/Bilbao se piden en vivo en cada
+    # ejecución y se concatenan sin más — TED en concreto puede devolver el
+    # mismo aviso más de una vez (p.ej. anuncio + corrección con el mismo
+    # ID). Sin este paso, un contrato duplicado de varios cientos de
+    # millones de euros infla el importe total de su sector al doble.
+    antes_dedup = len(registros)
+    vistos_id: set[str] = set()
+    sin_duplicados = []
+    for r in registros:
+        eid = r.get("external_id")
+        if eid and eid in vistos_id:
+            continue
+        if eid:
+            vistos_id.add(eid)
+        sin_duplicados.append(r)
+    registros = sin_duplicados
+    duplicados = antes_dedup - len(registros)
+    if duplicados:
+        print(f"Descartados {duplicados} registros duplicados (mismo external_id repetido entre fuentes)")
+
     # Filtro de seguridad: una "licitación abierta" con el plazo ya pasado
     # no es abierta. Esto pasa sobre todo con TED, que sigue indexando como
     # "cn-standard" avisos de acuerdos marco plurianuales (p.ej. ferroviarios)
