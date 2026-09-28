@@ -9,3 +9,8 @@ data/adjudicaciones.json
 artifact/adjudicaciones.json
 data/refresh.log
 data/cron.log
+
+# Lotes de reclutamiento con datos reales de empresas (nombre, NIF, email)
+# nunca van a un repo público — viven solo en la tabla privada
+# validacion_empresas (RLS, sin acceso de cliente). Ver validacion/COMPLIANCE.md.
+validacion/lote_*.csv
