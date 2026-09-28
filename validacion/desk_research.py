@@ -167,6 +167,7 @@ def main():
         SECTORES_ADICIONALES_EXPLORADOS = [
             "Servicios empresariales: publicidad, limpieza, consultoría, seguridad",
             "Servicios medioambientales, saneamiento, residuos",
+            "Servicios de reparación y mantenimiento",
         ]
         sectores_objetivo_candidatos = sorted(set(
             [s["sector"] for s in top_por_importe] + SECTORES_OBJETIVO + SECTORES_ADICIONALES_EXPLORADOS
