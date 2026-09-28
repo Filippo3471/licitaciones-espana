@@ -74,6 +74,14 @@ Deno.serve(async (req) => {
       .eq("token", token)
       .maybeSingle();
     if (!empresa) return jsonResponse({ error: "Enlace no válido." }, 404);
+
+    if (accion === "baja_invitacion") {
+      await admin.from("validacion_empresas").update({
+        estado_invitacion: "baja",
+        baja_en: new Date().toISOString(),
+      }).eq("token", token);
+      return jsonResponse({ baja: true });
+    }
     if (empresa.estado_invitacion === "baja") {
       return jsonResponse({ error: "Este contacto se dio de baja y no se puede iniciar la entrevista." }, 403);
     }
