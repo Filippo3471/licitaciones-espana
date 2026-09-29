@@ -110,10 +110,25 @@ Deno.serve(async (req) => {
         if (error) throw error;
         entrevista = nueva;
       }
+
+      // Si todavía no dio consentimiento, se le enseña primero el informe
+      // gratis de su sector/zona (dato que ya conocemos del reclutamiento,
+      // no hace falta preguntarlo) — el valor se ve antes de pedir nada,
+      // en vez de que el aviso de IA/consentimiento sea lo primero que ve.
+      let informe = null;
+      if (!entrevista.consentimiento_en) {
+        try {
+          informe = await generarInformeSector(empresa.sector, empresa.provincia);
+        } catch {
+          informe = null;
+        }
+      }
+
       return jsonResponse({
         consentimiento_dado: !!entrevista.consentimiento_en,
         transcript: entrevista.transcript,
         estado: entrevista.estado,
+        informe,
       });
     }
 

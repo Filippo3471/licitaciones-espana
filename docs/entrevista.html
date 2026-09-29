@@ -25,6 +25,11 @@
   }
   .aviso { font-size: 0.88rem; line-height: 1.6; }
   .aviso ul { padding-left: 1.2em; margin: 10px 0; }
+  .informe-titulo { font-weight: 600; font-size: 0.95rem; margin: 0 0 8px; }
+  .informe-texto {
+    white-space: pre-wrap; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 12px 14px; font-size: 0.86rem; margin: 0 0 14px;
+  }
   .consentimiento { display: flex; gap: 10px; align-items: flex-start; margin: 18px 0; font-size: 0.88rem; }
   .consentimiento input { margin-top: 3px; }
   .btn {
@@ -71,6 +76,22 @@
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.error || "Error de conexión");
     return data;
+  }
+
+  function renderInforme(informe) {
+    const cuerpo = informe
+      ? `<p class="informe-texto">${escapeHtml(informe.texto)}</p>`
+      : `<p class="informe-texto">Ahora mismo hay licitaciones abiertas en tu sector — te las mostramos al momento en la entrevista.</p>`;
+    card.innerHTML = `
+      <div class="aviso">
+        <p class="informe-titulo">Esto es lo que hay abierto ahora mismo en tu sector y zona:</p>
+        ${cuerpo}
+        <p>Si quieres el informe completo y personalizado (y nos ayudas respondiendo unas preguntas para
+        un estudio de mercado), sigue abajo — son 10 minutos.</p>
+        <button type="button" class="btn" id="btn-continuar">Seguir → empezar la entrevista (10 min)</button>
+      </div>
+    `;
+    document.getElementById("btn-continuar").addEventListener("click", renderAviso);
   }
 
   function renderAviso() {
@@ -169,7 +190,7 @@
       if (data.consentimiento_dado) {
         renderChat(data.transcript, data.estado);
       } else {
-        renderAviso();
+        renderInforme(data.informe);
       }
     } catch (err) {
       card.innerHTML = `<p class="error">${escapeHtml(err.message)}</p>`;
