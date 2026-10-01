@@ -200,30 +200,32 @@
 
   .filters {
     position: sticky; top: env(safe-area-inset-top, 0px);
-    background: var(--paper); z-index: 5; padding-block: 10px 14px;
-    display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--line); margin-bottom: 16px;
+    background: var(--paper); z-index: 5; padding-block: 12px 14px;
+    display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--line); margin-bottom: 18px;
   }
   .filters input[type="search"] {
-    flex: 1 1 220px; min-width: 0; padding: 9px 12px; border-radius: 7px;
-    border: 1px solid var(--line-strong); background: var(--paper-raised); color: var(--ink); font-size: 0.92rem;
+    width: 100%; min-width: 0; padding: 11px 14px; border-radius: 8px;
+    border: 1px solid var(--line-strong); background: var(--paper-raised); color: var(--ink); font-size: 0.96rem;
   }
+  .filters-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .filters select {
-    padding: 9px 10px; border-radius: 7px; border: 1px solid var(--line-strong);
-    background: var(--paper-raised); color: var(--ink); font-size: 0.86rem; max-width: 220px;
+    padding: 8px 10px; border-radius: 7px; border: 1px solid var(--line-strong);
+    background: var(--paper-raised); color: var(--ink); font-size: 0.84rem; max-width: 220px;
   }
   .filters input:focus-visible, .filters select:focus-visible, summary:focus-visible, a:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 2px;
   }
-  .filters .count { width: 100%; font-size: 0.8rem; color: var(--ink-muted); }
+  .filters .count { margin-left: auto; font-size: 0.8rem; color: var(--ink-muted); white-space: nowrap; }
 
   ul.registro { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 
   .expediente {
     background: var(--paper-raised); border: 1px solid var(--line); border-radius: 9px;
-    box-shadow: var(--shadow); overflow: hidden;
+    box-shadow: var(--shadow); overflow: hidden; transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
+  .expediente:hover { box-shadow: 0 2px 4px rgba(28,34,48,0.08), 0 10px 22px rgba(28,34,48,0.08); transform: translateY(-1px); }
   .expediente > summary {
-    list-style: none; cursor: pointer; padding: 13px 16px 13px 14px;
+    list-style: none; cursor: pointer; padding: 14px 16px 14px 14px;
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: start;
     border-left: 4px solid var(--ok);
   }
@@ -245,11 +247,13 @@
     white-space: nowrap;
   }
   .chip.ok { background: var(--ok-soft); color: var(--ok); }
+  .chip.sector { background: var(--accent-soft); color: var(--accent); }
   .exp-side { text-align: right; white-space: nowrap; }
   .plazo-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
   .plazo-fecha { font-family: "IBM Plex Mono", monospace; font-size: 0.95rem; }
-  .plazo-fecha.pronto { color: var(--accent-red); font-weight: 500; }
-  .importe { font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; margin-top: 4px; color: var(--ink); }
+  .plazo-fecha.pronto { color: var(--accent-red); font-weight: 600; }
+  .plazo-fecha.pronto::before { content: "⏱ "; }
+  .importe { font-family: "IBM Plex Mono", monospace; font-size: 1.05rem; font-weight: 600; margin-top: 5px; color: var(--ink); }
 
   .exp-body { padding: 0 16px 18px 18px; border-top: 1px solid var(--line); margin-top: 2px; }
   .exp-body h4 {
@@ -420,15 +424,17 @@
   <section id="tab-licitaciones" role="tabpanel">
     <div class="filters">
       <input type="search" id="lic-f-texto" placeholder="Buscar por título, órgano u objeto…" aria-label="Buscar">
-      <select id="lic-f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
-      <select id="lic-f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
-      <select id="lic-f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
-      <select id="lic-f-fuente" aria-label="Fuente"><option value="">Todas las fuentes</option></select>
-      <select id="lic-f-orden" aria-label="Ordenar por">
-        <option value="plazo">Plazo más próximo primero</option>
-        <option value="importe">Importe (mayor a menor)</option>
-      </select>
-      <p class="count" id="lic-count-label">Cargando licitaciones…</p>
+      <div class="filters-row">
+        <select id="lic-f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
+        <select id="lic-f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
+        <select id="lic-f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
+        <select id="lic-f-fuente" aria-label="Fuente"><option value="">Todas las fuentes</option></select>
+        <select id="lic-f-orden" aria-label="Ordenar por">
+          <option value="plazo">Plazo más próximo primero</option>
+          <option value="importe">Importe (mayor a menor)</option>
+        </select>
+        <p class="count" id="lic-count-label">Cargando licitaciones…</p>
+      </div>
     </div>
     <ul class="registro" id="lic-lista"></ul>
     <p class="empty" id="lic-empty" hidden>No hay licitaciones que coincidan con estos filtros.</p>
@@ -438,14 +444,16 @@
     <p class="sub" style="max-width:none;margin-bottom:14px">Quién se ha llevado cada contrato, por cuánto y compitiendo con cuántas empresas — útil para saber qué adjudicatarios se mueven en tu sector o zona antes de presentarte a una licitación similar.</p>
     <div class="filters">
       <input type="search" id="adj-f-texto" placeholder="Buscar por empresa, título u órgano…" aria-label="Buscar">
-      <select id="adj-f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
-      <select id="adj-f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
-      <select id="adj-f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
-      <select id="adj-f-orden" aria-label="Ordenar por">
-        <option value="fecha">Más recientes primero</option>
-        <option value="importe">Importe adjudicación (mayor a menor)</option>
-      </select>
-      <p class="count" id="adj-count-label">Cargando adjudicaciones…</p>
+      <div class="filters-row">
+        <select id="adj-f-ccaa" aria-label="Comunidad autónoma"><option value="">Toda España</option></select>
+        <select id="adj-f-tipo" aria-label="Tipo de contrato"><option value="">Cualquier tipo</option></select>
+        <select id="adj-f-sector" aria-label="Sector"><option value="">Cualquier sector</option></select>
+        <select id="adj-f-orden" aria-label="Ordenar por">
+          <option value="fecha">Más recientes primero</option>
+          <option value="importe">Importe adjudicación (mayor a menor)</option>
+        </select>
+        <p class="count" id="adj-count-label">Cargando adjudicaciones…</p>
+      </div>
     </div>
     <ul class="registro" id="adj-lista"></ul>
     <p class="empty" id="adj-empty" hidden>No hay adjudicaciones que coincidan con estos filtros.</p>
@@ -605,7 +613,7 @@
         <span class="exp-chips">
           <span class="chip ok">${escapeHtml(item.estado_legible || "Abierta")}</span>
           ${item.tipo_contrato_legible ? `<span class="chip">${escapeHtml(item.tipo_contrato_legible)}</span>` : ""}
-          ${item.sector ? `<span class="chip">${escapeHtml(item.sector)}</span>` : ""}
+          ${item.sector ? `<span class="chip sector">${escapeHtml(item.sector)}</span>` : ""}
         </span>
       </span>
       <span class="exp-side">
@@ -693,7 +701,7 @@
         <span class="exp-chips">
           <span class="chip">${escapeHtml(item.estado_legible || "Adjudicada")}</span>
           ${item.tipo_contrato_legible ? `<span class="chip">${escapeHtml(item.tipo_contrato_legible)}</span>` : ""}
-          ${item.sector ? `<span class="chip">${escapeHtml(item.sector)}</span>` : ""}
+          ${item.sector ? `<span class="chip sector">${escapeHtml(item.sector)}</span>` : ""}
           ${item.num_licitadores ? `<span class="chip">${item.num_licitadores} licitador${item.num_licitadores === 1 ? "" : "es"}${item.num_pymes_licitadoras ? ` (${item.num_pymes_licitadoras} pyme)` : ""}</span>` : ""}
         </span>
       </span>
@@ -1309,6 +1317,8 @@
     const fuentes = new Set([...licData, ...adjData].map((d) => d.fuente));
     $("#stat-fuentes").textContent = fuentes.size || "–";
     $("#generado-en").textContent = licPayload && licPayload.generado_en ? licPayload.generado_en.replace("T", " ") : "—";
+    if (licPayload) $("#tabbtn-licitaciones").textContent = `Licitaciones abiertas · ${licData.length.toLocaleString("es-ES")}`;
+    if (adjPayload) $("#tabbtn-adjudicaciones").textContent = `Histórico de adjudicaciones · ${adjData.length.toLocaleString("es-ES")}`;
   }
 
   boot();
