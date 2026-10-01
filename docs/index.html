@@ -7,6 +7,7 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://filippo3471.github.io/licitaciones-espana/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 
 <!-- Open Graph / redes sociales -->
 <meta property="og:type" content="website">
@@ -26,6 +27,7 @@
   "name": "Licitaciones España",
   "alternateName": "Registro de Licitaciones Públicas de España",
   "url": "https://filippo3471.github.io/licitaciones-espana/",
+  "logo": "https://filippo3471.github.io/licitaciones-espana/favicon.svg",
   "description": "Buscador y agregador de licitaciones públicas abiertas en España, con datos de PLACSP, TED (Unión Europea), Generalitat de Catalunya y otras fuentes oficiales, actualizado dos veces al día.",
   "inLanguage": "es-ES",
   "potentialAction": {
@@ -142,9 +144,18 @@
 
   header.masthead {
     border-bottom: 3px double var(--line-strong);
-    padding-bottom: 16px;
+    padding-bottom: 20px;
     margin-bottom: 18px;
     display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: flex-end; justify-content: space-between;
+  }
+  .brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 8px; flex: none;
+    box-shadow: 0 1px 2px rgba(28,34,48,0.18);
+  }
+  .brand-name {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.02em; color: var(--ink);
   }
   header.masthead .title-block .eyebrow {
     font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.09em;
@@ -161,10 +172,20 @@
   .review-strip {
     display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
     background: var(--accent-soft); color: var(--ink); border: 1px solid var(--line);
-    border-radius: 8px; padding: 9px 14px; font-size: 0.83rem; margin-bottom: 20px;
+    border-radius: 8px; padding: 9px 14px; font-size: 0.83rem; margin-bottom: 14px;
   }
   .review-strip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); flex: none; }
   .review-strip b { font-family: "IBM Plex Mono", monospace; font-weight: 500; }
+
+  .fuentes-row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px;
+    margin-bottom: 22px; font-size: 0.78rem; color: var(--ink-muted);
+  }
+  .fuentes-row .fuentes-label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; }
+  .fuente-badge {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.74rem; padding: 3px 10px;
+    border: 1px solid var(--line-strong); border-radius: 999px; color: var(--ink); background: var(--paper-raised);
+  }
 
   .tabs {
     display: flex; gap: 4px; margin-bottom: 6px; border-bottom: 1px solid var(--line);
@@ -354,6 +375,10 @@
 <div class="shell">
   <header class="masthead">
     <div class="title-block">
+      <div class="brand-row">
+        <img class="brand-mark" src="favicon.svg" alt="" width="30" height="30">
+        <span class="brand-name">LICITACIONES ESPAÑA</span>
+      </div>
       <p class="eyebrow">Registro · Contratación Pública</p>
       <h1>Licitaciones abiertas en España</h1>
       <p class="sub">Pliegos, requisitos de solvencia y zona de ejecución de cada expediente, más el histórico de quién gana cada adjudicación y por cuánto — agregados de varias fuentes oficiales y de terceros.</p>
@@ -377,6 +402,14 @@
   <div class="review-strip" id="review-strip">
     <span class="dot"></span>
     <span>Revisión automática a las <b>09:00</b> y <b>15:00</b> — datos generados el <b id="generado-en">—</b> · <a href="estadisticas.html">ver estadísticas por sector y comunidad autónoma</a></span>
+  </div>
+
+  <div class="fuentes-row">
+    <span class="fuentes-label">Datos oficiales agregados de</span>
+    <span class="fuente-badge">PLACSP</span>
+    <span class="fuente-badge">TED · Unión Europea</span>
+    <span class="fuente-badge">Generalitat de Catalunya</span>
+    <span class="fuente-badge">Ayuntamiento de Bilbao</span>
   </div>
 
   <nav class="tabs" role="tablist">
@@ -419,8 +452,8 @@
   </section>
 
   <footer class="foot">
-    <span>Fuentes: PLACSP · Generalitat de Catalunya · TED (UE) · Ayuntamiento de Bilbao — todas oficiales — más TendersGuru (terceros)</span>
-    <span>Prototipo de uso personal, no es un servicio oficial</span>
+    <span>Fuentes oficiales: PLACSP · Generalitat de Catalunya · TED (UE) · Ayuntamiento de Bilbao — más TendersGuru (terceros) · <a href="estadisticas.html">estadísticas</a></span>
+    <span>Licitaciones España es un proyecto independiente, no un servicio oficial de la Administración</span>
   </footer>
 </div>
 
