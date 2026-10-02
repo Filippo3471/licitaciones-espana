@@ -187,7 +187,7 @@ def render_html(stats: dict, generado_en: str) -> str:
   "url": "https://filippo3471.github.io/licitaciones-espana/estadisticas.html",
   "dateModified": "{generado_en}",
   "license": "https://creativecommons.org/publicdomain/zero/1.0/",
-  "creator": {{"@type": "Organization", "name": "Licitaciones España"}},
+  "creator": {{"@type": "Organization", "name": "Adjuplica"}},
   "spatialCoverage": {{"@type": "Place", "name": "España"}}
 }}
 </script>

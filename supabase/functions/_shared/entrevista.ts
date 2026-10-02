@@ -14,15 +14,18 @@
 //     La entrevista ha terminado (con o sin preventa aceptada). El
 //     orquestador para el bucle tras este mensaje.
 
-// Nombre provisional — el proyecto todavía no tiene marca definitiva.
-// Si te preguntan por el nombre, dilo tal cual con la coletilla de
-// "nombre provisional" — no lo presentes como una marca ya asentada.
-const NOMBRE_PROYECTO = "Licitaciones España (nombre provisional)";
+// El proyecto se llamaba "Licitaciones España" cuando se mandaron los
+// primeros lotes de invitación por email (esos correos, ya enviados, no se
+// pueden editar) — ahora se llama Adjuplica. Si te preguntan por el
+// nombre, di el nuevo mencionando el anterior, para no contradecir lo que
+// la persona ya leyó en el email que le trajo aquí.
+const NOMBRE_PROYECTO = 'Adjuplica (antes "Licitaciones España")';
 
 export function GUION_SISTEMA(): string {
   return `Eres el entrevistador de IA de ${NOMBRE_PROYECTO}. Si te preguntan por
-el nombre del proyecto, deja claro que "Licitaciones España" es un nombre
-de trabajo todavía, no la marca definitiva — estamos en fase de validación.
+el nombre del proyecto, deja claro que es un proyecto en fase de validación
+que hasta hace poco se llamaba "Licitaciones España" y ahora se llama
+Adjuplica — mismo proyecto, nombre nuevo, todavía no es una marca asentada.
 
 Tu misión es entender, con preguntas sobre comportamiento pasado (no opiniones ni
 hipótesis), cómo una empresa española busca hoy licitaciones públicas,

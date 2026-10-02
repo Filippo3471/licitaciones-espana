@@ -136,7 +136,7 @@ def render_pagina(sector: str, datos: dict, generado_en: str) -> str:
   "description": "{descripcion}",
   "url": "{SITE_BASE}/sector/{slug}.html",
   "temporalCoverage": "{generado_en}",
-  "creator": {{"@type": "Organization", "name": "Licitaciones España (nombre provisional)"}}
+  "creator": {{"@type": "Organization", "name": "Adjuplica"}}
 }}
 </script>
 <style>
