@@ -1,8 +1,8 @@
-# Licitaciones España
+# Adjuplica
 
-> Buscador y agregador de licitaciones públicas abiertas en España. Agrega datos oficiales de PLACSP (Plataforma de Contratación del Sector Público), TED (Tenders Electronic Daily, Unión Europea), la Generalitat de Catalunya y el Ayuntamiento de Bilbao en un único sitio, actualizado dos veces al día (09:00 y 15:00 hora española).
+> Buscador y agregador de licitaciones públicas abiertas en España (antes conocido como "Licitaciones España"). Agrega datos oficiales de PLACSP (Plataforma de Contratación del Sector Público), TED (Tenders Electronic Daily, Unión Europea), la Generalitat de Catalunya y el Ayuntamiento de Bilbao en un único sitio, actualizado dos veces al día (09:00 y 15:00 hora española).
 
-Nota: "Licitaciones España" es un nombre de trabajo provisional, todavía en fase de validación de producto — no es una marca comercial definitiva.
+Nota: "Adjuplica" es el nombre del proyecto, todavía en fase de validación de producto — no es una marca comercial consolidada.
 
 ## Qué hay en el sitio
 
