@@ -117,6 +117,11 @@ def _adjudicaciones_rows(limit: int = 4000) -> list[dict]:
     return out
 
 
+def _ultima_sync_placsp() -> str | None:
+    marcador = placsp_update.SYNC_MARKER
+    return marcador.read_text().strip() if marcador.exists() else None
+
+
 def run(
     pages: int,
     out_path: Path,
@@ -124,9 +129,15 @@ def run(
     include_optional_sources: bool = True,
     adjudicaciones_out_path: Path | None = None,
 ):
+    placsp_refresco_fallido = False
     if refresh_placsp:
         print("Actualizando PLACSP...")
-        placsp_update.run(max_pages=pages)
+        try:
+            placsp_update.run(max_pages=pages)
+        except Exception as exc:
+            placsp_refresco_fallido = True
+            print(f"PLACSP no responde ({exc.__class__.__name__}): se publica con la última sincronización completa de su caché.")
+    placsp_sync = _ultima_sync_placsp()
 
     registros = _placsp_rows()
     conteo = {"PLACSP": len(registros)}
@@ -186,6 +197,8 @@ def run(
 
     payload = {
         "generado_en": dt.datetime.now().isoformat(timespec="seconds"),
+        "placsp_ultima_sincronizacion": placsp_sync,
+        "placsp_refresco_fallido": placsp_refresco_fallido,
         "total": len(registros),
         "por_fuente": conteo,
         "licitaciones": registros,
@@ -201,6 +214,8 @@ def run(
     adj_path = adjudicaciones_out_path or (out_path.parent / "adjudicaciones.json")
     adj_payload = {
         "generado_en": dt.datetime.now().isoformat(timespec="seconds"),
+        "placsp_ultima_sincronizacion": placsp_sync,
+        "placsp_refresco_fallido": placsp_refresco_fallido,
         "total": len(adjudicaciones),
         "adjudicaciones": adjudicaciones,
     }

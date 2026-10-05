@@ -20,6 +20,8 @@ import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from .estadisticas import aviso_placsp_html
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 OUT_DIR = Path(__file__).resolve().parent.parent / "docs" / "sector"
 LICITACIONES_PATH = DATA_DIR / "licitaciones.json"
@@ -161,6 +163,7 @@ def render_pagina(sector: str, datos: dict, generado_en: str) -> str:
 <body>
 <div class="shell">
   <h1>{titulo}</h1>
+  {aviso_placsp_html()}
   <p class="sub">{datos['n_abiertas']} licitaciones abiertas ahora mismo · importe total {money(datos['importe_total'])} · actualizado dos veces al día</p>
 
   <h2>Por comunidad autónoma</h2>

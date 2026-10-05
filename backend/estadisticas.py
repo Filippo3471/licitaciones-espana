@@ -121,6 +121,19 @@ def money(v: float) -> str:
     return f"{v:,.0f}".replace(",", ".") + "€"
 
 
+
+def aviso_placsp_html() -> str:
+    meta = json.loads(LICITACIONES_PATH.read_text())
+    if not meta.get("placsp_refresco_fallido"):
+        return ""
+    cuando = (meta.get("placsp_ultima_sincronizacion") or "fecha desconocida").replace("T", " ")[:16]
+    return (
+        '<p class="nota" style="background:#fbf3e0;border-left:4px solid #8a6a1f;padding:10px 14px;'
+        'border-radius:8px;color:#1b1b18">PLACSP no ha respondido en la última actualización: sus datos son de la '
+        f'sincronización completa del {cuando}. TED, Generalitat de Catalunya y Bilbao están al día.</p>'
+    )
+
+
 def render_html(stats: dict, generado_en: str) -> str:
     from .paginas_sector import UMBRAL_MIN_LICITACIONES, slugify
 
@@ -207,6 +220,7 @@ def render_html(stats: dict, generado_en: str) -> str:
 </head>
 <body>
   <h1>Estadísticas de licitaciones públicas abiertas en España</h1>
+  {aviso_placsp_html()}
   <p class="sub">Datos generados el {generado_en} · fuentes: PLACSP, TED (UE), Generalitat de Catalunya, Ayuntamiento de Bilbao · se actualiza dos veces al día</p>
 
   <div class="resumen">

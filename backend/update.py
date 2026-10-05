@@ -6,9 +6,12 @@ Uso:
 """
 import argparse
 import datetime as dt
+from pathlib import Path
 
 from . import cpv, fetch, nuts_es, parser
 from .db import get_conn, upsert
+
+SYNC_MARKER = Path(__file__).resolve().parent.parent / "data" / "placsp_ultima_sync_completa.txt"
 
 
 def run(max_pages: int = 10):
@@ -32,6 +35,7 @@ def run(max_pages: int = 10):
     for estado, n in sorted(por_estado.items(), key=lambda x: -x[1]):
         print(f"  {estado}: {n}")
     conn.close()
+    SYNC_MARKER.write_text(fetched_at)
 
 
 if __name__ == "__main__":

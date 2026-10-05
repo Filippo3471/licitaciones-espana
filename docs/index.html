@@ -138,6 +138,13 @@
   .review-strip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); flex: none; }
   .review-strip b { font-family: "IBM Plex Mono", monospace; font-weight: 500; }
 
+  .placsp-aviso {
+    background: #fbf3e0; color: var(--ink); border: 1px solid var(--line);
+    border-left: 4px solid var(--warn); border-radius: var(--sp-2); padding: var(--sp-3) var(--sp-4);
+    font-size: 0.86rem; margin-bottom: var(--sp-4);
+  }
+  .placsp-aviso[hidden] { display: none; }
+
   .fuentes-row {
     display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px;
     margin-bottom: 22px; font-size: 0.78rem; color: var(--ink-muted);
@@ -420,6 +427,8 @@
     <span class="dot"></span>
     <span>Revisión automática a las <b>09:00</b> y <b>15:00</b> — datos generados el <b id="generado-en">—</b> · <a href="estadisticas.html">ver estadísticas por sector y comunidad autónoma</a></span>
   </div>
+
+  <div class="placsp-aviso" id="placsp-aviso" role="status" hidden></div>
 
   <div class="fuentes-row">
     <span class="fuentes-label">Datos oficiales agregados de</span>
@@ -1359,6 +1368,14 @@
     const fuentes = new Set([...licData, ...adjData].map((d) => d.fuente));
     $("#stat-fuentes").textContent = fuentes.size || "–";
     $("#generado-en").textContent = licPayload && licPayload.generado_en ? licPayload.generado_en.replace("T", " ") : "—";
+    if (licPayload && licPayload.placsp_refresco_fallido) {
+      const cuando = licPayload.placsp_ultima_sincronizacion
+        ? new Date(licPayload.placsp_ultima_sincronizacion).toLocaleString("es-ES", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
+        : "fecha desconocida";
+      const aviso = $("#placsp-aviso");
+      aviso.textContent = `PLACSP (Plataforma de Contratación del Sector Público) no ha respondido en la última actualización. Sus licitaciones son de la sincronización completa del ${cuando}; las de TED, Generalitat de Catalunya y Bilbao sí están al día.`;
+      aviso.hidden = false;
+    }
     if (licPayload) $("#tabbtn-licitaciones").textContent = `Licitaciones abiertas · ${licData.length.toLocaleString("es-ES")}`;
     if (adjPayload) $("#tabbtn-adjudicaciones").textContent = `Histórico de adjudicaciones · ${adjData.length.toLocaleString("es-ES")}`;
   }
