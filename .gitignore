@@ -14,3 +14,17 @@ data/cron.log
 # nunca van a un repo público — viven solo en la tabla privada
 # validacion_empresas (RLS, sin acceso de cliente). Ver validacion/COMPLIANCE.md.
 validacion/lote_*.csv
+
+# Informes a medida por empresa (borradores, no se publican)
+validacion/informes/
+
+# Leads de prospección (datos de contacto de empresas)
+validacion/leads_*
+
+# Mini-informes y envíos de prospección (Bloque 10): datos reales de
+# contacto (empresa, email, teléfono) — nunca al repo público.
+validacion/outreach_mini_informes.json
+validacion/outreach_envios_log.json
+
+# Notas internas de negocio (plan, precios, CFO, números) — nunca al repo público.
+founder/
