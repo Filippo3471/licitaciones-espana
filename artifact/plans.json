@@ -9,13 +9,18 @@
     "duracion_meses": 3,
     "_nota_duracion": "Antes era de por vida; founder/pricing.md (08-10-2026) recomienda limitarlo a 3 meses porque el precio ya ha bajado. Al crear el cupón en Stripe: duration='repeating', duration_in_months=3, y fija redeem_by con la fecha de fin que decidas (no hay una todavía).",
     "max_usos": 20,
-    "aplica_a": ["basico", "pro", "equipo"]
+    "aplica_a": [
+      "basico",
+      "pro",
+      "equipo"
+    ]
   },
   "producto_pliego_unico": {
     "nombre": "Análisis de 1 pliego",
-    "precio": 9,
-    "stripe_price_id": "PLACEHOLDER_PRICE_PLIEGO_UNICO",
-    "descripcion": "Desbloquea el resumen del pliego, el GO/NO-GO y el checklist de UNA licitación concreta, sin suscripción. Pensado para quien licita poco (founder/pricing.md)."
+    "precio_primero": 5,
+    "precio_siguiente": 19,
+    "_nota_precio": "Ronda 3 del founder-lab (08-10-2026): precio escalonado, no fijo. El primer pliego de cada empresa es un precio de bienvenida muy agresivo (5 €, por debajo del umbral de desconfianza del panel simulado) para quitar la barrera de probarlo sin arriesgar nada; a partir del segundo, el precio sube a 19 € para que, a partir de 2-3 pliegos al mes, la suscripción Básico (29 €/mes, 10 análisis) sea claramente mejor negocio. No usa stripe_price_id fijo: el precio se calcula en create-pliego-checkout contando cuántos single_tender_unlocks tiene ya la empresa, y se manda a Stripe como price_data (importe dinámico), no como un Price de catálogo.",
+    "descripcion": "Desbloquea el resumen del pliego, el GO/NO-GO y el checklist de UNA licitación concreta, sin suscripción. El primero sale por 5 €; a partir del segundo, 19 € — para quien licita poco, o para probar antes de suscribirse (founder/pricing.md, founder/summary.md)."
   },
   "planes": {
     "free": {
@@ -31,7 +36,10 @@
         "usuarios_max": 1,
         "empresas_max": 1
       },
-      "alertas": { "frecuencia": "semanal", "retraso_horas": 72 },
+      "alertas": {
+        "frecuencia": "semanal",
+        "retraso_horas": 72
+      },
       "funciones": {
         "busqueda": true,
         "go_no_go": true,
@@ -56,7 +64,10 @@
         "usuarios_max": 1,
         "empresas_max": 1
       },
-      "alertas": { "frecuencia": "diaria", "retraso_horas": 0 },
+      "alertas": {
+        "frecuencia": "diaria",
+        "retraso_horas": 0
+      },
       "funciones": {
         "busqueda": true,
         "go_no_go": true,
@@ -70,8 +81,8 @@
     },
     "pro": {
       "nombre": "Pro",
-      "precio_mes": 79,
-      "precio_anio": 790,
+      "precio_mes": 59,
+      "precio_anio": 590,
       "stripe_price_id_mes": "PLACEHOLDER_PRICE_PRO_MES",
       "stripe_price_id_anio": "PLACEHOLDER_PRICE_PRO_ANIO",
       "limites": {
@@ -81,7 +92,10 @@
         "usuarios_max": 3,
         "empresas_max": 1
       },
-      "alertas": { "frecuencia": "tiempo_real", "retraso_horas": 0 },
+      "alertas": {
+        "frecuencia": "tiempo_real",
+        "retraso_horas": 0
+      },
       "funciones": {
         "busqueda": true,
         "go_no_go": true,
@@ -106,7 +120,10 @@
         "usuarios_max": 10,
         "empresas_max": null
       },
-      "alertas": { "frecuencia": "tiempo_real", "retraso_horas": 0 },
+      "alertas": {
+        "frecuencia": "tiempo_real",
+        "retraso_horas": 0
+      },
       "funciones": {
         "busqueda": true,
         "go_no_go": true,

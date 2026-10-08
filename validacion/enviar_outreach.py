@@ -83,16 +83,20 @@ def elegible(contacto: dict) -> tuple[bool, str]:
 
 
 def construir_email(informe: dict) -> tuple[str, str]:
+    # Ronda 3 del founder-lab (08-10-2026): el panel simulado compra sobre
+    # todo la prueba suelta, no la suscripción directa (ver founder/
+    # summary.md). El ángulo del primer contacto cambia de "suscríbete" a
+    # "prueba tu primer pliego por 5 €" — es lo que de verdad convierte.
     asunto = f"{informe['empresa']}: quién está ganando en tu sector ahora mismo"
     cuerpo = (
         f"Hola,\n\n"
         f"{informe['mini_informe']}\n\n"
         f"Lo hemos sacado de un informe gratuito de tu sector, sin registro: {informe['link_con_utm']}\n\n"
-        f"Si alguna vez os presentáis a una de estas licitaciones, tenemos una herramienta "
-        f"(Adjuplica) que os dice en segundos si podéis presentaros a un pliego concreto "
-        f"(GO/NO-GO: compara el pliego con los requisitos de solvencia de tu empresa) y os "
-        f"ayuda a entender el pliego (qué documentación y qué plazos exige, con la cita exacta "
-        f"del PDF). No es spam de licitaciones — es para cuando ya tenéis el pliego delante y no "
+        f"Si tenéis un pliego concreto delante, podéis probar Adjuplica en ese mismo pliego por 5 € "
+        f"(el primero sale a ese precio; sin suscripción, sin tarjeta guardada). En segundos os dice "
+        f"si podéis presentaros — requisito por requisito de solvencia, comparado con vuestra empresa, "
+        f"con la cita exacta del pliego (GO/NO-GO) — y qué documentación y plazos os faltan, con un "
+        f"checklist. No es spam de licitaciones — es para cuando ya tenéis el pliego delante y no "
         f"queréis leerlo entero.\n\n"
         f"Si no os interesa, respondiendo \"BAJA\" no os volvemos a escribir.\n\n"
         f"Un saludo,\nFilippo (Adjuplica)"

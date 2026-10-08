@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
             await adminClient.from("single_tender_unlocks").upsert({
               company_id: companyId, external_id: externalId, stripe_checkout_session_id: session.id,
             });
-            await adminClient.from("app_events").insert({ company_id: companyId, event_type: "pago", metadata: { tipo: "pliego_unico", external_id: externalId } });
+            await adminClient.from("app_events").insert({ company_id: companyId, event_type: "pago", metadata: { tipo: "pliego_unico", external_id: externalId, precio_eur: session.metadata.precio_eur } });
           }
         }
         break;

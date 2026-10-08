@@ -1,10 +1,17 @@
-// Edge Function: create-pliego-checkout (Bloque 8 — pago único)
+// Edge Function: create-pliego-checkout (Bloque 8 — pago único, precio escalonado desde la ronda 3 del founder-lab)
 //
 // Crea una sesión de Stripe Checkout en modo "payment" (no suscripción)
-// para comprar el análisis de UNA licitación concreta (producto_pliego_
-// unico en plans.json, 9 € de PLACEHOLDER). Al completarse el pago, el
-// webhook de Stripe inserta en single_tender_unlocks y ayuda-pliego deja
-// pasar esa licitación aunque el plan no incluya pliego_summary.
+// para comprar el análisis de UNA licitación concreta. El precio NO es
+// fijo: el primer pliego que desbloquea una empresa (contando las filas
+// que ya tiene en single_tender_unlocks) sale a producto_pliego_unico.
+// precio_primero (5 €, un precio de bienvenida agresivo para quitar la
+// barrera de probarlo); a partir del segundo, precio_siguiente (19 €),
+// para que suscribirse al Básico compense claramente a partir de 2-3
+// pliegos al mes. Por eso no usa un stripe_price_id de catálogo: el
+// importe se manda a Stripe como price_data (dinámico) en cada sesión.
+// Al completarse el pago, el webhook de Stripe inserta en
+// single_tender_unlocks y ayuda-pliego deja pasar esa licitación aunque
+// el plan no incluya pliego_summary.
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@17.5.0";
@@ -32,9 +39,11 @@ Deno.serve(async (req) => {
     const { external_id, titulo } = await req.json();
     if (!external_id) return jsonResponse({ error: "Falta external_id" }, 400);
 
-    const priceId = (plans as any).producto_pliego_unico?.stripe_price_id;
-    if (!priceId || String(priceId).startsWith("PLACEHOLDER_")) {
-      return jsonResponse({ error: "El análisis de un solo pliego todavía no tiene precio configurado en Stripe." }, 500);
+    const producto = (plans as any).producto_pliego_unico;
+    const precioPrimero = Number(producto?.precio_primero);
+    const precioSiguiente = Number(producto?.precio_siguiente);
+    if (!precioPrimero || !precioSiguiente) {
+      return jsonResponse({ error: "El análisis de un solo pliego todavía no tiene precio configurado." }, 500);
     }
 
     const userClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { global: { headers: { Authorization: authHeader } } });
@@ -48,6 +57,13 @@ Deno.serve(async (req) => {
     const { data: yaDesbloqueado } = await adminClient.from("single_tender_unlocks").select("company_id").eq("company_id", companyId).eq("external_id", external_id).maybeSingle();
     if (yaDesbloqueado) return jsonResponse({ error: "Ya tienes acceso a esta licitación." }, 400);
 
+    const { count: pliegosYaComprados } = await adminClient
+      .from("single_tender_unlocks")
+      .select("company_id", { count: "exact", head: true })
+      .eq("company_id", companyId);
+    const esElPrimero = !pliegosYaComprados || pliegosYaComprados === 0;
+    const precioEur = esElPrimero ? precioPrimero : precioSiguiente;
+
     const { data: sub } = await adminClient.from("subscriptions").select("stripe_customer_id").eq("company_id", companyId).maybeSingle();
     let customerId = sub?.stripe_customer_id as string | undefined;
     if (!customerId) {
@@ -59,10 +75,21 @@ Deno.serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer: customerId,
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [{
+        price_data: {
+          currency: "eur",
+          unit_amount: Math.round(precioEur * 100),
+          product_data: {
+            name: esElPrimero
+              ? `${producto.nombre} (primer pliego — precio de bienvenida)`
+              : producto.nombre,
+          },
+        },
+        quantity: 1,
+      }],
       success_url: `${FRONTEND_URL}?pliego_comprado=${encodeURIComponent(external_id)}`,
       cancel_url: `${FRONTEND_URL}?checkout=cancel`,
-      metadata: { company_id: companyId, external_id, titulo: (titulo || "").slice(0, 400), type: "pliego_unico" },
+      metadata: { company_id: companyId, external_id, titulo: (titulo || "").slice(0, 400), type: "pliego_unico", precio_eur: String(precioEur) },
     });
 
     return jsonResponse({ url: session.url });

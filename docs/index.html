@@ -718,7 +718,7 @@
       <label><input type="radio" name="precios-interval" value="anio"> Anual (2 meses gratis)</label>
     </div>
     <div id="precios-grid" class="precios-grid"></div>
-    <p class="cache-note">¿Licitas poco? Puedes comprar el análisis de una sola licitación por 9 € desde su propio botón "Ayuda con el pliego", sin suscripción.</p>
+    <p class="cache-note">¿Licitas poco? Puedes comprar el análisis de una sola licitación desde su propio botón "Ayuda con el pliego", sin suscripción: el primero sale por 5 €; a partir del segundo, 19 €.</p>
     <p class="modal-error" id="precios-error"></p>
     <div class="modal-actions">
       <button type="button" class="modal-close" data-close="modal-precios">Cerrar</button>
@@ -1385,7 +1385,7 @@
     // Bloque 8: si esto bloqueó "Ayuda con el pliego" de una licitación
     // concreta, se ofrece también comprarla suelta, sin suscripción.
     if (item && (up.reason === "plan_feature_locked" || up.reason === "usage_limit_reached")) {
-      html += `<button type="button" class="btn small" data-action="comprar-pliego">Comprar solo este análisis — 9 €</button>`;
+      html += `<button type="button" class="btn small" data-action="comprar-pliego">Comprar solo este análisis — desde 5 €</button>`;
     }
     html += `</div>`;
     container.innerHTML = html;
