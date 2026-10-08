@@ -270,6 +270,12 @@
   }
   .chip.ok { background: var(--ok-soft); color: var(--ok); }
   .chip.sector { background: var(--accent-soft); color: var(--accent); }
+  #chip-cliente-activo button { border: none; background: none; cursor: pointer; font-size: 0.8em; margin-left: 4px; color: inherit; }
+  .clientes-list { list-style: none; margin: 0 0 16px; padding: 0; }
+  .clientes-list li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.86rem; }
+  .clientes-list .cli-actions { display: flex; gap: 6px; flex: none; }
+  .clientes-list .cli-actions button { font-size: 0.78rem; }
+  .clientes-list .cli-activo { font-weight: 600; color: var(--accent); }
   .exp-side { text-align: right; white-space: nowrap; }
   .plazo-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
   .plazo-fecha { font-family: "IBM Plex Mono", monospace; font-size: 0.95rem; }
@@ -464,6 +470,8 @@
         <button type="button" class="btn small" id="btn-precios" hidden>Precios</button>
         <button type="button" class="btn small" id="btn-gestionar-plan" hidden>Gestionar suscripción</button>
         <button type="button" class="btn small" id="btn-empresa" hidden>Mi empresa</button>
+        <button type="button" class="btn small" id="btn-clientes" hidden>Empresas cliente</button>
+        <span class="chip" id="chip-cliente-activo" hidden></span>
         <button type="button" class="btn small" id="btn-logout" hidden>Cerrar sesión</button>
       </div>
     </div>
@@ -668,6 +676,39 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="modal-clientes" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="modal-clientes-title">
+    <h3 id="modal-clientes-title">Empresas cliente</h3>
+    <p class="modal-sub">Gestiona el perfil de solvencia de cada cliente y marca cuál está activo para evaluar GO/NO-GO y pedir ayuda con el pliego en su nombre.</p>
+    <ul class="clientes-list" id="clientes-list"></ul>
+    <h4>Añadir empresa cliente</h4>
+    <form id="form-cliente">
+      <input type="hidden" id="cli-id">
+      <div class="field"><label for="cli-nombre">Nombre</label><input type="text" id="cli-nombre" required></div>
+      <div class="field-row">
+        <div class="field"><label for="cli-nif">NIF (opcional)</label><input type="text" id="cli-nif"></div>
+        <div class="field"><label for="cli-clasificacion">Clasificación empresarial</label><input type="text" id="cli-clasificacion"></div>
+      </div>
+      <div class="field"><label for="cli-cpv">Sectores CPV (separados por coma)</label><input type="text" id="cli-cpv"></div>
+      <div class="field"><label for="cli-ccaa">CCAA de interés (separadas por coma)</label><input type="text" id="cli-ccaa"></div>
+      <div class="field-row">
+        <div class="field"><label for="cli-importe-min">Importe mínimo (€)</label><input type="number" id="cli-importe-min" min="0"></div>
+        <div class="field"><label for="cli-importe-max">Importe máximo (€)</label><input type="number" id="cli-importe-max" min="0"></div>
+      </div>
+      <div class="field"><label for="cli-facturacion">Facturación anual (€, opcional)</label><input type="number" id="cli-facturacion" min="0"></div>
+      <div class="field"><label for="cli-certificaciones">Certificaciones (opcional)</label><input type="text" id="cli-certificaciones"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn small" id="cli-cancelar-edicion" hidden>Cancelar edición</button>
+        <button type="submit" class="btn primary small" id="cli-submit">Añadir cliente</button>
+      </div>
+      <p class="modal-error" id="cli-error"></p>
+    </form>
+    <div class="modal-actions">
+      <button type="button" class="modal-close" data-close="modal-clientes">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="modal-precios" hidden>
   <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="modal-precios-title">
     <h3 id="modal-precios-title">Planes</h3>
@@ -860,6 +901,9 @@
   let currentCompanyId = null;
   let currentPlan = "free";
   let plansConfig = null;
+  let clientCompanies = [];           // modo consultora (Bloque 7)
+  let currentClientCompanyId = null;  // empresa cliente activa, o null = la propia cuenta
+  let currentClientProfile = null;
   const PLAN_NAMES = { free: "Free", basico: "Básico", pro: "Pro", equipo: "Equipo" };
 
   function openModal(sel) { $(sel).hidden = false; }
@@ -1040,10 +1084,16 @@
       box.innerHTML = `<p class="cache-note">El pliego no dejó claros ni documentos ni plazos concretos para marcar — revísalo en el original.</p>`;
       return;
     }
+    // Modo consultora (Bloque 7): con un cliente activo, el checklist se
+    // guarda en su propia tabla (client_offer_checklists) para no
+    // mezclarlo con el de la cuenta ni con el de otro cliente.
+    const checklistTable = currentClientCompanyId ? "client_offer_checklists" : "offer_checklists";
+    const checklistKeyCol = currentClientCompanyId ? "client_company_id" : "company_id";
+    const checklistKeyVal = currentClientCompanyId || currentCompanyId;
     let saved = [];
-    if (currentCompanyId) {
+    if (checklistKeyVal) {
       try {
-        const { data } = await sb.from("offer_checklists").select("items").eq("company_id", currentCompanyId).eq("external_id", item.external_id).maybeSingle();
+        const { data } = await sb.from(checklistTable).select("items").eq(checklistKeyCol, checklistKeyVal).eq("external_id", item.external_id).maybeSingle();
         saved = (data && data.items) || [];
       } catch { /* sin checklist guardada todavía */ }
     }
@@ -1065,8 +1115,11 @@
           const idx = Number(e.target.dataset.idx);
           items[idx].done = e.target.checked;
           renderItems();
-          if (currentCompanyId) {
-            try { await sb.from("offer_checklists").upsert({ company_id: currentCompanyId, external_id: item.external_id, items }); } catch { /* se intentará de nuevo en el próximo cambio */ }
+          if (checklistKeyVal) {
+            const row = currentClientCompanyId
+              ? { client_company_id: currentClientCompanyId, external_id: item.external_id, items }
+              : { company_id: currentCompanyId, external_id: item.external_id, items };
+            try { await sb.from(checklistTable).upsert(row); } catch { /* se intentará de nuevo en el próximo cambio */ }
           }
         });
       });
@@ -1094,7 +1147,7 @@
           Authorization: `Bearer ${sess.session.access_token}`,
           apikey: SUPABASE_ANON_KEY,
         },
-        body: JSON.stringify({ external_id: item.external_id, documentos: item.documentos, tender: item }),
+        body: JSON.stringify({ external_id: item.external_id, documentos: item.documentos, tender: item, client_company_id: currentClientCompanyId }),
       });
       const data = await resp.json();
       if (!resp.ok) {
@@ -1120,7 +1173,9 @@
       return;
     }
     const hasPliego = item.documentos && item.documentos.length > 0;
+    const evaluandoPara = currentClientProfile ? `<p class="cache-note">Evaluando para el perfil de <strong>${escapeHtml(currentClientProfile.company_name)}</strong> (empresa cliente activa).</p>` : "";
     container.innerHTML = `
+      ${evaluandoPara}
       <div class="empresa-actions">
         <button type="button" class="btn small" data-action="gonogo">Evaluar GO/NO-GO rápido</button>
         ${hasPliego ? `<button type="button" class="btn small primary" data-action="pliego">Ayuda con el pliego (IA)</button>` : `<span class="cache-note">Esta fuente no tiene pliego enlazado para analizar.</span>`}
@@ -1129,7 +1184,7 @@
     `;
     const resultDiv = container.querySelector(".tool-result");
     container.querySelector('[data-action="gonogo"]').addEventListener("click", () => {
-      const { veredicto, puntos } = quickGoNoGo(item, currentProfile);
+      const { veredicto, puntos } = quickGoNoGo(item, currentClientProfile || currentProfile);
       renderVerdict(resultDiv, veredicto, puntos, 'Evaluación rápida sin leer el pliego — usa "Ayuda con el pliego" para un análisis completo.');
     });
     const pliegoBtn = container.querySelector('[data-action="pliego"]');
@@ -1156,15 +1211,50 @@
 
   async function loadProfile() {
     const { data: { user } } = await sb.auth.getUser();
-    if (!user) { currentProfile = null; currentCompanyId = null; currentPlan = "free"; return; }
+    if (!user) { currentProfile = null; currentCompanyId = null; currentPlan = "free"; clientCompanies = []; currentClientCompanyId = null; currentClientProfile = null; return; }
     const { data: membership } = await sb.from("company_members").select("company_id").eq("user_id", user.id).limit(1).maybeSingle();
     currentCompanyId = membership?.company_id || null;
-    if (!currentCompanyId) { currentProfile = null; currentPlan = "free"; return; }
+    if (!currentCompanyId) { currentProfile = null; currentPlan = "free"; clientCompanies = []; return; }
     const { data: company } = await sb.from("companies").select("*").eq("id", currentCompanyId).maybeSingle();
     currentProfile = company || null;
     const { data: sub } = await sb.from("subscriptions").select("plan, status").eq("company_id", currentCompanyId).maybeSingle();
     currentPlan = (sub && (sub.status === "active" || sub.status === "trialing")) ? sub.plan : "free";
+    await loadPlansConfig();
+    const tieneConsultora = !!plansConfig?.planes?.[currentPlan]?.funciones?.multi_empresa;
+    if (tieneConsultora) {
+      const { data: clientes } = await sb.from("client_companies").select("*").eq("managed_by_company_id", currentCompanyId).order("company_name");
+      clientCompanies = clientes || [];
+    } else {
+      clientCompanies = [];
+      currentClientCompanyId = null;
+      currentClientProfile = null;
+    }
     updatePlanBadge();
+    updateClientesUI();
+  }
+
+  function updateClientesUI() {
+    const tieneConsultora = !!plansConfig?.planes?.[currentPlan]?.funciones?.multi_empresa;
+    const btn = $("#btn-clientes");
+    if (btn) btn.hidden = !currentCompanyId || !tieneConsultora;
+    const chip = $("#chip-cliente-activo");
+    if (!chip) return;
+    if (currentClientCompanyId) {
+      const c = clientCompanies.find((c) => c.id === currentClientCompanyId);
+      chip.hidden = false;
+      chip.innerHTML = `Cliente: ${escapeHtml(c ? c.company_name : "…")} <button type="button" id="chip-cliente-clear" aria-label="Quitar cliente activo">✕</button>`;
+      chip.querySelector("#chip-cliente-clear").addEventListener("click", () => setClienteActivo(null));
+    } else {
+      chip.hidden = true;
+      chip.innerHTML = "";
+    }
+  }
+
+  async function setClienteActivo(clientCompanyId) {
+    currentClientCompanyId = clientCompanyId;
+    currentClientProfile = clientCompanyId ? (clientCompanies.find((c) => c.id === clientCompanyId) || null) : null;
+    updateClientesUI();
+    document.dispatchEvent(new CustomEvent("empresa:changed"));
   }
 
   async function loadPlansConfig() {
@@ -1359,6 +1449,115 @@
     }
   }
 
+  function renderClientesList() {
+    const list = $("#clientes-list");
+    if (!clientCompanies.length) { list.innerHTML = `<li class="cache-note" style="border:none;">Todavía no tienes empresas cliente.</li>`; return; }
+    list.innerHTML = clientCompanies.map((c) => `
+      <li>
+        <span class="${c.id === currentClientCompanyId ? "cli-activo" : ""}">${escapeHtml(c.company_name)}${c.id === currentClientCompanyId ? " (activa)" : ""}</span>
+        <span class="cli-actions">
+          <button type="button" class="btn small" data-cli-activar="${escapeAttr(c.id)}">${c.id === currentClientCompanyId ? "Desactivar" : "Activar"}</button>
+          <button type="button" class="btn small" data-cli-editar="${escapeAttr(c.id)}">Editar</button>
+          <button type="button" class="btn small" data-cli-borrar="${escapeAttr(c.id)}">Borrar</button>
+        </span>
+      </li>
+    `).join("");
+    list.querySelectorAll("[data-cli-activar]").forEach((b) => b.addEventListener("click", () => {
+      const id = b.dataset.cliActivar;
+      setClienteActivo(id === currentClientCompanyId ? null : id);
+      renderClientesList();
+    }));
+    list.querySelectorAll("[data-cli-editar]").forEach((b) => b.addEventListener("click", () => cargarClienteEnFormulario(b.dataset.cliEditar)));
+    list.querySelectorAll("[data-cli-borrar]").forEach((b) => b.addEventListener("click", () => borrarCliente(b.dataset.cliBorrar)));
+  }
+
+  function cargarClienteEnFormulario(id) {
+    const c = clientCompanies.find((c) => c.id === id);
+    if (!c) return;
+    $("#cli-id").value = c.id;
+    $("#cli-nombre").value = c.company_name || "";
+    $("#cli-nif").value = c.nif || "";
+    $("#cli-clasificacion").value = c.clasificacion_empresarial || "";
+    $("#cli-cpv").value = (c.cpv_codes || []).join(", ");
+    $("#cli-ccaa").value = (c.ccaa_scope || []).join(", ");
+    $("#cli-importe-min").value = c.importe_min ?? "";
+    $("#cli-importe-max").value = c.importe_max ?? "";
+    $("#cli-facturacion").value = c.facturacion_anual ?? "";
+    $("#cli-certificaciones").value = c.certificaciones || "";
+    $("#cli-submit").textContent = "Guardar cambios";
+    $("#cli-cancelar-edicion").hidden = false;
+  }
+
+  function resetFormCliente() {
+    $("#form-cliente").reset();
+    $("#cli-id").value = "";
+    $("#cli-submit").textContent = "Añadir cliente";
+    $("#cli-cancelar-edicion").hidden = true;
+    $("#cli-error").textContent = "";
+  }
+
+  async function callClientCompanyFn(body) {
+    const { data: sess } = await sb.auth.getSession();
+    if (!sess.session) throw new Error("Tu sesión ha caducado.");
+    const resp = await fetch(`${SUPABASE_URL}/functions/v1/save-client-company`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${sess.session.access_token}`, apikey: SUPABASE_ANON_KEY },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw Object.assign(new Error(data.error || "Error"), { data });
+    return data;
+  }
+
+  async function saveCliente(e) {
+    e.preventDefault();
+    $("#cli-error").textContent = "";
+    $("#cli-submit").disabled = true;
+    try {
+      const id = $("#cli-id").value || null;
+      const body = {
+        accion: id ? "actualizar" : "crear",
+        id,
+        company_name: $("#cli-nombre").value.trim(),
+        nif: $("#cli-nif").value.trim() || null,
+        clasificacion_empresarial: $("#cli-clasificacion").value.trim() || null,
+        cpv_codes: splitList($("#cli-cpv").value),
+        ccaa_scope: splitList($("#cli-ccaa").value),
+        importe_min: numOrNull($("#cli-importe-min").value),
+        importe_max: numOrNull($("#cli-importe-max").value),
+        facturacion_anual: numOrNull($("#cli-facturacion").value),
+        certificaciones: $("#cli-certificaciones").value.trim() || null,
+      };
+      const data = await callClientCompanyFn(body);
+      const idx = clientCompanies.findIndex((c) => c.id === data.client_company.id);
+      if (idx >= 0) clientCompanies[idx] = data.client_company; else clientCompanies.push(data.client_company);
+      resetFormCliente();
+      renderClientesList();
+    } catch (err) {
+      $("#cli-error").textContent = (err.data && err.data.error) || err.message || "No se pudo guardar";
+    } finally {
+      $("#cli-submit").disabled = false;
+    }
+  }
+
+  async function borrarCliente(id) {
+    if (!confirm("¿Borrar esta empresa cliente? Se perderá su perfil y su checklist guardado.")) return;
+    try {
+      await callClientCompanyFn({ accion: "borrar", id });
+      clientCompanies = clientCompanies.filter((c) => c.id !== id);
+      if (currentClientCompanyId === id) await setClienteActivo(null);
+      renderClientesList();
+    } catch (err) {
+      alert((err.data && err.data.error) || err.message || "No se pudo borrar");
+    }
+  }
+
+  function openClientesModal() {
+    resetFormCliente();
+    renderClientesList();
+    openModal("#modal-clientes");
+  }
+
   async function initAuth() {
     document.querySelectorAll("[data-close]").forEach((btn) => {
       btn.addEventListener("click", () => closeModal("#" + btn.dataset.close));
@@ -1383,6 +1582,8 @@
     $("#btn-login").addEventListener("click", () => { $("#auth-error").textContent = ""; openModal("#modal-auth"); });
     $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
     $("#btn-empresa").addEventListener("click", openEmpresaModal);
+    $("#btn-clientes").addEventListener("click", openClientesModal);
+    $("#cli-cancelar-edicion").addEventListener("click", resetFormCliente);
     $("#btn-precios").addEventListener("click", openPreciosModal);
     $("#btn-consultoras-precios").addEventListener("click", openPreciosModal);
     $("#btn-gestionar-plan").addEventListener("click", abrirPortalSuscripcion);
@@ -1456,6 +1657,7 @@
     });
 
     $("#form-empresa").addEventListener("submit", saveEmpresa);
+    $("#form-cliente").addEventListener("submit", saveCliente);
   }
 
   // ---- Motor de filtros/orden genérico --------------------------------

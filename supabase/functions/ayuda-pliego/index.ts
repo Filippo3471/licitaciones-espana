@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) return jsonResponse({ error: "Falta autenticación" }, 401);
 
-    const { external_id, documentos, tender } = await req.json();
+    const { external_id, documentos, tender, client_company_id } = await req.json();
     if (!external_id || !Array.isArray(documentos)) {
       return jsonResponse({ error: "external_id y documentos son obligatorios" }, 400);
     }
@@ -87,7 +87,13 @@ Deno.serve(async (req) => {
     if (userErr || !userData?.user) return jsonResponse({ error: "Sesión inválida" }, 401);
 
     const companyId = await getUserCompanyId(userClient, userData.user.id);
-    const { data: profile } = companyId
+    // Modo consultora (Bloque 7): si se pide evaluar contra una empresa
+    // CLIENTE en vez de la propia cuenta, se usa ese perfil — RLS en
+    // client_companies ya exige que sea gestionada por la cuenta del
+    // usuario, así que basta con pasar el cliente del propio usuario.
+    const { data: profile } = client_company_id
+      ? await userClient.from("client_companies").select("*").eq("id", client_company_id).maybeSingle()
+      : companyId
       ? await userClient.from("companies").select("*").eq("id", companyId).maybeSingle()
       : { data: null };
 
@@ -120,7 +126,7 @@ Deno.serve(async (req) => {
     if (cached?.resumen) {
       resumen = cached.resumen as Record<string, unknown>;
       await adminClient.from("ia_usage_log").insert({
-        company_id: companyId, external_id, feature: "pliego_summary",
+        company_id: companyId, client_company_id: client_company_id ?? null, external_id, feature: "pliego_summary",
         model: null, input_tokens: null, output_tokens: null, desde_cache: true,
       });
     } else {
@@ -205,7 +211,7 @@ Deno.serve(async (req) => {
 
       const usage = anthropicJson?.usage ?? {};
       await adminClient.from("ia_usage_log").insert({
-        company_id: companyId, external_id, feature: "pliego_summary",
+        company_id: companyId, client_company_id: client_company_id ?? null, external_id, feature: "pliego_summary",
         model: "claude-sonnet-5", input_tokens: usage.input_tokens ?? null,
         output_tokens: usage.output_tokens ?? null, desde_cache: false,
       });
