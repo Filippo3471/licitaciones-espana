@@ -29,6 +29,12 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Sube la versión cuando cambie la forma del JSON que se pide al modelo —
+// un resumen cacheado con una versión distinta se trata como si no
+// existiera y se regenera, sin tocar la fila vieja (queda ahí, solo deja
+// de servirse).
+const SCHEMA_VERSION = 2;
+
 const RESUMEN_SCHEMA_PROMPT = `Eres un asistente que extrae información objetiva de pliegos de contratación pública española (PCAP/PPT). Analiza el/los documento(s) adjuntos y devuelve ÚNICAMENTE un JSON (sin texto antes ni después, sin markdown) con esta forma exacta:
 
 {
@@ -43,6 +49,8 @@ const RESUMEN_SCHEMA_PROMPT = `Eres un asistente que extrae información objetiv
   "criterios_adjudicacion": [{"criterio": string, "peso": string}] | null,
   "forma_presentacion": string | null,
   "fecha_limite": string | null,
+  "documentacion_requerida": [{"documento": string, "cita": string}] | null,
+  "plazos": [{"hito": string, "fecha": string, "cita": string}] | null,
   "riesgos": string[] | null,
   "citas": { "<nombre_de_campo>": string }
 }
@@ -50,6 +58,8 @@ const RESUMEN_SCHEMA_PROMPT = `Eres un asistente que extrae información objetiv
 Reglas estrictas:
 - Si un dato no aparece en el documento, ese campo debe ser null (o [] si es una lista vacía). NUNCA inventes ni deduzcas un valor que no esté escrito.
 - "citas" debe indicar, para cada campo que sí encontraste, en qué página o sección del documento lo leíste (texto libre breve, p.ej. "página 4, cláusula 8").
+- "documentacion_requerida" es la lista de documentos que hay que presentar con la oferta (DEUC, solvencia, declaraciones, garantía provisional...), cada uno con su propia cita de página/cláusula — no una lista genérica, solo lo que el pliego pide explícitamente.
+- "plazos" son los hitos con fecha que aparecen en el pliego (presentación de ofertas, plazo de aclaraciones, apertura de sobres, fecha de inicio...), cada uno con su propia cita.
 - "riesgos" son puntos que un licitador debería vigilar (plazos ajustados, requisitos inusuales, penalizaciones severas...), solo si están explícitos en el texto — no especules.
 - Responde solo el JSON.`;
 
@@ -98,14 +108,21 @@ Deno.serve(async (req) => {
     }
 
     let resumen: Record<string, unknown>;
-    const { data: cached } = await adminClient
+    const { data: cachedRow } = await adminClient
       .from("pliego_summaries")
-      .select("resumen")
+      .select("resumen, schema_version")
       .eq("external_id", external_id)
       .maybeSingle();
+    // Un resumen de un esquema anterior se trata como caché fría: no se
+    // sirve (le faltarían documentacion_requerida/plazos), se regenera.
+    const cached = cachedRow && cachedRow.schema_version === SCHEMA_VERSION ? cachedRow : null;
 
     if (cached?.resumen) {
       resumen = cached.resumen as Record<string, unknown>;
+      await adminClient.from("ia_usage_log").insert({
+        company_id: companyId, external_id, feature: "pliego_summary",
+        model: null, input_tokens: null, output_tokens: null, desde_cache: true,
+      });
     } else {
       const veredictoUso = await can(adminClient, companyId, "pliego_summary", { usageLimitKey: "pliego_summaries" });
       if (!veredictoUso.allowed) {
@@ -181,11 +198,24 @@ Deno.serve(async (req) => {
         return jsonResponse({ error: "El LLM no devolvió JSON válido" }, 502);
       }
 
+      // No es parte de lo que pide el modelo — se añade aquí para que el
+      // frontend pueda enlazar cada cita a la página del PDF real
+      // (#page=N), sin tener que volver a adivinar qué documento se usó.
+      (resumen as any)._fuentes_pdf = { pcap: pcap?.url ?? null, ppt: ppt?.url ?? null };
+
+      const usage = anthropicJson?.usage ?? {};
+      await adminClient.from("ia_usage_log").insert({
+        company_id: companyId, external_id, feature: "pliego_summary",
+        model: "claude-sonnet-5", input_tokens: usage.input_tokens ?? null,
+        output_tokens: usage.output_tokens ?? null, desde_cache: false,
+      });
+
       await adminClient.from("pliego_summaries").upsert({
         external_id,
         fuente: tender?.fuente ?? null,
         resumen,
         model: "claude-sonnet-5",
+        schema_version: SCHEMA_VERSION,
       });
 
       await recordUsage(adminClient, companyId, "pliego_summaries");
@@ -208,6 +238,8 @@ function evaluarEncaje(resumen: any, profile: any, tender: any) {
   }
 
   const puntos: { tipo: "cumple" | "no_cumple" | "revisar"; texto: string }[] = [];
+  const citas = resumen.citas || {};
+  const conCita = (texto: string, citaTexto?: string) => (citaTexto ? `${texto} (${citaTexto})` : texto);
 
   // Importe: dentro del rango declarado por la empresa.
   const importe = resumen.importe_licitacion ?? tender?.importe ?? null;
@@ -238,19 +270,54 @@ function evaluarEncaje(resumen: any, profile: any, tender: any) {
     if (profile.clasificacion_empresarial) {
       puntos.push({
         tipo: "revisar",
-        texto: `Se exige clasificación "${resumen.clasificacion_exigida}". Verifica que tu clasificación (${profile.clasificacion_empresarial}) la cubre — esto no se puede comparar automáticamente con fiabilidad.`,
+        texto: conCita(`Se exige clasificación "${resumen.clasificacion_exigida}". Verifica que tu clasificación (${profile.clasificacion_empresarial}) la cubre — esto no se puede comparar automáticamente con fiabilidad.`, citas.clasificacion_exigida),
       });
     } else {
-      puntos.push({ tipo: "no_cumple", texto: `Se exige clasificación empresarial ("${resumen.clasificacion_exigida}") y no tienes ninguna declarada en tu perfil.` });
+      puntos.push({ tipo: "no_cumple", texto: conCita(`Se exige clasificación empresarial ("${resumen.clasificacion_exigida}") y no tienes ninguna declarada en tu perfil.`, citas.clasificacion_exigida) });
     }
   }
 
-  // Facturación mínima habitual: heurística conservadora (no oficial).
-  if (importe != null && profile.facturacion_anual != null) {
+  // Requisitos de solvencia económica, uno por uno — cada requisito del
+  // pliego es un punto propio, con su cita, en vez de un veredicto global.
+  const solvenciaEconomica: string[] = resumen.solvencia_economica ?? [];
+  if (solvenciaEconomica.length) {
+    for (const req of solvenciaEconomica) {
+      if (/facturaci[oó]n/i.test(req) && profile.facturacion_anual == null) {
+        puntos.push({ tipo: "revisar", texto: conCita(`"${req}" — Para saber si cumples, dinos tu volumen de negocio de los 3 últimos años en el perfil de tu empresa.`, citas.solvencia_economica) });
+      } else if (/facturaci[oó]n/i.test(req) && importe != null && profile.facturacion_anual != null) {
+        const cumpleFacturacion = profile.facturacion_anual >= importe * 0.75;
+        puntos.push({
+          tipo: cumpleFacturacion ? "cumple" : "no_cumple",
+          texto: conCita(`"${req}" — tu facturación anual declarada (${profile.facturacion_anual.toLocaleString("es-ES")} €) ${cumpleFacturacion ? "parece suficiente" : "parece insuficiente"} frente al importe de este contrato (confírmalo con la cifra exacta que pida el pliego).`, citas.solvencia_economica),
+        });
+      } else {
+        puntos.push({ tipo: "revisar", texto: conCita(`"${req}" — revísalo contra tu documentación de solvencia económica, no se puede comprobar automáticamente.`, citas.solvencia_economica) });
+      }
+    }
+  } else if (importe != null && profile.facturacion_anual != null) {
+    // El pliego no detalla requisitos de solvencia económica explícitos;
+    // mantenemos la heurística general como señal orientativa.
     if (profile.facturacion_anual >= importe * 0.75) {
       puntos.push({ tipo: "cumple", texto: "Tu facturación anual declarada es holgada frente al importe de este contrato." });
     } else {
       puntos.push({ tipo: "revisar", texto: "Tu facturación anual declarada es baja frente al importe — algunos pliegos piden facturación mínima de 1–1.5x el importe licitado; confírmalo en la solvencia económica exigida." });
+    }
+  }
+
+  // Requisitos de solvencia técnica, uno por uno, igual que la económica.
+  const solvenciaTecnica: string[] = resumen.solvencia_tecnica ?? [];
+  for (const req of solvenciaTecnica) {
+    if (/certificad|ISO|acreditaci[oó]n/i.test(req) && !profile.certificaciones) {
+      puntos.push({ tipo: "revisar", texto: conCita(`"${req}" — Para saber si cumples, dinos qué certificaciones tiene tu empresa (ISO, acreditaciones...) en el perfil.`, citas.solvencia_tecnica) });
+    } else if (/certificad|ISO|acreditaci[oó]n/i.test(req) && profile.certificaciones) {
+      const menciona = String(profile.certificaciones).toLowerCase();
+      const probable = req.toLowerCase().split(/\s+/).some((w) => w.length > 3 && menciona.includes(w));
+      puntos.push({
+        tipo: probable ? "cumple" : "revisar",
+        texto: conCita(`"${req}" — ${probable ? "parece cubierto por tus certificaciones declaradas" : "revisa si tus certificaciones declaradas (" + profile.certificaciones + ") lo cubren"}.`, citas.solvencia_tecnica),
+      });
+    } else {
+      puntos.push({ tipo: "revisar", texto: conCita(`"${req}" — revísalo contra tu experiencia y medios técnicos, no se puede comprobar automáticamente.`, citas.solvencia_tecnica) });
     }
   }
 

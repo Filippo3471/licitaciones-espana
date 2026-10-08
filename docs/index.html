@@ -399,7 +399,11 @@
   .pliego-summary .campo { margin-bottom: 10px; }
   .pliego-summary .campo-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); margin-bottom: 2px; }
   .pliego-summary .cita { font-size: 0.74rem; color: var(--ink-muted); font-style: italic; }
+  .pliego-summary .cita a, .pliego-summary .cita-inline a { color: var(--accent); }
+  .pliego-summary .cita-inline { font-size: 0.74rem; color: var(--ink-muted); font-style: italic; }
+  .pliego-summary .no-encontrado { font-size: 0.82rem; color: var(--ink-muted); font-style: italic; margin: 0; }
   .pliego-summary ul { margin: 2px 0 0; padding-left: 1.1em; }
+  .pliego-summary .checklist-preview li { margin-bottom: 4px; }
   .spinner-line { font-size: 0.85rem; color: var(--ink-muted); }
   .cache-note { font-size: 0.72rem; color: var(--ink-muted); margin-top: 6px; }
 
@@ -892,14 +896,38 @@
     return { veredicto, puntos };
   }
 
+  function pdfLinkFromCita(fuentesPdf, citaTexto) {
+    if (!fuentesPdf || !citaTexto) return null;
+    const url = fuentesPdf.pcap || fuentesPdf.ppt;
+    if (!url) return null;
+    const m = /p[aá]gina\s*(\d+)/i.exec(citaTexto);
+    return m ? `${url}#page=${m[1]}` : url;
+  }
+
   function renderPliegoSummary(container, data) {
     const r = data.resumen || {};
     const citas = r.citas || {};
+    const fuentesPdf = r._fuentes_pdf || {};
+    const citaHtml = (key) => {
+      if (!citas[key]) return "";
+      const link = pdfLinkFromCita(fuentesPdf, citas[key]);
+      return `<div class="cita">${escapeHtml(citas[key])}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver en el pliego</a>` : ""}</div>`;
+    };
     const campo = (label, key, render) => {
       const val = r[key];
       if (val == null || (Array.isArray(val) && val.length === 0)) return "";
-      const cita = citas[key] ? `<div class="cita">${escapeHtml(citas[key])}</div>` : "";
-      return `<div class="campo"><div class="campo-label">${escapeHtml(label)}</div>${render(val)}${cita}</div>`;
+      return `<div class="campo"><div class="campo-label">${escapeHtml(label)}</div>${render(val)}${citaHtml(key)}</div>`;
+    };
+    // Documentación y plazos son el motivo de ser de esta función — se
+    // muestran siempre, aunque el pliego no los deje claros, en vez de
+    // desaparecer en silencio como el resto de campos opcionales.
+    const campoObligatorio = (label, key, render) => {
+      const val = r[key];
+      const vacio = val == null || (Array.isArray(val) && val.length === 0);
+      const cuerpo = vacio
+        ? `<p class="no-encontrado">No encontrado en el pliego: revísalo en el original.</p>`
+        : render(val);
+      return `<div class="campo"><div class="campo-label">${escapeHtml(label)}</div>${cuerpo}</div>`;
     };
     let html = `<div class="pliego-summary">`;
     html += `<h4>Evaluación para tu empresa</h4><div class="pliego-verdict"></div>`;
@@ -915,6 +943,14 @@
     html += campo("Criterios de adjudicación", "criterios_adjudicacion", (v) => `<ul>${v.map((c) => `<li>${escapeHtml(c.criterio || "")} — ${escapeHtml(c.peso || "")}</li>`).join("")}</ul>`);
     html += campo("Forma de presentación", "forma_presentacion", (v) => `<p>${escapeHtml(v)}</p>`);
     html += campo("Fecha límite", "fecha_limite", (v) => `<p>${escapeHtml(v)}</p>`);
+    html += campoObligatorio("Documentos a presentar", "documentacion_requerida", (v) => `<ul class="checklist-preview">${v.map((d) => {
+      const link = pdfLinkFromCita(fuentesPdf, d.cita);
+      return `<li>${escapeHtml(d.documento || "")}${d.cita ? ` <span class="cita-inline">(${escapeHtml(d.cita)}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver</a>` : ""})</span>` : ""}</li>`;
+    }).join("")}</ul>`);
+    html += campoObligatorio("Plazos e hitos", "plazos", (v) => `<ul class="checklist-preview">${v.map((p) => {
+      const link = pdfLinkFromCita(fuentesPdf, p.cita);
+      return `<li><strong>${escapeHtml(p.fecha || "—")}</strong> — ${escapeHtml(p.hito || "")}${p.cita ? ` <span class="cita-inline">(${escapeHtml(p.cita)}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver</a>` : ""})</span>` : ""}</li>`;
+    }).join("")}</ul>`);
     html += campo("Riesgos / puntos a vigilar", "riesgos", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
     html += `<p class="cache-note">${data.desde_cache ? "Resumen ya generado antes para esta licitación (caché compartida entre usuarios)." : "Resumen generado ahora mismo por IA a partir del pliego oficial."} Verifica siempre contra el PDF original antes de decidir.</p>`;
     html += `</div>`;
