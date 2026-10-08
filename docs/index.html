@@ -718,6 +718,7 @@
       <label><input type="radio" name="precios-interval" value="anio"> Anual (2 meses gratis)</label>
     </div>
     <div id="precios-grid" class="precios-grid"></div>
+    <p class="cache-note">¿Licitas poco? Puedes comprar el análisis de una sola licitación por 9 € desde su propio botón "Ayuda con el pliego", sin suscripción.</p>
     <p class="modal-error" id="precios-error"></p>
     <div class="modal-actions">
       <button type="button" class="modal-close" data-close="modal-precios">Cerrar</button>
@@ -1151,7 +1152,7 @@
       });
       const data = await resp.json();
       if (!resp.ok) {
-        if (data.upsell) { renderUpsell(container, data); return; }
+        if (data.upsell) { renderUpsell(container, data, item); return; }
         throw new Error(data.error || "Error del servidor");
       }
       renderPliegoSummary(container, data, item);
@@ -1340,7 +1341,7 @@
     }
   }
 
-  function renderUpsell(container, data) {
+  function renderUpsell(container, data, item) {
     const up = data.upsell || {};
     const planActual = PLAN_NAMES[up.plan] || up.plan || "Free";
     const planSugerido = up.upgrade_to ? (PLAN_NAMES[up.upgrade_to] || up.upgrade_to) : null;
@@ -1352,10 +1353,36 @@
       html += `<span class="cache-note">Tu plan actual: ${escapeHtml(planActual)}. Disponible desde: <strong>${escapeHtml(planSugerido)}</strong></span>`;
       html += `<button type="button" class="btn small primary" data-open="modal-precios">Ver planes</button>`;
     }
+    // Bloque 8: si esto bloqueó "Ayuda con el pliego" de una licitación
+    // concreta, se ofrece también comprarla suelta, sin suscripción.
+    if (item && (up.reason === "plan_feature_locked" || up.reason === "usage_limit_reached")) {
+      html += `<button type="button" class="btn small" data-action="comprar-pliego">Comprar solo este análisis — 9 €</button>`;
+    }
     html += `</div>`;
     container.innerHTML = html;
     const upgradeBtn = container.querySelector("[data-open]");
     if (upgradeBtn) upgradeBtn.addEventListener("click", () => openPreciosModal());
+    const comprarBtn = container.querySelector('[data-action="comprar-pliego"]');
+    if (comprarBtn) comprarBtn.addEventListener("click", () => comprarPliegoUnico(item, comprarBtn));
+  }
+
+  async function comprarPliegoUnico(item, btn) {
+    btn.disabled = true;
+    try {
+      const { data: sess } = await sb.auth.getSession();
+      if (!sess.session) throw new Error("Tu sesión ha caducado.");
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/create-pliego-checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sess.session.access_token}`, apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({ external_id: item.external_id, titulo: item.titulo }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.url) throw new Error(data.error || "No se pudo iniciar el pago");
+      location.href = data.url;
+    } catch (err) {
+      alert(err.message || "No se pudo iniciar el pago");
+      btn.disabled = false;
+    }
   }
 
   async function onAuthChange(session) {

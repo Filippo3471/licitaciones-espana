@@ -52,6 +52,16 @@ Deno.serve(async (req) => {
         if (session.mode === "subscription" && session.subscription) {
           const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
           await syncSubscription(subscription);
+        } else if (session.mode === "payment" && session.metadata?.type === "pliego_unico") {
+          // Bloque 8: pago único de un solo pliego — desbloquea esa
+          // licitación concreta para esa empresa, sin tocar su plan.
+          const companyId = session.metadata.company_id;
+          const externalId = session.metadata.external_id;
+          if (companyId && externalId) {
+            await adminClient.from("single_tender_unlocks").upsert({
+              company_id: companyId, external_id: externalId, stripe_checkout_session_id: session.id,
+            });
+          }
         }
         break;
       }

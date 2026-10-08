@@ -6,8 +6,16 @@
   "cupon_fundador": {
     "codigo": "FUNDADOR50",
     "descuento_porcentaje": 50,
+    "duracion_meses": 3,
+    "_nota_duracion": "Antes era de por vida; founder/pricing.md (08-10-2026) recomienda limitarlo a 3 meses porque el precio ya ha bajado. Al crear el cupón en Stripe: duration='repeating', duration_in_months=3, y fija redeem_by con la fecha de fin que decidas (no hay una todavía).",
     "max_usos": 20,
     "aplica_a": ["basico", "pro", "equipo"]
+  },
+  "producto_pliego_unico": {
+    "nombre": "Análisis de 1 pliego",
+    "precio": 9,
+    "stripe_price_id": "PLACEHOLDER_PRICE_PLIEGO_UNICO",
+    "descripcion": "Desbloquea el resumen del pliego, el GO/NO-GO y el checklist de UNA licitación concreta, sin suscripción. Pensado para quien licita poco (founder/pricing.md)."
   },
   "planes": {
     "free": {
@@ -37,8 +45,8 @@
     },
     "basico": {
       "nombre": "Básico",
-      "precio_mes": 49,
-      "precio_anio": 490,
+      "precio_mes": 29,
+      "precio_anio": 290,
       "stripe_price_id_mes": "PLACEHOLDER_PRICE_BASICO_MES",
       "stripe_price_id_anio": "PLACEHOLDER_PRICE_BASICO_ANIO",
       "limites": {
@@ -62,8 +70,8 @@
     },
     "pro": {
       "nombre": "Pro",
-      "precio_mes": 149,
-      "precio_anio": 1490,
+      "precio_mes": 79,
+      "precio_anio": 790,
       "stripe_price_id_mes": "PLACEHOLDER_PRICE_PRO_MES",
       "stripe_price_id_anio": "PLACEHOLDER_PRICE_PRO_ANIO",
       "limites": {

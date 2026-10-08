@@ -108,9 +108,22 @@ Deno.serve(async (req) => {
     if (!companyId) {
       return jsonResponse({ error: "No se encontró tu empresa. Cierra sesión y vuelve a entrar." }, 400);
     }
-    const veredictoAcceso = await can(adminClient, companyId, "pliego_summary");
-    if (!veredictoAcceso.allowed) {
-      return jsonResponse({ error: veredictoAcceso.message, upsell: veredictoAcceso }, 402);
+    // Bloque 8: si esta licitación concreta se compró suelta (9 €, sin
+    // suscripción), se salta tanto el gating de acceso como el de uso
+    // mensual para ella — el resto de licitaciones siguen bajo su plan.
+    const { data: unlock } = await adminClient
+      .from("single_tender_unlocks")
+      .select("company_id")
+      .eq("company_id", companyId)
+      .eq("external_id", external_id)
+      .maybeSingle();
+    const desbloqueadaSuelta = !!unlock;
+
+    if (!desbloqueadaSuelta) {
+      const veredictoAcceso = await can(adminClient, companyId, "pliego_summary");
+      if (!veredictoAcceso.allowed) {
+        return jsonResponse({ error: veredictoAcceso.message, upsell: veredictoAcceso }, 402);
+      }
     }
 
     let resumen: Record<string, unknown>;
@@ -130,9 +143,11 @@ Deno.serve(async (req) => {
         model: null, input_tokens: null, output_tokens: null, desde_cache: true,
       });
     } else {
-      const veredictoUso = await can(adminClient, companyId, "pliego_summary", { usageLimitKey: "pliego_summaries" });
-      if (!veredictoUso.allowed) {
-        return jsonResponse({ error: veredictoUso.message, upsell: veredictoUso }, 402);
+      if (!desbloqueadaSuelta) {
+        const veredictoUso = await can(adminClient, companyId, "pliego_summary", { usageLimitKey: "pliego_summaries" });
+        if (!veredictoUso.allowed) {
+          return jsonResponse({ error: veredictoUso.message, upsell: veredictoUso }, 402);
+        }
       }
 
       // El PCAP/PPT no siempre es un PDF: a veces el técnico se sube como
@@ -224,7 +239,7 @@ Deno.serve(async (req) => {
         schema_version: SCHEMA_VERSION,
       });
 
-      await recordUsage(adminClient, companyId, "pliego_summaries");
+      if (!desbloqueadaSuelta) await recordUsage(adminClient, companyId, "pliego_summaries");
     }
 
     const evaluacion = evaluarEncaje(resumen, profile, tender);
