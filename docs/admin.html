@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Adjuplica</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root { --paper:#f6f5f1; --paper-raised:#fff; --ink:#1b1b18; --ink-muted:#6b6b63; --line:#e4e1d8; --accent:#1b5e4f; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  .shell { max-width:900px; margin:0 auto; padding:24px 16px 60px; }
+  h1 { font-size:1.4rem; }
+  h2 { font-size:1.05rem; margin:28px 0 8px; }
+  table { width:100%; border-collapse:collapse; background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:16px; }
+  th, td { padding:6px 8px; border-bottom:1px solid var(--line); text-align:right; font-size:0.82rem; }
+  th:first-child, td:first-child { text-align:left; }
+  th { background:#efece3; }
+  .card { background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:16px; }
+  .err { color:#a33; }
+  .nota { color:var(--ink-muted); font-size:0.78rem; }
+  input, button { font-size:0.9rem; padding:6px 10px; }
+  button { background:var(--accent); color:#fff; border:none; border-radius:6px; cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>Panel interno</h1>
+  <div id="login-box" class="card">
+    <p>Inicia sesión con tu cuenta de administrador para ver el embudo.</p>
+    <input type="email" id="in-email" placeholder="email"> <input type="password" id="in-pass" placeholder="contraseña"> <button id="in-btn">Entrar</button>
+    <p class="err" id="in-err"></p>
+  </div>
+  <div id="out" hidden></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_dioPbNOINWVB3SB6X-fwJQ_YXBXrCTT";
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function money(n) { return (n == null) ? "—" : n.toLocaleString("es-ES"); }
+
+  async function cargar() {
+    const { data: sess } = await sb.auth.getSession();
+    if (!sess.session) return;
+    document.getElementById("login-box").hidden = true;
+    const out = document.getElementById("out");
+    out.hidden = false;
+    out.innerHTML = "Cargando…";
+    try {
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/admin-stats`, {
+        headers: { Authorization: `Bearer ${sess.session.access_token}`, apikey: SUPABASE_ANON_KEY },
+      });
+      const data = await resp.json();
+      if (!resp.ok) { out.innerHTML = `<p class="err">${data.error || "Error"}</p>`; return; }
+
+      let html = `<h2>Embudo semanal</h2><table><thead><tr>
+        <th>Semana</th><th>Visitas</th><th>Registros</th><th>Empresas con 1er análisis</th><th>Análisis de pliego</th><th>Checklists al 100%</th><th>Pagos</th>
+      </tr></thead><tbody>`;
+      data.embudo.forEach((s) => {
+        html += `<tr><td>${s.semana_inicio}</td><td>${s.landing_visit}</td><td>${s.registro}</td><td>${s.empresas_con_analisis}</td><td>${s.primer_analisis_pliego}</td><td>${s.checklist_completo}</td><td>${s.pago}</td></tr>`;
+      });
+      html += `</tbody></table>`;
+
+      html += `<h2>Visitas por fuente (utm_source)</h2><table><thead><tr><th>Fuente</th><th>Visitas</th></tr></thead><tbody>`;
+      Object.entries(data.visitas_por_fuente).sort((a, b) => b[1] - a[1]).forEach(([f, n]) => { html += `<tr><td>${f}</td><td>${n}</td></tr>`; });
+      html += `</tbody></table>`;
+
+      const c = data.coste_ia;
+      html += `<h2>Coste de IA (últimos ${c.periodo_dias} días)</h2><div class="card">
+        <p>${c.generaciones_nuevas} análisis generados de nuevo, ${c.lecturas_desde_cache} servidos desde caché (coste 0).</p>
+        <p>Tokens: ${money(c.total_input_tokens)} entrada / ${money(c.total_output_tokens)} salida.</p>
+        <p><strong>Coste total aproximado: ${money(c.coste_total_usd_aprox)} USD</strong> — ${money(c.coste_por_pliego_usd_aprox)} USD por pliego generado.</p>
+        <p class="nota">${c.nota}</p>
+      </div>`;
+
+      out.innerHTML = html;
+    } catch (err) {
+      out.innerHTML = `<p class="err">${err.message}</p>`;
+    }
+  }
+
+  document.getElementById("in-btn").addEventListener("click", async () => {
+    document.getElementById("in-err").textContent = "";
+    const { error } = await sb.auth.signInWithPassword({
+      email: document.getElementById("in-email").value.trim(),
+      password: document.getElementById("in-pass").value,
+    });
+    if (error) { document.getElementById("in-err").textContent = error.message; return; }
+    cargar();
+  });
+
+  cargar();
+})();
+</script>
+</body>
+</html>

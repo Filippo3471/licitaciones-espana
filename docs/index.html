@@ -912,6 +912,28 @@
   function splitList(s) { return s.split(",").map((x) => x.trim()).filter(Boolean); }
   function numOrNull(v) { return v === "" || v == null ? null : Number(v); }
 
+  // Bloque 9: medición mínima del embudo, sin herramientas de terceros.
+  // Nunca bloquea ni interrumpe al usuario si falla — es best-effort.
+  async function trackEvent(event_type, metadata) {
+    try {
+      const params = new URLSearchParams(location.search);
+      const { data: sess } = await sb.auth.getSession().catch(() => ({ data: {} }));
+      const headers = { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY };
+      if (sess && sess.session) headers.Authorization = `Bearer ${sess.session.access_token}`;
+      await fetch(`${SUPABASE_URL}/functions/v1/track-event`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          event_type,
+          utm_source: params.get("utm_source"),
+          utm_medium: params.get("utm_medium"),
+          utm_campaign: params.get("utm_campaign"),
+          metadata: metadata || null,
+        }),
+      });
+    } catch { /* la medición nunca debe romper la experiencia */ }
+  }
+
   const VERDICT_LABELS = {
     apto: "Apto",
     apto_con_dudas: "Apto con dudas",
@@ -1104,9 +1126,15 @@
       return { key, label: d.documento || `Documento ${i + 1}`, done: prev ? !!prev.done : false };
     });
 
+    let notifiedComplete = false;
     function renderItems() {
       const doneCount = items.filter((i) => i.done).length;
       box.querySelector(".checklist-progress").textContent = items.length ? `${doneCount} de ${items.length} documentos marcados` : "";
+      if (items.length && doneCount === items.length) {
+        if (!notifiedComplete) { notifiedComplete = true; trackEvent("checklist_completo", { external_id: item.external_id }); }
+      } else {
+        notifiedComplete = false;
+      }
       box.querySelector(".checklist-items").innerHTML = items.map((it, idx) => `
         <li><input type="checkbox" id="chk-${escapeAttr(it.key)}-${idx}" ${it.done ? "checked" : ""} data-idx="${idx}">
         <label for="chk-${escapeAttr(it.key)}-${idx}" class="${it.done ? "done" : ""}">${escapeHtml(it.label)}</label></li>
@@ -1156,6 +1184,7 @@
         throw new Error(data.error || "Error del servidor");
       }
       renderPliegoSummary(container, data, item);
+      trackEvent("primer_analisis_pliego", { external_id: item.external_id });
     } catch (err) {
       container.innerHTML = `<p class="modal-error" style="margin:0">${escapeHtml(err.message || "No se pudo generar la ayuda")}</p>`;
     }
@@ -1672,6 +1701,7 @@
         if (error) throw error;
         // Con confirmación de email desactivada, signUp() ya deja sesión
         // iniciada al momento — se trata igual que un login correcto.
+        if (authMode === "signup") trackEvent("registro");
         closeModal("#modal-auth");
         $("#form-auth").reset();
         $("#auth-invite-field").hidden = true;
@@ -1820,6 +1850,7 @@
   async function boot() {
     setupTabs();
     initAuth();
+    trackEvent("landing_visit");
     const [licPayload, adjPayload] = await Promise.all([licitacionesTab.boot(), adjudicacionesTab.boot()]);
     const licData = licPayload ? licPayload.licitaciones || [] : [];
     const adjData = adjPayload ? adjPayload.adjudicaciones || [] : [];
