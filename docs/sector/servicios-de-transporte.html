@@ -21,7 +21,7 @@
   "name": "Licitaciones públicas de Servicios de transporte en España",
   "description": "103 licitaciones públicas abiertas de Servicios de transporte en España ahora mismo, por un importe total de 960.725.856€. Actualizado dos veces al día.",
   "url": "https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html",
-  "temporalCoverage": "2026-10-08T12:47:54",
+  "temporalCoverage": "2026-10-08T14:28:42",
   "creator": {"@type": "Organization", "name": "Adjuplica"}
 }
 </script>
@@ -42,6 +42,12 @@
   .nota { font-size:0.8rem; color:var(--ink-muted); }
   .volver { display:inline-block; margin-top:24px; }
   .generado { font-size:0.78rem; color:var(--ink-muted); margin-top:30px; }
+  .lead-box { background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:24px; }
+  .lead-box form { display:flex; flex-direction:column; gap:8px; max-width:420px; }
+  .lead-box input[type=email], .lead-box input[type=text]:not(#lead-honeypot) { padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:0.9rem; }
+  .lead-consent { font-size:0.78rem; color:var(--ink-muted); display:flex; gap:6px; align-items:flex-start; }
+  .btn-lead { background:var(--accent); color:#fff; border:none; border-radius:6px; padding:9px 14px; font-size:0.9rem; cursor:pointer; align-self:flex-start; }
+  .lead-msg { font-size:0.82rem; color:var(--ink-muted); min-height:1em; margin:0; }
 </style>
 </head>
 <body>
@@ -74,6 +80,41 @@
     </tbody>
   </table>
   <p class="nota">El importe total excluye 1 licitación(es) con un importe individual superior a 1.000M€ (acuerdos marco plurianuales con lotes de valor atípico) para no distorsionar la cifra, aunque sí cuentan en el número de licitaciones abiertas.</p>
+  
+  <h2>Quién gana en este sector</h2>
+  <p class="sub">De 57 adjudicaciones registradas en el histórico: baja media 26.6% (adjudicado frente a licitado, sobre 55 con ambos importes) · 1.9 licitadores de media por contrato (sobre 57 con ese dato).</p>
+  <table>
+    <thead><tr><th>Adjudicatario</th><th class="num">Contratos ganados</th><th class="num">Importe adjudicado</th></tr></thead>
+    <tbody>
+      <tr><td>Celering Travel S.L.</td><td class="num">3</td><td class="num">435.481€</td></tr>
+<tr><td>AUTOCARES CALVO E HIJOS S.L.</td><td class="num">2</td><td class="num">68.700€</td></tr>
+<tr><td>TRANSPORTES TERRESTRES CANTABROS S.A.</td><td class="num">2</td><td class="num">51.758€</td></tr>
+<tr><td>SECANIM BIO-INDUSTRIES, S.A.U</td><td class="num">1</td><td class="num">163.800€</td></tr>
+<tr><td>SERVICIOS Y ESTUDIOS MARITIMOS 2020 SL</td><td class="num">1</td><td class="num">957.954€</td></tr>
+<tr><td>BENIU SOLUCIONES S.L</td><td class="num">1</td><td class="num">11.506€</td></tr>
+<tr><td>BLAZQUEZ MARTIN OBRAS CIVILES SL.</td><td class="num">1</td><td class="num">14.264€</td></tr>
+<tr><td>JOSEARTE, SL</td><td class="num">1</td><td class="num">282.714€</td></tr>
+<tr><td>FABIAN MARTIN SL</td><td class="num">1</td><td class="num">219.512€</td></tr>
+<tr><td>AUTOCARES BARAZA S.L.</td><td class="num">1</td><td class="num">3.600€</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Quién más contrata en este sector</h2>
+  <table>
+    <thead><tr><th>Órgano de contratación</th><th class="num">Adjudicaciones</th></tr></thead>
+    <tbody>
+      <tr><td>Dirección General de Renfe Viajeros Sociedad Mercantil Estatal, S.A.</td><td class="num">10</td></tr>
+<tr><td>Dirección General de la Mutual Midat Cyclops, Mutua Colaboradora con la Seguridad Social, nº 1</td><td class="num">5</td></tr>
+<tr><td>Delegación Provincial de la Consejería de Educación, Cultura y Deportes en Toledo</td><td class="num">4</td></tr>
+<tr><td>Empresa de Transformación Agraria S.A.,S.M.E., M.P., (TRAGSA)</td><td class="num">3</td></tr>
+<tr><td>Dirección Provincial de Educación en Palencia</td><td class="num">2</td></tr>
+<tr><td>Sociedad Aragonesa de Gestión Agroambiental, S.L.U. (SARGA)</td><td class="num">1</td></tr>
+<tr><td>Consorcio Medioambiente y Aguas Provincia de Cáceres - Mas Medio</td><td class="num">1</td></tr>
+<tr><td>Gerencia del Consorcio de Museos de la Comunitat Valenciana</td><td class="num">1</td></tr>
+<tr><td>Alcaldía del Ayuntamiento de Cuevas del Almanzora</td><td class="num">1</td></tr>
+<tr><td>Dirección de la Agencia Española de Medicamentos y Productos Sanitarios</td><td class="num">1</td></tr>
+    </tbody>
+  </table>
 
   <h2>Licitaciones con plazo más próximo</h2>
   <table>
@@ -201,11 +242,58 @@
         </tr>
     </tbody>
   </table>
+  
+  <div class="lead-box">
+    <h2>Recibe este informe por email</h2>
+    <p class="sub">Te lo mandamos cuando se actualice, con la cifra exacta de tu sector y comunidad autónoma. Nada más — puedes darte de baja en un clic en cualquier momento.</p>
+    <form id="lead-form">
+      <input type="email" id="lead-email" placeholder="tu@empresa.com" required>
+      <input type="text" id="lead-ccaa" placeholder="Tu comunidad autónoma (opcional)">
+      <input type="text" id="lead-honeypot" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px">
+      <label class="lead-consent"><input type="checkbox" id="lead-consent" required> Acepto recibir este informe por email y que se guarde mi email para enviármelo. Puedo darme de baja cuando quiera.</label>
+      <button type="submit" class="btn-lead">Enviarme el informe</button>
+      <p class="lead-msg" id="lead-msg" role="status"></p>
+    </form>
+  </div>
+  <script>
+  (function () {
+    const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_dioPbNOINWVB3SB6X-fwJQ_YXBXrCTT";
+    const form = document.getElementById("lead-form");
+    const msg = document.getElementById("lead-msg");
+    const params = new URLSearchParams(location.search);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      msg.textContent = "Enviando…";
+      fetch(SUPABASE_URL + "/functions/v1/capture-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({
+          email: document.getElementById("lead-email").value,
+          sector: "Servicios de transporte",
+          ccaa: document.getElementById("lead-ccaa").value || null,
+          consiente: document.getElementById("lead-consent").checked,
+          honeypot: document.getElementById("lead-honeypot").value,
+          fuente: "informe_sector_gratuito",
+          utm_source: params.get("utm_source"),
+          utm_medium: params.get("utm_medium"),
+          utm_campaign: params.get("utm_campaign"),
+        }),
+      })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          msg.textContent = res.ok ? "Hecho — te lo mandaremos a ese email." : (res.d.error || "No se pudo enviar.");
+          if (res.ok) form.reset();
+        })
+        .catch(function () { msg.textContent = "No se pudo enviar. Inténtalo de nuevo."; });
+    });
+  })();
+  </script>
 
   <a class="volver" href="../">← Buscar todas las licitaciones abiertas</a> ·
   <a class="volver" href="../estadisticas.html">Ver estadísticas completas por sector y CCAA</a>
 
-  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el 2026-10-08T12:47:54.</p>
+  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el 2026-10-08T14:28:42.</p>
 </div>
 </body>
 </html>

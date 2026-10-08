@@ -21,7 +21,7 @@
   "name": "Licitaciones públicas de Servicios de reparación y mantenimiento en España",
   "description": "418 licitaciones públicas abiertas de Servicios de reparación y mantenimiento en España ahora mismo, por un importe total de 335.626.241€. Actualizado dos veces al día.",
   "url": "https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-reparacion-y-mantenimiento.html",
-  "temporalCoverage": "2026-10-08T12:47:54",
+  "temporalCoverage": "2026-10-08T14:28:42",
   "creator": {"@type": "Organization", "name": "Adjuplica"}
 }
 </script>
@@ -42,6 +42,12 @@
   .nota { font-size:0.8rem; color:var(--ink-muted); }
   .volver { display:inline-block; margin-top:24px; }
   .generado { font-size:0.78rem; color:var(--ink-muted); margin-top:30px; }
+  .lead-box { background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:24px; }
+  .lead-box form { display:flex; flex-direction:column; gap:8px; max-width:420px; }
+  .lead-box input[type=email], .lead-box input[type=text]:not(#lead-honeypot) { padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:0.9rem; }
+  .lead-consent { font-size:0.78rem; color:var(--ink-muted); display:flex; gap:6px; align-items:flex-start; }
+  .btn-lead { background:var(--accent); color:#fff; border:none; border-radius:6px; padding:9px 14px; font-size:0.9rem; cursor:pointer; align-self:flex-start; }
+  .lead-msg { font-size:0.82rem; color:var(--ink-muted); min-height:1em; margin:0; }
 </style>
 </head>
 <body>
@@ -77,6 +83,41 @@
     </tbody>
   </table>
   
+  
+  <h2>Quién gana en este sector</h2>
+  <p class="sub">De 192 adjudicaciones registradas en el histórico: baja media 27.4% (adjudicado frente a licitado, sobre 184 con ambos importes) · 2.3 licitadores de media por contrato (sobre 192 con ese dato).</p>
+  <table>
+    <thead><tr><th>Adjudicatario</th><th class="num">Contratos ganados</th><th class="num">Importe adjudicado</th></tr></thead>
+    <tbody>
+      <tr><td>FULTON SERVICIOS INTEGRALES SA</td><td class="num">3</td><td class="num">690.229€</td></tr>
+<tr><td>RUBALCABASA SL</td><td class="num">3</td><td class="num">10.456€</td></tr>
+<tr><td>SCHINDLER, S.A.</td><td class="num">2</td><td class="num">946.593€</td></tr>
+<tr><td>Grupo Tecnología del Tráfico, S.L.</td><td class="num">2</td><td class="num">29.332€</td></tr>
+<tr><td>CANON MEDICAL SYSTEMS S.A.</td><td class="num">2</td><td class="num">1.904.548€</td></tr>
+<tr><td>OTIS MOBILITY S.A.</td><td class="num">2</td><td class="num">5.711€</td></tr>
+<tr><td>TK Elevadores España,S.L.</td><td class="num">2</td><td class="num">7.896€</td></tr>
+<tr><td>ELECTRO CAOR S.A.</td><td class="num">2</td><td class="num">8.322€</td></tr>
+<tr><td>BECTON DICKINSON, S.A.U.</td><td class="num">2</td><td class="num">295.066€</td></tr>
+<tr><td>VEOLIA SERVICIOS LECAM, S.A.U.</td><td class="num">2</td><td class="num">23.138€</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Quién más contrata en este sector</h2>
+  <table>
+    <thead><tr><th>Órgano de contratación</th><th class="num">Adjudicaciones</th></tr></thead>
+    <tbody>
+      <tr><td>Dirección General de Renfe Ingeniería y Mantenimiento Sociedad Mercantil Estatal, S.A.</td><td class="num">10</td></tr>
+<tr><td>Jefatura de Asuntos Económicos del Mando de Apoyo Logístico</td><td class="num">6</td></tr>
+<tr><td>Jefatura de Intendencia de Asuntos Económicos Oeste</td><td class="num">5</td></tr>
+<tr><td>Secretaría General de la Agencia Estatal Consejo Superior de Investigaciones Científicas</td><td class="num">4</td></tr>
+<tr><td>Dirección General del Agua</td><td class="num">4</td></tr>
+<tr><td>Inspección General de Sanidad de la Defensa</td><td class="num">3</td></tr>
+<tr><td>Comisión Ejecutiva de Gestión Integral del Agua de Huelva</td><td class="num">3</td></tr>
+<tr><td>Dirección General de Renfe Viajeros Sociedad Mercantil Estatal, S.A.</td><td class="num">3</td></tr>
+<tr><td>Gerencia Sector Sanitario de Zaragoza 2</td><td class="num">2</td></tr>
+<tr><td>Presidencia del Consejo de Administración de la Autoridad Portuaria de Barcelona (PORT DE BARCELONA)</td><td class="num">2</td></tr>
+    </tbody>
+  </table>
 
   <h2>Licitaciones con plazo más próximo</h2>
   <table>
@@ -204,11 +245,58 @@
         </tr>
     </tbody>
   </table>
+  
+  <div class="lead-box">
+    <h2>Recibe este informe por email</h2>
+    <p class="sub">Te lo mandamos cuando se actualice, con la cifra exacta de tu sector y comunidad autónoma. Nada más — puedes darte de baja en un clic en cualquier momento.</p>
+    <form id="lead-form">
+      <input type="email" id="lead-email" placeholder="tu@empresa.com" required>
+      <input type="text" id="lead-ccaa" placeholder="Tu comunidad autónoma (opcional)">
+      <input type="text" id="lead-honeypot" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px">
+      <label class="lead-consent"><input type="checkbox" id="lead-consent" required> Acepto recibir este informe por email y que se guarde mi email para enviármelo. Puedo darme de baja cuando quiera.</label>
+      <button type="submit" class="btn-lead">Enviarme el informe</button>
+      <p class="lead-msg" id="lead-msg" role="status"></p>
+    </form>
+  </div>
+  <script>
+  (function () {
+    const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_dioPbNOINWVB3SB6X-fwJQ_YXBXrCTT";
+    const form = document.getElementById("lead-form");
+    const msg = document.getElementById("lead-msg");
+    const params = new URLSearchParams(location.search);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      msg.textContent = "Enviando…";
+      fetch(SUPABASE_URL + "/functions/v1/capture-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({
+          email: document.getElementById("lead-email").value,
+          sector: "Servicios de reparaci\u00f3n y mantenimiento",
+          ccaa: document.getElementById("lead-ccaa").value || null,
+          consiente: document.getElementById("lead-consent").checked,
+          honeypot: document.getElementById("lead-honeypot").value,
+          fuente: "informe_sector_gratuito",
+          utm_source: params.get("utm_source"),
+          utm_medium: params.get("utm_medium"),
+          utm_campaign: params.get("utm_campaign"),
+        }),
+      })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          msg.textContent = res.ok ? "Hecho — te lo mandaremos a ese email." : (res.d.error || "No se pudo enviar.");
+          if (res.ok) form.reset();
+        })
+        .catch(function () { msg.textContent = "No se pudo enviar. Inténtalo de nuevo."; });
+    });
+  })();
+  </script>
 
   <a class="volver" href="../">← Buscar todas las licitaciones abiertas</a> ·
   <a class="volver" href="../estadisticas.html">Ver estadísticas completas por sector y CCAA</a>
 
-  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el 2026-10-08T12:47:54.</p>
+  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el 2026-10-08T14:28:42.</p>
 </div>
 </body>
 </html>

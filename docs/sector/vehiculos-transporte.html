@@ -21,7 +21,7 @@
   "name": "Licitaciones públicas de Vehículos, transporte en España",
   "description": "317 licitaciones públicas abiertas de Vehículos, transporte en España ahora mismo, por un importe total de 968.304.107€. Actualizado dos veces al día.",
   "url": "https://filippo3471.github.io/licitaciones-espana/sector/vehiculos-transporte.html",
-  "temporalCoverage": "2026-10-08T12:47:54",
+  "temporalCoverage": "2026-10-08T14:28:42",
   "creator": {"@type": "Organization", "name": "Adjuplica"}
 }
 </script>
@@ -42,6 +42,12 @@
   .nota { font-size:0.8rem; color:var(--ink-muted); }
   .volver { display:inline-block; margin-top:24px; }
   .generado { font-size:0.78rem; color:var(--ink-muted); margin-top:30px; }
+  .lead-box { background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:24px; }
+  .lead-box form { display:flex; flex-direction:column; gap:8px; max-width:420px; }
+  .lead-box input[type=email], .lead-box input[type=text]:not(#lead-honeypot) { padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:0.9rem; }
+  .lead-consent { font-size:0.78rem; color:var(--ink-muted); display:flex; gap:6px; align-items:flex-start; }
+  .btn-lead { background:var(--accent); color:#fff; border:none; border-radius:6px; padding:9px 14px; font-size:0.9rem; cursor:pointer; align-self:flex-start; }
+  .lead-msg { font-size:0.82rem; color:var(--ink-muted); min-height:1em; margin:0; }
 </style>
 </head>
 <body>
@@ -75,6 +81,41 @@
     </tbody>
   </table>
   
+  
+  <h2>Quién gana en este sector</h2>
+  <p class="sub">De 257 adjudicaciones registradas en el histórico: baja media 30.6% (adjudicado frente a licitado, sobre 257 con ambos importes) · 2.7 licitadores de media por contrato (sobre 257 con ese dato).</p>
+  <table>
+    <thead><tr><th>Adjudicatario</th><th class="num">Contratos ganados</th><th class="num">Importe adjudicado</th></tr></thead>
+    <tbody>
+      <tr><td>CAR ET BUS MAINTENANCE IBERICA S.L</td><td class="num">12</td><td class="num">5.609€</td></tr>
+<tr><td>I2M SOLUCIONES TECNICAS S.L.</td><td class="num">9</td><td class="num">28.473€</td></tr>
+<tr><td>COVISA AUTOMOCION SA</td><td class="num">8</td><td class="num">9.106€</td></tr>
+<tr><td>AUTO COMERCIAL MONEDERO, S.A.U.</td><td class="num">8</td><td class="num">44.267€</td></tr>
+<tr><td>Eurorecambios del camión, S.L.</td><td class="num">6</td><td class="num">5.038€</td></tr>
+<tr><td>KNORR-BREMSE RAIL SYSTEMS ESPAÑA SA</td><td class="num">6</td><td class="num">27.471€</td></tr>
+<tr><td>TEKNIK DESARROLLOS MECANICOS S.L.</td><td class="num">4</td><td class="num">39.432€</td></tr>
+<tr><td>CASTRO PERERO ROBERTO</td><td class="num">4</td><td class="num">11.004€</td></tr>
+<tr><td>FAIVELEY TRANSPORT IBERICA S.A.</td><td class="num">3</td><td class="num">28.375€</td></tr>
+<tr><td>CINTRATEC COMERCIAL DE SUMINISTR OS INDUSTRIALES S.L.</td><td class="num">3</td><td class="num">4.072€</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Quién más contrata en este sector</h2>
+  <table>
+    <thead><tr><th>Órgano de contratación</th><th class="num">Adjudicaciones</th></tr></thead>
+    <tbody>
+      <tr><td>Dirección General de Renfe Ingeniería y Mantenimiento Sociedad Mercantil Estatal, S.A.</td><td class="num">91</td></tr>
+<tr><td>Gerencia de la Empresa Municipal Autobuses de Córdoba S.A. (AUCORSA)</td><td class="num">38</td></tr>
+<tr><td>Empresa de Transformación Agraria S.A.,S.M.E., M.P., (TRAGSA)</td><td class="num">4</td></tr>
+<tr><td>Jefatura de Asuntos Económicos del Mando de Apoyo Logístico</td><td class="num">4</td></tr>
+<tr><td>Dirección de Adquisiciones del Mando de Apoyo Logístico del Ejército del Aire y del Espacio</td><td class="num">4</td></tr>
+<tr><td>Consejería de Agricultura, Ganadería, Medio Rural y Política Ambiental de la Junta de Castilla y León</td><td class="num">3</td></tr>
+<tr><td>Consejería de Hacienda de la Ciudad Autónoma de Melilla</td><td class="num">3</td></tr>
+<tr><td>Imprenta de Billetes, S.A., Medio Propio del Banco de España (IMBISA)</td><td class="num">3</td></tr>
+<tr><td>Junta de Gobierno del Ayuntamiento de Corvera de Asturias</td><td class="num">2</td></tr>
+<tr><td>Aena. Dirección del Aeropuerto de Málaga-Costa del Sol</td><td class="num">2</td></tr>
+    </tbody>
+  </table>
 
   <h2>Licitaciones con plazo más próximo</h2>
   <table>
@@ -203,11 +244,58 @@ nuevos en color come</a><div class="organo">Jefatura de Asuntos Económicos de l
         </tr>
     </tbody>
   </table>
+  
+  <div class="lead-box">
+    <h2>Recibe este informe por email</h2>
+    <p class="sub">Te lo mandamos cuando se actualice, con la cifra exacta de tu sector y comunidad autónoma. Nada más — puedes darte de baja en un clic en cualquier momento.</p>
+    <form id="lead-form">
+      <input type="email" id="lead-email" placeholder="tu@empresa.com" required>
+      <input type="text" id="lead-ccaa" placeholder="Tu comunidad autónoma (opcional)">
+      <input type="text" id="lead-honeypot" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px">
+      <label class="lead-consent"><input type="checkbox" id="lead-consent" required> Acepto recibir este informe por email y que se guarde mi email para enviármelo. Puedo darme de baja cuando quiera.</label>
+      <button type="submit" class="btn-lead">Enviarme el informe</button>
+      <p class="lead-msg" id="lead-msg" role="status"></p>
+    </form>
+  </div>
+  <script>
+  (function () {
+    const SUPABASE_URL = "https://fssriztfcedgmwtgkxof.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_dioPbNOINWVB3SB6X-fwJQ_YXBXrCTT";
+    const form = document.getElementById("lead-form");
+    const msg = document.getElementById("lead-msg");
+    const params = new URLSearchParams(location.search);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      msg.textContent = "Enviando…";
+      fetch(SUPABASE_URL + "/functions/v1/capture-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({
+          email: document.getElementById("lead-email").value,
+          sector: "Veh\u00edculos, transporte",
+          ccaa: document.getElementById("lead-ccaa").value || null,
+          consiente: document.getElementById("lead-consent").checked,
+          honeypot: document.getElementById("lead-honeypot").value,
+          fuente: "informe_sector_gratuito",
+          utm_source: params.get("utm_source"),
+          utm_medium: params.get("utm_medium"),
+          utm_campaign: params.get("utm_campaign"),
+        }),
+      })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          msg.textContent = res.ok ? "Hecho — te lo mandaremos a ese email." : (res.d.error || "No se pudo enviar.");
+          if (res.ok) form.reset();
+        })
+        .catch(function () { msg.textContent = "No se pudo enviar. Inténtalo de nuevo."; });
+    });
+  })();
+  </script>
 
   <a class="volver" href="../">← Buscar todas las licitaciones abiertas</a> ·
   <a class="volver" href="../estadisticas.html">Ver estadísticas completas por sector y CCAA</a>
 
-  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el 2026-10-08T12:47:54.</p>
+  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el 2026-10-08T14:28:42.</p>
 </div>
 </body>
 </html>
