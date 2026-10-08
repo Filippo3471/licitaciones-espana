@@ -173,6 +173,34 @@
     .exp-body { padding: 0 12px 12px 14px; }
   }
 
+  .steps-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+  .step-item {
+    border: 1px solid var(--line); border-radius: var(--sp-2); background: var(--paper-raised);
+    padding: var(--sp-3); font-size: 0.85rem;
+  }
+  .step-num {
+    display: inline-flex; width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+    color: var(--accent-ink); align-items: center; justify-content: center; font-size: 0.75rem;
+    font-weight: 600; margin-bottom: var(--sp-2);
+  }
+  .step-item strong { display: block; margin-bottom: 2px; }
+  .step-item span.step-sub { color: var(--ink-muted); font-size: 0.8rem; }
+  @media (max-width: 720px) { .steps-row { grid-template-columns: 1fr; } }
+
+  .consultoras-section {
+    border: 1px solid var(--line); border-radius: var(--sp-2); background: var(--paper-raised);
+    padding: var(--sp-4); margin-bottom: var(--sp-5); display: flex; flex-wrap: wrap; gap: var(--sp-4);
+    align-items: center; justify-content: space-between;
+  }
+  .consultoras-section .consultoras-copy { max-width: 560px; }
+  .consultoras-section h2 { font-size: 1.05rem; margin: 0 0 4px; }
+  .consultoras-section p { font-size: 0.85rem; color: var(--ink-muted); margin: 0 0 6px; }
+  .consultoras-section ul { margin: 6px 0 0; padding-left: 18px; font-size: 0.82rem; color: var(--ink); }
+  .consultoras-section ul li { margin-bottom: 2px; }
+
   .tabs {
     display: flex; gap: 4px; margin-bottom: 6px; border-bottom: 1px solid var(--line);
     overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -438,6 +466,24 @@
     <span class="fuente-badge">Ayuntamiento de Bilbao</span>
   </div>
 
+  <div class="steps-row">
+    <div class="step-item">
+      <span class="step-num">1</span>
+      <strong>Elige una licitación abierta</strong>
+      <span class="step-sub">De cualquier sector o comunidad autónoma, con su pliego oficial enlazado.</span>
+    </div>
+    <div class="step-item">
+      <span class="step-num">2</span>
+      <strong>GO/NO-GO contra tu solvencia</strong>
+      <span class="step-sub">Comparamos el pliego con el perfil de tu empresa: qué cumples, qué no y qué hay que revisar.</span>
+    </div>
+    <div class="step-item">
+      <span class="step-num">3</span>
+      <strong>Checklist de documentos y plazos</strong>
+      <span class="step-sub">Qué presentar y cuándo vence cada hito, con enlace a la página y cláusula exacta del pliego.</span>
+    </div>
+  </div>
+
   <div class="features-row">
     <div class="feature-item">
       <span class="feature-icon">✓</span>
@@ -445,9 +491,22 @@
     </div>
     <div class="feature-item">
       <span class="feature-icon">✓</span>
-      <div><strong>Ayuda con el pliego (IA):</strong> resumen de requisitos, solvencia y criterios sin leer el PDF entero.</div>
+      <div><strong>Ayuda con el pliego (IA):</strong> resumen de requisitos, solvencia y criterios sin leer el PDF entero, con la cláusula exacta citada junto a cada dato.</div>
     </div>
     <span class="feature-note">Entra con tu cuenta de empresa para usarlas en cualquier licitación</span>
+  </div>
+
+  <div class="consultoras-section">
+    <div class="consultoras-copy">
+      <h2>¿Preparas ofertas para varios clientes?</h2>
+      <p>El plan Equipo / Consultora gestiona varias empresas cliente desde una sola cuenta, cada una con su propio perfil de solvencia.</p>
+      <ul>
+        <li>Un análisis de pliego y un GO/NO-GO por cada cliente, sin mezclar perfiles.</li>
+        <li>Selector de empresa activa: cambias de cliente sin salir de la cuenta.</li>
+        <li>Checklist y resumen exportables, listos para entregar al cliente.</li>
+      </ul>
+    </div>
+    <button type="button" class="btn primary" data-open="modal-precios" id="btn-consultoras-precios">Ver plan Equipo</button>
   </div>
 
   <nav class="tabs" role="tablist">
@@ -495,7 +554,8 @@
 
   <footer class="foot">
     <span>Fuentes oficiales: PLACSP · Generalitat de Catalunya · TED (UE) · Ayuntamiento de Bilbao — más TendersGuru (terceros) · <a href="estadisticas.html">estadísticas</a></span>
-    <span>Adjuplica es un proyecto independiente, no un servicio oficial de la Administración</span>
+    <span>Adjuplica es un proyecto independiente, no un servicio oficial de la Administración. Titular: Filippo Di Nola, en fase de validación de producto.</span>
+    <span><a href="aviso-legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="baja.html">Darse de baja</a></span>
   </footer>
 </div>
 
@@ -1153,6 +1213,7 @@
     $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
     $("#btn-empresa").addEventListener("click", openEmpresaModal);
     $("#btn-precios").addEventListener("click", openPreciosModal);
+    $("#btn-consultoras-precios").addEventListener("click", openPreciosModal);
     $("#btn-gestionar-plan").addEventListener("click", abrirPortalSuscripcion);
     document.querySelectorAll('input[name="precios-interval"]').forEach((r) => {
       r.addEventListener("change", () => { if (plansConfig) renderPrecios(); });
