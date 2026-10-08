@@ -413,6 +413,7 @@
   .checklist-items input[type="checkbox"] { margin-top: 2px; }
   .checklist-items label.done { text-decoration: line-through; color: var(--ink-muted); }
   .checklist-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lead-consent { display: flex; gap: 6px; align-items: flex-start; font-size: 0.82rem; color: var(--ink-muted); font-weight: 400; }
 
   @media print {
     .masthead .auth-bar, .review-strip, .placsp-aviso, .fuentes-row, .steps-row, .features-row,
@@ -654,6 +655,9 @@
       <div class="field">
         <label for="emp-certificaciones">Certificaciones (texto libre, opcional)</label>
         <input type="text" id="emp-certificaciones" placeholder="p.ej. ISO 9001, ISO 14001">
+      </div>
+      <div class="field">
+        <label class="lead-consent"><input type="checkbox" id="emp-alertas"> Avísame por email de licitaciones nuevas en estos sectores/CCAA (según la frecuencia de tu plan)</label>
       </div>
       <div class="modal-actions">
         <button type="button" class="modal-close" data-close="modal-empresa">Cancelar</button>
@@ -1278,7 +1282,7 @@
     document.dispatchEvent(new CustomEvent("empresa:changed"));
   }
 
-  function openEmpresaModal() {
+  async function openEmpresaModal() {
     $("#emp-error").textContent = "";
     if (currentProfile) {
       $("#emp-nombre").value = currentProfile.company_name || "";
@@ -1290,6 +1294,10 @@
       $("#emp-importe-max").value = currentProfile.importe_max ?? "";
       $("#emp-facturacion").value = currentProfile.facturacion_anual ?? "";
       $("#emp-certificaciones").value = currentProfile.certificaciones || "";
+      try {
+        const { data: alertSub } = await sb.from("alert_subscriptions").select("activa").eq("company_id", currentCompanyId).maybeSingle();
+        $("#emp-alertas").checked = !!(alertSub && alertSub.activa);
+      } catch { $("#emp-alertas").checked = false; }
     } else {
       $("#form-empresa").reset();
     }
@@ -1334,6 +1342,14 @@
       currentCompanyId = data.company.id;
       currentPlan = data.plan || "free";
       updatePlanBadge();
+      try {
+        await sb.from("alert_subscriptions").upsert({
+          company_id: currentCompanyId,
+          cpv: body.cpv_codes,
+          ccaa: body.ccaa_scope,
+          activa: $("#emp-alertas").checked,
+        });
+      } catch { /* las alertas son secundarias — no bloquea el guardado del perfil */ }
       closeModal("#modal-empresa");
       document.dispatchEvent(new CustomEvent("empresa:changed"));
     } catch (err) {
