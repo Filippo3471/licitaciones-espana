@@ -404,6 +404,24 @@
   .pliego-summary .no-encontrado { font-size: 0.82rem; color: var(--ink-muted); font-style: italic; margin: 0; }
   .pliego-summary ul { margin: 2px 0 0; padding-left: 1.1em; }
   .pliego-summary .checklist-preview li { margin-bottom: 4px; }
+
+  .checklist-box { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .checklist-box h4 { font-size: 0.82rem; margin: 0 0 6px; }
+  .checklist-progress { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 6px; }
+  .checklist-items { list-style: none; margin: 0 0 8px; padding: 0; }
+  .checklist-items li { display: flex; gap: 6px; align-items: flex-start; font-size: 0.83rem; margin-bottom: 4px; }
+  .checklist-items input[type="checkbox"] { margin-top: 2px; }
+  .checklist-items label.done { text-decoration: line-through; color: var(--ink-muted); }
+  .checklist-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  @media print {
+    .masthead .auth-bar, .review-strip, .placsp-aviso, .fuentes-row, .steps-row, .features-row,
+    .consultoras-section, .tabs, .filters, .foot, .empresa-actions button, .checklist-actions,
+    .modal-backdrop { display: none !important; }
+    details.expediente:not([open]) { display: none !important; }
+    .shell { max-width: 100%; }
+    body { background: #fff; }
+  }
   .spinner-line { font-size: 0.85rem; color: var(--ink-muted); }
   .cache-note { font-size: 0.72rem; color: var(--ink-muted); margin-top: 6px; }
 
@@ -904,7 +922,7 @@
     return m ? `${url}#page=${m[1]}` : url;
   }
 
-  function renderPliegoSummary(container, data) {
+  function renderPliegoSummary(container, data, item) {
     const r = data.resumen || {};
     const citas = r.citas || {};
     const fuentesPdf = r._fuentes_pdf || {};
@@ -953,10 +971,111 @@
     }).join("")}</ul>`);
     html += campo("Riesgos / puntos a vigilar", "riesgos", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
     html += `<p class="cache-note">${data.desde_cache ? "Resumen ya generado antes para esta licitación (caché compartida entre usuarios)." : "Resumen generado ahora mismo por IA a partir del pliego oficial."} Verifica siempre contra el PDF original antes de decidir.</p>`;
+    html += `
+      <div class="checklist-box">
+        <h4>Checklist de la oferta</h4>
+        <div class="checklist-progress"></div>
+        <ul class="checklist-items"></ul>
+        <div class="checklist-actions">
+          <button type="button" class="btn small" data-action="ics">Añadir plazos a mi calendario</button>
+          <button type="button" class="btn small" data-action="print">Exportar / imprimir</button>
+        </div>
+      </div>
+    `;
     html += `</div>`;
     container.innerHTML = html;
     const ev = data.evaluacion || {};
     renderVerdict(container.querySelector(".pliego-verdict"), ev.veredicto || "sin_datos_suficientes", ev.puntos, ev.explicacion);
+    setupChecklist(container, item, r);
+  }
+
+  function icsEscape(s) { return String(s || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+  function icsDate(d) { return d.toISOString().slice(0, 10).replace(/-/g, ""); }
+
+  function parseFechaEs(s) {
+    if (!s) return null;
+    s = String(s).trim();
+    let m = /(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s);
+    if (m) return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+    m = /(\d{1,2})[/-](\d{1,2})[/-](\d{4})/.exec(s);
+    if (m) return new Date(Date.UTC(+m[3], +m[2] - 1, +m[1]));
+    const meses = { enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5, julio: 6, agosto: 7, septiembre: 8, setiembre: 8, octubre: 9, noviembre: 10, diciembre: 11 };
+    m = /(\d{1,2})\s+de\s+([a-záéíóúñ]+)\s+de\s+(\d{4})/i.exec(s);
+    if (m && meses[m[2].toLowerCase()] != null) return new Date(Date.UTC(+m[3], meses[m[2].toLowerCase()], +m[1]));
+    return null;
+  }
+
+  function downloadIcsPlazos(item, plazos) {
+    const eventos = plazos.map((p) => ({ fecha: parseFechaEs(p.fecha), hito: p.hito })).filter((e) => e.fecha);
+    if (!eventos.length) {
+      alert("No se ha podido interpretar ninguna de las fechas del pliego en un formato reconocible — añádelas a mano a tu calendario.");
+      return;
+    }
+    let ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Adjuplica//Plazos//ES\r\n";
+    eventos.forEach((e, i) => {
+      ics += `BEGIN:VEVENT\r\nUID:${icsEscape(item.external_id)}-${i}@adjuplica\r\nDTSTAMP:${icsDate(new Date())}T000000Z\r\nDTSTART;VALUE=DATE:${icsDate(e.fecha)}\r\nSUMMARY:${icsEscape(e.hito || "Plazo de licitación")}\r\nDESCRIPTION:${icsEscape(item.titulo || "")}\r\nEND:VEVENT\r\n`;
+    });
+    ics += "END:VCALENDAR\r\n";
+    const blob = new Blob([ics], { type: "text/calendar" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `plazos-${String(item.external_id).replace(/[^a-z0-9]/gi, "_").slice(0, 60)}.ics`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function setupChecklist(container, item, resumen) {
+    const box = container.querySelector(".checklist-box");
+    if (!box) return;
+    const docs = resumen.documentacion_requerida || [];
+    const plazos = resumen.plazos || [];
+    if (!docs.length && !plazos.length) {
+      box.innerHTML = `<p class="cache-note">El pliego no dejó claros ni documentos ni plazos concretos para marcar — revísalo en el original.</p>`;
+      return;
+    }
+    let saved = [];
+    if (currentCompanyId) {
+      try {
+        const { data } = await sb.from("offer_checklists").select("items").eq("company_id", currentCompanyId).eq("external_id", item.external_id).maybeSingle();
+        saved = (data && data.items) || [];
+      } catch { /* sin checklist guardada todavía */ }
+    }
+    const items = docs.map((d, i) => {
+      const key = `doc_${i}`;
+      const prev = saved.find((s) => s.key === key);
+      return { key, label: d.documento || `Documento ${i + 1}`, done: prev ? !!prev.done : false };
+    });
+
+    function renderItems() {
+      const doneCount = items.filter((i) => i.done).length;
+      box.querySelector(".checklist-progress").textContent = items.length ? `${doneCount} de ${items.length} documentos marcados` : "";
+      box.querySelector(".checklist-items").innerHTML = items.map((it, idx) => `
+        <li><input type="checkbox" id="chk-${escapeAttr(it.key)}-${idx}" ${it.done ? "checked" : ""} data-idx="${idx}">
+        <label for="chk-${escapeAttr(it.key)}-${idx}" class="${it.done ? "done" : ""}">${escapeHtml(it.label)}</label></li>
+      `).join("");
+      box.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+        cb.addEventListener("change", async (e) => {
+          const idx = Number(e.target.dataset.idx);
+          items[idx].done = e.target.checked;
+          renderItems();
+          if (currentCompanyId) {
+            try { await sb.from("offer_checklists").upsert({ company_id: currentCompanyId, external_id: item.external_id, items }); } catch { /* se intentará de nuevo en el próximo cambio */ }
+          }
+        });
+      });
+    }
+    renderItems();
+
+    const icsBtn = box.querySelector('[data-action="ics"]');
+    if (icsBtn) {
+      if (!plazos.length) icsBtn.disabled = true;
+      icsBtn.addEventListener("click", () => downloadIcsPlazos(item, plazos));
+    }
+    const printBtn = box.querySelector('[data-action="print"]');
+    if (printBtn) printBtn.addEventListener("click", () => window.print());
   }
 
   async function pedirAyudaPliego(item, container) {
@@ -978,7 +1097,7 @@
         if (data.upsell) { renderUpsell(container, data); return; }
         throw new Error(data.error || "Error del servidor");
       }
-      renderPliegoSummary(container, data);
+      renderPliegoSummary(container, data, item);
     } catch (err) {
       container.innerHTML = `<p class="modal-error" style="margin:0">${escapeHtml(err.message || "No se pudo generar la ayuda")}</p>`;
     }
