@@ -25,6 +25,7 @@ validacion/leads_*
 # contacto (empresa, email, teléfono) — nunca al repo público.
 validacion/outreach_mini_informes.json
 validacion/outreach_envios_log.json
+validacion/instantly_import.csv
 
 # Notas internas de negocio (plan, precios, CFO, números) — nunca al repo público.
 founder/
