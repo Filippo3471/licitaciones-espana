@@ -55,6 +55,14 @@ RAIZ = Path(__file__).resolve().parent.parent
 INFORMES_PATH = RAIZ / "validacion" / "outreach_mini_informes.json"
 NO_REPETIR_DIAS = 14
 
+# Lente Monopoly (ronda 4 del founder-lab, founder/offer.md): no repartir
+# el outreach por toda España a la vez. Andalucía y Madrid son, con datos
+# reales de data/adjudicaciones.json, los mercados de arquitectura/
+# ingeniería/TI con más actividad y menos concentración (nadie los
+# domina ya) — se prioriza ahí primero, pero sin excluir al resto: si el
+# cupo diario no se llena con esas dos CCAA, sigue con las demás.
+CCAA_PRIORIDAD_MONOPOLY = ("Andalucía", "Comunidad de Madrid")
+
 
 def cargar_informes() -> dict[str, dict]:
     if not INFORMES_PATH.exists():
@@ -68,10 +76,14 @@ def cargar_informes() -> dict[str, dict]:
 def cargar_candidatos(session: requests.Session, base_url: str) -> list[dict]:
     r = session.get(
         f"{base_url}/rest/v1/outreach_contacts",
-        params={"estado": "neq.baja", "select": "id,empresa,nif,canal,email,estado,fecha_contacto"},
+        params={"estado": "neq.baja", "select": "id,empresa,nif,canal,email,estado,fecha_contacto,ccaa"},
     )
     r.raise_for_status()
-    return r.json()
+    filas = r.json()
+    # Orden estable: Andalucía/Madrid primero (lente Monopoly), el resto
+    # después, en el mismo orden en que llegaron. Nadie se excluye.
+    filas.sort(key=lambda c: 0 if c.get("ccaa") in CCAA_PRIORIDAD_MONOPOLY else 1)
+    return filas
 
 
 def elegible(contacto: dict) -> tuple[bool, str]:
@@ -159,7 +171,10 @@ def main():
     base_url = url.rstrip("/")
 
     candidatos = cargar_candidatos(session, base_url)
-    print(f"{len(candidatos)} contactos (sin dar de baja) en outreach_contacts. Modo: {'ENVÍO REAL' if modo_live else 'DRY_RUN'}. Límite: {args.limite}.")
+    n_prioridad = sum(1 for c in candidatos if c.get("ccaa") in CCAA_PRIORIDAD_MONOPOLY)
+    print(f"{len(candidatos)} contactos (sin dar de baja) en outreach_contacts "
+          f"({n_prioridad} en {'/'.join(CCAA_PRIORIDAD_MONOPOLY)}, van primero). "
+          f"Modo: {'ENVÍO REAL' if modo_live else 'DRY_RUN'}. Límite: {args.limite}.")
 
     resend_key = os.environ.get("RESEND_API_KEY")
     from_email = os.environ.get("ALERTS_FROM_EMAIL")

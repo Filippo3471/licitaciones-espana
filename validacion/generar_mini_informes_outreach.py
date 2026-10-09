@@ -53,7 +53,13 @@ def cargar_contactos_pendientes() -> list[dict]:
         headers={"apikey": key, "Authorization": f"Bearer {key}"},
     )
     r.raise_for_status()
-    return r.json()
+    filas = r.json()
+    # Lente Monopoly (ronda 4 del founder-lab): Andalucía y Madrid primero
+    # (ver founder/offer.md) — así, si se corta el lote, lo ya generado
+    # cubre la zona prioritaria. No se excluye al resto.
+    CCAA_PRIORIDAD_MONOPOLY = ("Andalucía", "Comunidad de Madrid")
+    filas.sort(key=lambda c: 0 if c.get("ccaa") in CCAA_PRIORIDAD_MONOPOLY else 1)
+    return filas
 
 
 def calcular_stats_por_sector_ccaa(licitaciones: list[dict], adjudicaciones: list[dict]) -> dict:
