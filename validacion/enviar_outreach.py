@@ -1,6 +1,14 @@
 """Bloque 10.3 del prompt "copiloto de ofertas": script de envío del
 primer contacto (el mini-informe del Bloque 10.2), con salvaguardas.
 
+AVISO operativo (ronda 4 del founder-lab, 09-10-2026): el email que
+construye este script le pide al destinatario que mande un pliego ya
+cerrado para analizarlo gratis. Ese flujo HOY es manual — no hay un
+botón de autoservicio en la web para subir un pliego ya decidido y
+compararlo con el resultado real. Si se manda un lote real y alguien
+responde con un pliego, hace falta procesarlo a mano (vía la cuenta de
+empresa del fundador) hasta que se construya ese flujo.
+
 SIEMPRE en modo DRY_RUN salvo que se pase --live explícitamente, Y ADEMÁS
 se escriba CONFIRMO_ENVIO=SI en el entorno. Ninguna de las dos cosas por
 separado basta — esto es intencional: nunca se manda un lote real de
@@ -83,21 +91,28 @@ def elegible(contacto: dict) -> tuple[bool, str]:
 
 
 def construir_email(informe: dict) -> tuple[str, str]:
-    # Ronda 3 del founder-lab (08-10-2026): el panel simulado compra sobre
-    # todo la prueba suelta, no la suscripción directa (ver founder/
-    # summary.md). El ángulo del primer contacto cambia de "suscríbete" a
-    # "prueba tu primer pliego por 5 €" — es lo que de verdad convierte.
-    asunto = f"{informe['empresa']}: quién está ganando en tu sector ahora mismo"
+    # Ronda 4 del founder-lab (09-10-2026, founder/offer.md): lo que mueve
+    # la aguja no es el precio ni la promesa, es la probabilidad percibida
+    # de que el análisis acierte (ecuación de valor de Hormozi). El email
+    # lleva la prueba verificable (pliego ya conocido) y la garantía por
+    # delante, en vez de pedir que se fíen a ciegas. Tono: Ogilvy (dato
+    # concreto del propio sector del lector, una sola promesa, una sola
+    # llamada a la acción, cero adjetivos sin respaldo) + Hormozi (riesgo
+    # invertido: la empresa no arriesga nada, Adjuplica sí).
+    asunto = f"{informe['empresa']}: quién está ganando en {informe['sector']} ahora mismo"
     cuerpo = (
         f"Hola,\n\n"
         f"{informe['mini_informe']}\n\n"
         f"Lo hemos sacado de un informe gratuito de tu sector, sin registro: {informe['link_con_utm']}\n\n"
-        f"Si tenéis un pliego concreto delante, podéis probar Adjuplica en ese mismo pliego por 5 € "
-        f"(el primero sale a ese precio; sin suscripción, sin tarjeta guardada). En segundos os dice "
-        f"si podéis presentaros — requisito por requisito de solvencia, comparado con vuestra empresa, "
-        f"con la cita exacta del pliego (GO/NO-GO) — y qué documentación y plazos os faltan, con un "
-        f"checklist. No es spam de licitaciones — es para cuando ya tenéis el pliego delante y no "
-        f"queréis leerlo entero.\n\n"
+        f"Una propuesta concreta: mandadnos un pliego que ya ganasteis o perdisteis — uno cuyo resultado "
+        f"ya conocéis. Lo analizamos gratis y comparáis vosotros mismos si el GO/NO-GO (requisito por "
+        f"requisito de solvencia, con la cita exacta del pliego) coincide con lo que de verdad pasó. "
+        f"Sin compromiso, sin tarjeta.\n\n"
+        f"Si cuadra, el primer pliego real que analicéis después cuesta 5 € (a partir del segundo, 19 €, "
+        f"o la suscripción si licitáis a menudo). Y si alguna vez el GO/NO-GO os dice que cumplís un "
+        f"requisito y la mesa de contratación os excluye por ese mismo requisito, os devolvemos el "
+        f"análisis y os regalamos 3 meses de Básico. El riesgo es nuestro, no vuestro.\n\n"
+        f"¿Nos mandáis un pliego ya cerrado para probarlo?\n\n"
         f"Si no os interesa, respondiendo \"BAJA\" no os volvemos a escribir.\n\n"
         f"Un saludo,\nFilippo (Adjuplica)"
     )
