@@ -19,13 +19,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-empresariales-publicidad-limpieza-consultoria-seguridad.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-arquitectura-ingenieria-y-construccion.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-arquitectura-ingenieria-y-construccion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-empresariales-publicidad-limpieza-consultoria-seguridad.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -49,13 +49,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-salud-y-accion-social.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-medicos-farmacia-cosmetica.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-medicos-farmacia-cosmetica.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-salud-y-accion-social.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -85,18 +85,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-y-aparatos-electricos.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
@@ -115,6 +103,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-industrial.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
@@ -127,13 +127,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-recreativos-culturales-y-deportivos.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-de-radio-tv-comunicaciones.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-recreativos-culturales-y-deportivos.html</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
