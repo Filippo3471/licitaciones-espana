@@ -110,12 +110,22 @@ def construir_email(informe: dict) -> tuple[str, str]:
     # delante, en vez de pedir que se fíen a ciegas. Tono: Ogilvy (dato
     # concreto del propio sector del lector, una sola promesa, una sola
     # llamada a la acción, cero adjetivos sin respaldo) + Hormozi (riesgo
-    # invertido: la empresa no arriesga nada, Adjuplica sí).
+    # invertido: la empresa no arriesga nada, Adjuplica sí). La cita de la
+    # CNMC es textual y real: respuesta anónima de una pyme de construcción
+    # a la consulta pública de la CNMC sobre contratación pública (nov.
+    # 2023), ver https://www.cnmc.es/sites/default/files/PYME_Confidencial_4.pdf
+    # — confirmada con /agent-reach (ronda de validación de mercado,
+    # 13-10-2026). No se inventa ni se parafrasea de más.
     asunto = f"{informe['empresa']}: quién está ganando en {informe['sector']} ahora mismo"
     cuerpo = (
         f"Hola,\n\n"
         f"{informe['mini_informe']}\n\n"
         f"Lo hemos sacado de un informe gratuito de tu sector, sin registro: {informe['link_con_utm']}\n\n"
+        f"Una pyme lo contaba así en una consulta pública de la CNMC sobre contratación pública: \"El "
+        f"contenido de los sobres suele dar problemas de comprensión. Lo que tiene que llevar, no "
+        f"mezclar... además sabiendo que puedes ser excluido si te confundes.\" No es un miedo solo "
+        f"vuestro: falta de solvencia acreditada y documentación incompleta están entre los motivos de "
+        f"exclusión más repetidos en las resoluciones de los tribunales de contratación.\n\n"
         f"Una propuesta concreta: mandadnos un pliego que ya ganasteis o perdisteis — uno cuyo resultado "
         f"ya conocéis. Lo analizamos gratis y comparáis vosotros mismos si el GO/NO-GO (requisito por "
         f"requisito de solvencia, con la cita exacta del pliego) coincide con lo que de verdad pasó. "
