@@ -13,7 +13,7 @@ from pathlib import Path
 
 from . import update as placsp_update
 from .db import get_conn
-from .sources import bilbao, catalunya, ted, tenders_guru
+from .sources import bilbao, catalunya, euskadi, placsp_agregadas, ted, tenders_guru
 
 OUT_DEFAULT = Path(__file__).resolve().parent.parent / "data" / "licitaciones.json"
 
@@ -137,6 +137,19 @@ def run(
         except Exception as exc:
             placsp_refresco_fallido = True
             print(f"PLACSP no responde ({exc.__class__.__name__}): se publica con la última sincronización completa de su caché.")
+
+        # Plataformas agregadas (sindicacion_1044): licitaciones de entes
+        # sin perfil propio en PLACSP, que el feed principal no trae. Va
+        # en su propio try/except — si falla, no debe hacer pensar que el
+        # feed principal también falló (son descargas independientes).
+        print("Actualizando PLACSP — plataformas agregadas...")
+        try:
+            conn_agregadas = get_conn()
+            n_agregadas = placsp_agregadas.sync(conn_agregadas)
+            conn_agregadas.close()
+            print(f"Plataformas agregadas: {n_agregadas} entradas procesadas")
+        except Exception as exc:
+            print(f"[placsp_agregadas] error inesperado, se omite: {exc}")
     placsp_sync = _ultima_sync_placsp()
 
     registros = _placsp_rows()
@@ -145,6 +158,7 @@ def run(
     if include_optional_sources:
         for nombre, fn in (
             ("Catalunya (Generalitat)", catalunya.fetch),
+            ("País Vasco (KontratazioA)", euskadi.fetch),
             ("TED (UE)", ted.fetch),
             ("Ayuntamiento de Bilbao", bilbao.fetch),
             ("TendersGuru", tenders_guru.fetch),
