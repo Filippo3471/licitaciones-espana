@@ -13,7 +13,7 @@ from pathlib import Path
 
 from . import update as placsp_update
 from .db import get_conn
-from .sources import bilbao, catalunya, euskadi, placsp_agregadas, ted, tenders_guru
+from .sources import bilbao, castilla_y_leon, catalunya, euskadi, placsp_agregadas, ted, tenders_guru
 
 OUT_DEFAULT = Path(__file__).resolve().parent.parent / "data" / "licitaciones.json"
 
@@ -67,22 +67,57 @@ ESTADO_ADJUDICACION_LEGIBLE = {
 }
 
 
-def _adjudicaciones_rows(limit: int = 4000) -> list[dict]:
+# Fuentes que comparten la tabla SQLite con PLACSP pero NO lo son — se
+# identifican por el prefijo de su external_id (puesto por su propio
+# módulo en backend/sources/) y tienen su propia cuota reservada en
+# _adjudicaciones_rows, para que un LIMIT global no las deje fuera del
+# todo si PLACSP tiene más volumen reciente (le pasó a Castilla y León:
+# sus 9.854 filas quedaban a cero en el JSON publicado hasta este fix).
+FUENTES_EXTRA_PREFIJO = {
+    "cyl-": "Castilla y León (Junta)",
+}
+
+
+def _fuente_por_external_id(external_id: str) -> str:
+    for prefijo, nombre in FUENTES_EXTRA_PREFIJO.items():
+        if external_id.startswith(prefijo):
+            return nombre
+    return "PLACSP"
+
+
+def _adjudicaciones_rows(limit: int = 4000, cuota_por_fuente_extra: int = 500) -> list[dict]:
     """Histórico de adjudicaciones: quién ganó cada licitación, por cuánto y
     con cuántos competidores. Se ordena por fecha de adjudicación descendente
     y se limita para mantener el tamaño del JSON manejable — la base de
     datos local conserva todo, así que este histórico se hace más rico con
-    cada ejecución programada."""
+    cada ejecución programada.
+
+    PLACSP (incluida la agregación de plataformas) se lleva el grueso del
+    cupo; cada fuente extra (ver FUENTES_EXTRA_PREFIJO) tiene su propia
+    cuota reservada aparte, para que no la saque del top el volumen diario
+    de PLACSP."""
     conn = get_conn()
+    limit_placsp = limit - len(FUENTES_EXTRA_PREFIJO) * cuota_por_fuente_extra
+    condiciones_excluir = " AND ".join(f"external_id NOT LIKE '{p}%'" for p in FUENTES_EXTRA_PREFIJO) or "1=1"
     rows = conn.execute(
-        """
+        f"""
         SELECT * FROM licitaciones
-        WHERE estado IN ('ADJ', 'RES') AND adjudicatario_nombre IS NOT NULL
+        WHERE estado IN ('ADJ', 'RES') AND adjudicatario_nombre IS NOT NULL AND {condiciones_excluir}
         ORDER BY (fecha_adjudicacion IS NULL), fecha_adjudicacion DESC
         LIMIT ?
         """,
-        (limit,),
+        (limit_placsp,),
     ).fetchall()
+    for prefijo in FUENTES_EXTRA_PREFIJO:
+        rows += conn.execute(
+            """
+            SELECT * FROM licitaciones
+            WHERE estado IN ('ADJ', 'RES') AND adjudicatario_nombre IS NOT NULL AND external_id LIKE ?
+            ORDER BY (fecha_adjudicacion IS NULL), fecha_adjudicacion DESC
+            LIMIT ?
+            """,
+            (f"{prefijo}%", cuota_por_fuente_extra),
+        ).fetchall()
     conn.close()
     out = []
     for r in rows:
@@ -90,7 +125,7 @@ def _adjudicaciones_rows(limit: int = 4000) -> list[dict]:
         cpv_codes = json.loads(d["cpv_codes"]) if d["cpv_codes"] else []
         out.append(
             {
-                "fuente": "PLACSP",
+                "fuente": _fuente_por_external_id(d["external_id"]),
                 "external_id": d["external_id"],
                 "expediente": d["expediente"],
                 "titulo": d["titulo"],
@@ -150,6 +185,18 @@ def run(
             print(f"Plataformas agregadas: {n_agregadas} entradas procesadas")
         except Exception as exc:
             print(f"[placsp_agregadas] error inesperado, se omite: {exc}")
+
+        # Castilla y León (Junta): contratos YA FORMALIZADOS, no licitaciones
+        # abiertas — solo enriquece adjudicaciones.json ("quién gana en tu
+        # sector"), no cuenta para el total de licitaciones abiertas.
+        print("Actualizando Castilla y León (adjudicaciones)...")
+        try:
+            conn_cyl = get_conn()
+            n_cyl = castilla_y_leon.sync(conn_cyl)
+            conn_cyl.close()
+            print(f"Castilla y León: {n_cyl} adjudicaciones procesadas")
+        except Exception as exc:
+            print(f"[castilla_y_leon] error inesperado, se omite: {exc}")
     placsp_sync = _ultima_sync_placsp()
 
     registros = _placsp_rows()
