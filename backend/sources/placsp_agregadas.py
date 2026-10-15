@@ -49,7 +49,7 @@ def _descargar_zip(year_month: str) -> zipfile.ZipFile | None:
         return None
 
 
-def sync(conn, meses_atras: int = 2) -> int:
+def sync(conn, meses_atras: int = 4) -> int:
     """Descarga los últimos `meses_atras` meses (el actual y los
     anteriores) y hace upsert de cada entrada en la misma tabla
     `licitaciones`. Devuelve cuántas entradas se procesaron."""
