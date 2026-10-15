@@ -55,8 +55,8 @@
       "nombre": "Básico",
       "precio_mes": 29,
       "precio_anio": 290,
-      "stripe_price_id_mes": "price_1UQCP96uhjEQYWVmmC4kcamG",
-      "stripe_price_id_anio": "price_1UQCRt6uhjEQYWVmQ2V5mjEX",
+      "stripe_price_id_mes": "price_1UQsik6FcQac1WHp1nmANcGm",
+      "stripe_price_id_anio": "price_1UQsik6FcQac1WHppdD0WfhS",
       "limites": {
         "cpv_max": 3,
         "ccaa_max": 1,
@@ -83,8 +83,8 @@
       "nombre": "Pro",
       "precio_mes": 59,
       "precio_anio": 590,
-      "stripe_price_id_mes": "price_1UQCZd6uhjEQYWVmpiKr1Wfe",
-      "stripe_price_id_anio": "price_1UQCag6uhjEQYWVmy9o8LFi0",
+      "stripe_price_id_mes": "price_1UQsik6FcQac1WHphHE2Rvky",
+      "stripe_price_id_anio": "price_1UQsij6FcQac1WHphoYioFIf",
       "limites": {
         "cpv_max": null,
         "ccaa_max": null,
@@ -111,8 +111,8 @@
       "nombre": "Equipo / Consultora",
       "precio_mes": 399,
       "precio_anio": 3990,
-      "stripe_price_id_mes": "price_1UQChT6uhjEQYWVmhLAI7yqS",
-      "stripe_price_id_anio": "price_1UQCi36uhjEQYWVmkND5Vx4J",
+      "stripe_price_id_mes": "price_1UQsin6FcQac1WHpaKvd7ucv",
+      "stripe_price_id_anio": "price_1UQsin6FcQac1WHpB5OLYqzq",
       "limites": {
         "cpv_max": null,
         "ccaa_max": null,
@@ -143,20 +143,20 @@
     "inteligencia_adjudicaciones (cruce de similares por CPV/órgano/región)"
   ],
   "_aviso_roadmap": "Las funciones listadas arriba están en 'funciones' de PRO/EQUIPO como lo que desbloquearán cuando existan, pero HOY no están construidas. can() debe devolver not_built (no allowed=true) si alguien las intenta usar, para no prometer algo que no funciona.",
-  "_nota_stripe_ids": "Los stripe_price_id de abajo son del modo SANDBOX/TEST de Stripe (13-10-2026), para probar el flujo de pago de punta a punta sin dinero real. Antes de cobrar de verdad hay que repetir la creación de productos/precios en el modo LIVE de Stripe y sustituir estos IDs por los reales.",
-  "_price_ids_live_pendiente_activar": {
-    "_nota": "Price IDs reales de Stripe en modo LIVE (cuenta ya activada con pagos reales), creados a mano el 15-10-2026 y verificados uno a uno en el dashboard (importe, moneda EUR, intervalo y 'default price' correctos para los 6). AÚN NO ESTÁN ACTIVOS A PROPÓSITO: los stripe_price_id_mes/anio de cada plan en 'planes' (abajo) siguen apuntando a los IDs de sandbox, porque STRIPE_SECRET_KEY en producción sigue siendo la clave de test — Stripe rechaza mezclar una clave de un modo con un price_id del otro. Para activar pagos reales hay que hacer LOS TRES pasos siguientes A LA VEZ en el mismo despliegue (no dejar un estado a medias): 1) sustituir en cada plan de 'planes' los stripe_price_id_mes/anio por los valores de aquí abajo y recopiar con scripts/sync_plans.sh; 2) cambiar el secret STRIPE_SECRET_KEY de Supabase a la clave LIVE (sk_live_..., nunca pegarla en el chat — usar `supabase secrets set` directamente en tu terminal); 3) crear un webhook endpoint NUEVO en el modo LIVE del dashboard de Stripe (el de test no vale para live) apuntando a la misma URL de stripe-webhook, y actualizar STRIPE_WEBHOOK_SECRET con el signing secret que te dé ese webhook live.",
+  "_nota_stripe_ids": "Los stripe_price_id de 'planes' (arriba) son los REALES de Stripe en modo LIVE, activados el 15-10-2026 — cobran dinero real. Los de sandbox/test anteriores quedan guardados en _price_ids_sandbox_test_anteriores solo como referencia.",
+  "_price_ids_sandbox_test_anteriores": {
+    "_nota": "IDs de sandbox/test que estaban activos antes del cutover a LIVE del 15-10-2026. Se guardan aquí solo como referencia/rollback, no se usan en producción.",
     "basico": {
-      "stripe_price_id_mes": "price_1UQsik6FcQac1WHp1nmANcGm",
-      "stripe_price_id_anio": "price_1UQsik6FcQac1WHppdD0WfhS"
+      "stripe_price_id_mes": "price_1UQCP96uhjEQYWVmmC4kcamG",
+      "stripe_price_id_anio": "price_1UQCRt6uhjEQYWVmQ2V5mjEX"
     },
     "pro": {
-      "stripe_price_id_mes": "price_1UQsik6FcQac1WHphHE2Rvky",
-      "stripe_price_id_anio": "price_1UQsij6FcQac1WHphoYioFIf"
+      "stripe_price_id_mes": "price_1UQCZd6uhjEQYWVmpiKr1Wfe",
+      "stripe_price_id_anio": "price_1UQCag6uhjEQYWVmy9o8LFi0"
     },
     "equipo": {
-      "stripe_price_id_mes": "price_1UQsin6FcQac1WHpaKvd7ucv",
-      "stripe_price_id_anio": "price_1UQsin6FcQac1WHpB5OLYqzq"
+      "stripe_price_id_mes": "price_1UQChT6uhjEQYWVmhLAI7yqS",
+      "stripe_price_id_anio": "price_1UQCi36uhjEQYWVmkND5Vx4J"
     }
   }
 }
