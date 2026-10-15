@@ -62,9 +62,13 @@ Deno.serve(async (req) => {
           const companyId = session.metadata.company_id;
           const externalId = session.metadata.external_id;
           if (companyId && externalId) {
-            await adminClient.from("single_tender_unlocks").upsert({
+            const { error: unlockErr } = await adminClient.from("single_tender_unlocks").upsert({
               company_id: companyId, external_id: externalId, stripe_checkout_session_id: session.id,
             });
+            // Esto sí se comprueba: es lo que da acceso a lo que ya se
+            // cobró. app_events es solo medición, no hace falta pararse
+            // si falla (mismo criterio que track-event).
+            if (unlockErr) throw new Error(`No se pudo desbloquear el pliego pagado: ${unlockErr.message}`);
             await adminClient.from("app_events").insert({ company_id: companyId, event_type: "pago", metadata: { tipo: "pliego_unico", external_id: externalId, precio_eur: session.metadata.precio_eur } });
           }
         }
@@ -80,10 +84,11 @@ Deno.serve(async (req) => {
         const subscription = event.data.object as Stripe.Subscription;
         const companyId = await resolveCompanyId(subscription);
         if (companyId) {
-          await adminClient
+          const { error } = await adminClient
             .from("subscriptions")
             .update({ status: "canceled", cancel_at_period_end: false })
             .eq("company_id", companyId);
+          if (error) throw new Error(`No se pudo cancelar la suscripción en BD: ${error.message}`);
         }
         break;
       }
@@ -142,7 +147,16 @@ async function syncSubscription(subscription: Stripe.Subscription) {
   if (subscription.trial_end) row.trial_end = new Date(subscription.trial_end * 1000).toISOString();
   if (usedTrial) row.trial_used = true;
 
-  await adminClient.from("subscriptions").update(row).eq("company_id", companyId);
+  const { error } = await adminClient.from("subscriptions").update(row).eq("company_id", companyId);
+  // Antes esto no se comprobaba: si la BD rechazaba la fila (p.ej. una
+  // restricción check), supabase-js NO lanza excepción por sí solo —
+  // devuelve el error en la respuesta y el código seguía como si nada,
+  // dejando la suscripción en 'free' en silencio pese a que Stripe ya
+  // había cobrado. Lanzar aquí hace que el webhook devuelva 500 y Stripe
+  // reintente, en vez de fallar callado. (Bug real encontrado y corregido
+  // el 15-10-2026 en la ronda de pruebas E2E — ver la migración del
+  // mismo día que realinea el check de billing_interval.)
+  if (error) throw new Error(`No se pudo guardar la suscripción en BD: ${error.message}`);
 }
 
 function mapStripeStatus(stripeStatus: Stripe.Subscription.Status): string {

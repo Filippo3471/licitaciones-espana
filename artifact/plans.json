@@ -55,8 +55,8 @@
       "nombre": "Básico",
       "precio_mes": 29,
       "precio_anio": 290,
-      "stripe_price_id_mes": "PLACEHOLDER_PRICE_BASICO_MES",
-      "stripe_price_id_anio": "PLACEHOLDER_PRICE_BASICO_ANIO",
+      "stripe_price_id_mes": "price_1UQCP96uhjEQYWVmmC4kcamG",
+      "stripe_price_id_anio": "price_1UQCRt6uhjEQYWVmQ2V5mjEX",
       "limites": {
         "cpv_max": 3,
         "ccaa_max": 1,
@@ -83,8 +83,8 @@
       "nombre": "Pro",
       "precio_mes": 59,
       "precio_anio": 590,
-      "stripe_price_id_mes": "PLACEHOLDER_PRICE_PRO_MES",
-      "stripe_price_id_anio": "PLACEHOLDER_PRICE_PRO_ANIO",
+      "stripe_price_id_mes": "price_1UQCZd6uhjEQYWVmpiKr1Wfe",
+      "stripe_price_id_anio": "price_1UQCag6uhjEQYWVmy9o8LFi0",
       "limites": {
         "cpv_max": null,
         "ccaa_max": null,
@@ -111,8 +111,8 @@
       "nombre": "Equipo / Consultora",
       "precio_mes": 399,
       "precio_anio": 3990,
-      "stripe_price_id_mes": "PLACEHOLDER_PRICE_EQUIPO_MES",
-      "stripe_price_id_anio": "PLACEHOLDER_PRICE_EQUIPO_ANIO",
+      "stripe_price_id_mes": "price_1UQChT6uhjEQYWVmhLAI7yqS",
+      "stripe_price_id_anio": "price_1UQCi36uhjEQYWVmkND5Vx4J",
       "limites": {
         "cpv_max": null,
         "ccaa_max": null,
@@ -142,5 +142,6 @@
     "envio_real_de_alertas_por_email",
     "inteligencia_adjudicaciones (cruce de similares por CPV/órgano/región)"
   ],
-  "_aviso_roadmap": "Las funciones listadas arriba están en 'funciones' de PRO/EQUIPO como lo que desbloquearán cuando existan, pero HOY no están construidas. can() debe devolver not_built (no allowed=true) si alguien las intenta usar, para no prometer algo que no funciona."
+  "_aviso_roadmap": "Las funciones listadas arriba están en 'funciones' de PRO/EQUIPO como lo que desbloquearán cuando existan, pero HOY no están construidas. can() debe devolver not_built (no allowed=true) si alguien las intenta usar, para no prometer algo que no funciona.",
+  "_nota_stripe_ids": "Los stripe_price_id de abajo son del modo SANDBOX/TEST de Stripe (13-10-2026), para probar el flujo de pago de punta a punta sin dinero real. Antes de cobrar de verdad hay que repetir la creación de productos/precios en el modo LIVE de Stripe y sustituir estos IDs por los reales."
 }
