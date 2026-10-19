@@ -115,6 +115,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
@@ -122,12 +128,6 @@
   </url>
   <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-industrial.html</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
