@@ -79,13 +79,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/mobiliario-articulos-del-hogar-limpieza.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/materiales-de-construccion.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/materiales-de-construccion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/mobiliario-articulos-del-hogar-limpieza.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -188,6 +188,12 @@
   </url>
   <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/instrumentos-musicales-deportivos-juegos.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/agricultura-ganaderia-pesca-silvicultura.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
