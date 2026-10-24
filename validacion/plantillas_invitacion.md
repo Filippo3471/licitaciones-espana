@@ -98,6 +98,43 @@ Filippo — Adjuplica
 
 ---
 
+## Seguimiento 1 — día 3 (paso 2 de la secuencia en Instantly)
+
+**Asunto:** ¿viste nuestro email?
+
+Hola de nuevo,
+
+Por si se perdió entre el resto de correos: {{n_abiertas_zona}}
+licitaciones abiertas ahora mismo en vuestro sector en {{ccaa}}
+({{importe_total_zona}}€ en total), y os mandamos gratis el informe
+completo a cambio de 5 minutos en un chat con IA.
+
+👉 [Empezar (5 min)](https://filippo3471.github.io/licitaciones-espana/entrevista.html?t={{token}})
+
+Si no os interesa, [daos de baja en un clic]({{unsubscribe_link}}).
+
+Un saludo,
+Filippo — Adjuplica
+
+---
+
+## Seguimiento 2 — día 7 (paso 3 de la secuencia en Instantly)
+
+**Asunto:** último correo
+
+Último correo, no insisto más. Si alguna vez os habéis preguntado cuántas
+licitaciones reales hay abiertas en vuestro sector ahora mismo, lo tenéis
+aquí gratis, sin compromiso:
+
+👉 [Verlo (5 min)](https://filippo3471.github.io/licitaciones-espana/entrevista.html?t={{token}})
+
+Si no, perdonad la insistencia y [daos de baja aquí]({{unsubscribe_link}}).
+
+Un saludo,
+Filippo — Adjuplica
+
+---
+
 ## 🔴 Estado real de los 3 lotes (verificado contra la base de datos, no de memoria)
 
 - **lote_01 (20 empresas)**: 0 tienen email real — no son leads enviables.
