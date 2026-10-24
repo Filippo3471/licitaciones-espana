@@ -39,7 +39,7 @@ traen de serie y es obligatorio que esté presente.
 
 Hola,
 
-Soy Filippo, fundador de Licitaciones España. Os escribo porque vimos que
+Soy Filippo, fundador de Adjuplica. Os escribo porque vimos que
 {{empresa_nombre}} ha sido adjudicataria de contratos públicos recientes
 (dato público de PLACSP) — así que puede que esto os interese.
 
@@ -73,7 +73,7 @@ Filippo — Adjuplica
 
 Hola,
 
-Soy Filippo, fundador de Licitaciones España. Estamos hablando con
+Soy Filippo, fundador de Adjuplica. Estamos hablando con
 empresas de vuestro sector en {{ccaa}} para entender cómo buscáis hoy
 licitaciones públicas — antes de construir nada, queremos saber si de
 verdad hace falta.
