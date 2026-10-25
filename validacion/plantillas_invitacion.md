@@ -5,11 +5,19 @@ Estado: **DRY_RUN — no enviado.** Pendiente de tu aprobación explícita
 confirmes que legal ha revisado `validacion/COMPLIANCE.md`.
 
 Variables: `{{empresa_nombre}}`, `{{n_abiertas_zona}}`,
-`{{importe_total_zona}}`, `{{ccaa}}`, `{{sector}}`, `{{token}}`. El dato
-concreto (nº de licitaciones e importe) sale de
-`validacion/desk_research.json`, no está inventado — las mismas columnas
-ya existen en los CSV de cada lote, así que Instantly las rellena solas al
-importar el CSV como leads (no hace falta tocar nada más).
+`{{importe_total_zona}}`, `{{ccaa}}`, `{{sector}}`, `{{token}}`,
+`{{ejemplo_organo}}`, `{{ejemplo_importe}}`. El dato concreto (nº de
+licitaciones e importe) sale de `validacion/desk_research.json` o, para
+los lotes sourceados vía Harvey/DataForSEO, se calcula en vivo contra
+`licitaciones.json` (`validacion/harvey_a_lote.py`) — nunca inventado. Las
+dos últimas (`ejemplo_organo`/`ejemplo_importe`) son la licitación más
+grande real de ese sector/zona — un dato concreto y verificable, no solo
+un agregado, siguiendo el principio de "específico, no genérico" (ronda
+del 25-10-2026). Si una fila no tiene ningún ejemplo con importe real,
+`harvey_a_lote.py` la descarta en vez de dejar el hueco vacío o inventar
+uno. Las mismas columnas ya existen en los CSV de cada lote, así que
+Instantly las rellena solas al importar el CSV como leads (no hace falta
+tocar nada más).
 
 `{{link_entrevista}}` se sustituye por la URL real de la entrevista por IA
 que ya existe en producción (`docs/entrevista.html` + la Edge Function
@@ -44,7 +52,8 @@ Soy Filippo, fundador de Adjuplica. Os escribo porque vimos que
 (dato público de PLACSP) — así que puede que esto os interese.
 
 Ahora mismo hay **{{n_abiertas_zona}} licitaciones abiertas** en vuestro
-sector en {{ccaa}}, por un importe total de **{{importe_total_zona}}€**.
+sector en {{ccaa}}, por un importe total de **{{importe_total_zona}}€** —
+la más grande, de {{ejemplo_organo}}, por **{{ejemplo_importe}}€**.
 
 Estamos investigando cómo buscan hoy licitaciones empresas como la
 vuestra, antes de construir nada más. A cambio de 5 minutos en una
@@ -81,7 +90,8 @@ verdad hace falta.
 Como agradecimiento por 5 minutos de conversación por chat (con un
 asistente de IA, no una llamada — os lo explicamos al entrar), os
 mandamos gratis un informe con las **{{n_abiertas_zona}} licitaciones
-abiertas ahora mismo** en vuestro sector en {{ccaa}} ({{importe_total_zona}}€ en total).
+abiertas ahora mismo** en vuestro sector en {{ccaa}} ({{importe_total_zona}}€
+en total) — la más grande, de {{ejemplo_organo}}, por {{ejemplo_importe}}€.
 
 👉 [Empezar (5 min)](https://filippo3471.github.io/licitaciones-espana/entrevista.html?t={{token}})
 

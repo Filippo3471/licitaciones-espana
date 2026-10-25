@@ -107,10 +107,21 @@ def extraer_ccaa(location: str) -> str:
     return partes[-1] if partes else ""
 
 
-def obtener_stats_reales(licitaciones: list[dict], sector: str, ccaa: str) -> tuple[int, float]:
+def obtener_stats_reales(licitaciones: list[dict], sector: str, ccaa: str) -> tuple[int, float, str, float]:
     filtradas = [t for t in licitaciones if t.get("sector") == sector and (not ccaa or t.get("ccaa") == ccaa)]
     importe_total = sum(t.get("importe") or 0 for t in filtradas)
-    return len(filtradas), round(importe_total, 2)
+    # El ejemplo concreto (órgano + importe) de la licitación más grande real
+    # de esa combinación — da un dato tangible en el email, no solo un
+    # agregado. Si no hay ninguna con importe, se deja vacío (nunca se
+    # inventa una cifra).
+    con_importe = [t for t in filtradas if t.get("importe")]
+    if con_importe:
+        mayor = max(con_importe, key=lambda t: t["importe"])
+        ejemplo_organo = mayor.get("organo") or ""
+        ejemplo_importe = mayor["importe"]
+    else:
+        ejemplo_organo, ejemplo_importe = "", 0.0
+    return len(filtradas), round(importe_total, 2), ejemplo_organo, round(ejemplo_importe, 2)
 
 
 def insertar_validacion_empresa(session: requests.Session, base_url: str, fila: dict) -> bool:
@@ -158,7 +169,7 @@ def main():
     for p in nuevos:
         sector = p["industry"] if p["industry"] in SECTORES_VALIDOS else "Sin clasificar"
         ccaa = extraer_ccaa(p["location"])
-        n_abiertas, importe_total = obtener_stats_reales(licitaciones, sector, ccaa)
+        n_abiertas, importe_total, ejemplo_organo, ejemplo_importe = obtener_stats_reales(licitaciones, sector, ccaa)
         if sector == "Sin clasificar" or not ccaa:
             # Sin sector/ccaa reales no podemos dar un dato honesto en el
             # gancho del email — se descarta esta fila, no se inventa nada.
@@ -166,6 +177,9 @@ def main():
             continue
 
         token = secrets.token_hex(20)
+        dato_gancho = (
+            f"{ejemplo_organo}: {ejemplo_importe}€" if ejemplo_organo else ""
+        )
         fila_db = {
             "token": token,
             "empresa_nombre": p["empresa"],
@@ -174,9 +188,10 @@ def main():
             "provincia": ccaa,
             "lote_id": args.lote_id,
             "fuente_contacto": "dataforseo_harvey",
+            "dato_gancho": dato_gancho,
         }
         if args.dry_run:
-            print(f"  DRY-RUN: {p['empresa']} | {sector} | {ccaa} | {n_abiertas} abiertas, {importe_total}€")
+            print(f"  DRY-RUN: {p['empresa']} | {sector} | {ccaa} | {n_abiertas} abiertas, {importe_total}€ | ejemplo: {dato_gancho}")
         else:
             if not insertar_validacion_empresa(session, base_url, fila_db):
                 continue
@@ -189,6 +204,8 @@ def main():
             "ccaa": ccaa,
             "n_abiertas_zona": n_abiertas,
             "importe_total_zona": importe_total,
+            "ejemplo_organo": ejemplo_organo,
+            "ejemplo_importe": ejemplo_importe,
             "lote_id": args.lote_id,
             "email_generico": p["email"],
         })
@@ -203,7 +220,7 @@ def main():
 
     out_csv = VALIDACION_DIR / f"{args.lote_id}.csv"
     with out_csv.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["token", "empresa_nombre", "nif", "sector", "ccaa", "n_abiertas_zona", "importe_total_zona", "lote_id", "email_generico"])
+        w = csv.DictWriter(f, fieldnames=["token", "empresa_nombre", "nif", "sector", "ccaa", "n_abiertas_zona", "importe_total_zona", "ejemplo_organo", "ejemplo_importe", "lote_id", "email_generico"])
         w.writeheader()
         w.writerows(filas_csv)
 
