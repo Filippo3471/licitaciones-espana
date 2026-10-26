@@ -71,6 +71,82 @@ SECTORES_VALIDOS = {
     "Equipos de seguridad, defensa",
 }
 
+# DataForSEO/Google Maps trae el "industry" en inglés y genérico (categoría
+# de Maps, no CPV) — 25-10-2026, tras ver que 88 de 163 filas se descartaban
+# por esto. Traduce las categorías más comunes observadas a la taxonomía
+# real del proyecto; lo que no esté aquí sigue cayendo en "Sin clasificar"
+# (nunca se adivina a ciegas).
+MAPEO_SECTOR_INGLES = {
+    "engineer": "Servicios de arquitectura, ingeniería y construcción",
+    "engineering consultant": "Servicios de arquitectura, ingeniería y construcción",
+    "structural engineer": "Servicios de arquitectura, ingeniería y construcción",
+    "industrial engineer": "Servicios de arquitectura, ingeniería y construcción",
+    "architect": "Servicios de arquitectura, ingeniería y construcción",
+    "architecture firm": "Servicios de arquitectura, ingeniería y construcción",
+    "topography company": "Servicios de arquitectura, ingeniería y construcción",
+    "electrical installation service": "Servicios de reparación y mantenimiento",
+    "solar energy company": "Productos petrolíferos, combustibles, electricidad y energía",
+    "solar energy equipment supplier": "Productos petrolíferos, combustibles, electricidad y energía",
+}
+
+
+def normalizar_sector(industry: str) -> str:
+    if industry in SECTORES_VALIDOS:
+        return industry
+    return MAPEO_SECTOR_INGLES.get((industry or "").strip().lower(), "Sin clasificar")
+
+
+# DataForSEO trae a veces la provincia (en inglés, "Province of X", o el
+# nombre de la capital) en vez de la CCAA real que usa licitaciones.json —
+# 25-10-2026. Cobertura de las provincias más probables dado nuestro
+# sourcing (construcción/ingeniería/TI, repartido por toda España); lo que
+# no esté aquí sigue cayendo en "Sin clasificar" vía CCAA, no se adivina.
+PROVINCIA_A_CCAA = {
+    "málaga": "Andalucía", "province of málaga": "Andalucía", "malaga": "Andalucía",
+    "sevilla": "Andalucía", "seville": "Andalucía", "province of seville": "Andalucía",
+    "cádiz": "Andalucía", "cadiz": "Andalucía", "córdoba": "Andalucía", "cordoba": "Andalucía",
+    "granada": "Andalucía", "almería": "Andalucía", "almeria": "Andalucía",
+    "huelva": "Andalucía", "jaén": "Andalucía", "jaen": "Andalucía",
+    "madrid": "Comunidad de Madrid", "province of madrid": "Comunidad de Madrid",
+    "barcelona": "Cataluña", "province of barcelona": "Cataluña",
+    "girona": "Cataluña", "gerona": "Cataluña", "lleida": "Cataluña", "lérida": "Cataluña",
+    "tarragona": "Cataluña",
+    "valencia": "Comunidad Valenciana", "province of valencia": "Comunidad Valenciana",
+    "alicante": "Comunidad Valenciana", "alacant": "Comunidad Valenciana",
+    "castellón": "Comunidad Valenciana", "castellon": "Comunidad Valenciana",
+    "zaragoza": "Aragón", "huesca": "Aragón", "teruel": "Aragón",
+    "vizcaya": "País Vasco", "bizkaia": "País Vasco", "bilbao": "País Vasco",
+    "guipúzcoa": "País Vasco", "gipuzkoa": "País Vasco", "san sebastián": "País Vasco",
+    "álava": "País Vasco", "araba": "País Vasco", "vitoria": "País Vasco",
+    "la coruña": "Galicia", "a coruña": "Galicia", "lugo": "Galicia",
+    "ourense": "Galicia", "orense": "Galicia", "pontevedra": "Galicia", "vigo": "Galicia",
+    "murcia": "Región de Murcia", "province of murcia": "Región de Murcia",
+    "las palmas": "Canarias", "santa cruz de tenerife": "Canarias", "tenerife": "Canarias",
+    "gran canaria": "Canarias",
+    "palma de mallorca": "Illes Balears", "mallorca": "Illes Balears", "baleares": "Illes Balears",
+    "valladolid": "Castilla y León", "salamanca": "Castilla y León", "burgos": "Castilla y León",
+    "león": "Castilla y León", "leon": "Castilla y León", "segovia": "Castilla y León",
+    "ávila": "Castilla y León", "zamora": "Castilla y León", "palencia": "Castilla y León",
+    "soria": "Castilla y León",
+    "toledo": "Castilla-La Mancha", "ciudad real": "Castilla-La Mancha",
+    "albacete": "Castilla-La Mancha", "cuenca": "Castilla-La Mancha", "guadalajara": "Castilla-La Mancha",
+    "badajoz": "Extremadura", "cáceres": "Extremadura", "caceres": "Extremadura",
+    "oviedo": "Principado de Asturias", "asturias": "Principado de Asturias",
+    "santander": "Cantabria", "cantabria": "Cantabria",
+    "pamplona": "Comunidad Foral de Navarra", "navarra": "Comunidad Foral de Navarra",
+    "logroño": "La Rioja", "la rioja": "La Rioja",
+    "ceuta": "Ciudad Autónoma de Ceuta", "melilla": "Ciudad Autónoma de Melilla",
+}
+
+
+def normalizar_ccaa(ccaa_o_provincia: str) -> str:
+    cand = (ccaa_o_provincia or "").strip()
+    if not cand:
+        return ""
+    # Compara en minúsculas y sin el prefijo "Province of " para dar con el mapeo
+    clave = cand.lower().replace("province of ", "").strip()
+    return PROVINCIA_A_CCAA.get(clave, cand)
+
 
 def cargar_ya_exportados() -> set[str]:
     if YA_EXPORTADOS.exists():
@@ -167,12 +243,13 @@ def main():
 
     descartados_sin_dato = 0
     for p in nuevos:
-        sector = p["industry"] if p["industry"] in SECTORES_VALIDOS else "Sin clasificar"
-        ccaa = extraer_ccaa(p["location"])
+        sector = normalizar_sector(p["industry"])
+        ccaa = normalizar_ccaa(extraer_ccaa(p["location"]))
         n_abiertas, importe_total, ejemplo_organo, ejemplo_importe = obtener_stats_reales(licitaciones, sector, ccaa)
-        if sector == "Sin clasificar" or not ccaa:
-            # Sin sector/ccaa reales no podemos dar un dato honesto en el
-            # gancho del email — se descarta esta fila, no se inventa nada.
+        if sector == "Sin clasificar" or not ccaa or n_abiertas == 0:
+            # Sin sector/ccaa reales (o sin ninguna licitación real que
+            # mostrar) no podemos dar un dato honesto en el gancho del
+            # email — se descarta esta fila, no se inventa ni se deja a 0.
             descartados_sin_dato += 1
             continue
 
