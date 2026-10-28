@@ -169,7 +169,10 @@ def leer_prospectos_harvey() -> list[dict]:
         SELECT p.id as prospect_id, p.email, p.email_status, c.name as empresa, c.industry, c.location
         FROM prospects p
         JOIN companies c ON c.id = p.company_id
-        WHERE p.email_status IN ('verified', 'risky') AND p.email != ''
+        -- Solo 'verified' desde el 28-10-2026: el día 2 de envío real dio
+        -- 0% rebote en verified contra 37% (10/27) en risky — catch-all no
+        -- garantiza que el prefijo genérico adivinado exista de verdad.
+        WHERE p.email_status = 'verified' AND p.email != ''
         """
     ).fetchall()
     conn.close()
