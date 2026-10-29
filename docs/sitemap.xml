@@ -79,13 +79,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-financieros-y-de-seguros.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/materiales-de-construccion.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/materiales-de-construccion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-financieros-y-de-seguros.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -98,12 +98,6 @@
   </url>
   <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinas-de-oficina-informatica.html</loc>
-    <lastmod>2026-10-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -127,6 +121,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
@@ -139,13 +139,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-de-radio-tv-comunicaciones.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/productos-petroliferos-combustibles-electricidad-y-energia.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/productos-petroliferos-combustibles-electricidad-y-energia.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-de-radio-tv-comunicaciones.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -170,6 +170,18 @@
   </url>
   <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/alimentacion-bebidas-tabaco.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/otros-servicios-comunitarios-sociales-y-personales.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-inmobiliarios.html</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
