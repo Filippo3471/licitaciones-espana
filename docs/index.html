@@ -606,7 +606,7 @@
       <div class="field" id="auth-invite-field" hidden>
         <label for="auth-input-invite">Código de invitación</label>
         <input type="text" id="auth-input-invite" autocomplete="off">
-        <p style="font-size:0.78rem;color:var(--ink-muted);margin:6px 0 0">Estamos dando entrada a las primeras empresas mientras afinamos el producto. ¿No tienes código? <a href="#" id="link-pedir-acceso">Pide el tuyo</a>.</p>
+        <p style="font-size:0.78rem;color:var(--ink-muted);margin:6px 0 0">Damos acceso a un número limitado de empresas nuevas por semana. ¿No tienes código? <a href="#" id="link-pedir-acceso">Pide el tuyo</a>.</p>
       </div>
       <div class="modal-actions">
         <button type="button" class="switch-mode" id="auth-switch-mode">¿No tienes cuenta? Regístrate</button>
@@ -1712,7 +1712,15 @@
         });
         const data = await resp.json();
         if (!resp.ok || data.error) throw new Error(data.error || "Error al enviar la solicitud");
-        $("#pa-msg").textContent = "Hecho. Si tu empresa encaja, te escribimos con el código.";
+        if (data.codigo) {
+          $("#auth-input-invite").value = data.codigo;
+          $("#auth-input-email").value = email;
+          $("#panel-pedir-acceso").hidden = true;
+          $("#auth-error").style.color = "#1b5e4f";
+          $("#auth-error").textContent = "Había hueco en la tanda de esta semana — ya tienes el código puesto arriba. Dale a Crear cuenta.";
+        } else {
+          $("#pa-msg").textContent = "Esta semana ya hemos dado acceso a las primeras empresas. Te escribimos en la próxima tanda si encaja.";
+        }
         $("#form-pedir-acceso").reset();
       } catch (err) {
         $("#pa-msg").style.color = "#b42318";

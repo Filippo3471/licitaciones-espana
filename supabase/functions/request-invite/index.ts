@@ -1,13 +1,22 @@
-// Edge Function pública (sin JWT): guarda una solicitud de acceso cuando
-// alguien llega al registro sin código de invitación válido. Sustituye el
-// flujo anterior ("escríbeme al Gmail personal de Filippo") por una cola
-// que se revisa por lotes -- no bloquea a nadie esperando una respuesta
-// en tiempo real, y Filippo no tiene que estar disponible al momento.
+// Edge Function pública (sin JWT): procesa una solicitud de acceso cuando
+// alguien llega al registro sin código de invitación válido.
+//
+// Cupo semanal real (no falso): si quedan plazas en los últimos 7 días
+// (INVITE_WEEKLY_CAP, por defecto 10), se concede el código al instante en
+// la propia respuesta -- cero espera, cero intervención de Filippo. Si el
+// cupo de la semana ya está lleno, la solicitud queda en cola
+// (invite_requests, atendido=false) para la siguiente tanda. El cupo es
+// real -- cuenta solicitudes reales de los últimos 7 días -- no decorativo.
+//
+// Requiere: supabase secrets set SIGNUP_INVITE_CODE=<código>
+// Opcional: supabase secrets set INVITE_WEEKLY_CAP=10
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const SIGNUP_INVITE_CODE = Deno.env.get("SIGNUP_INVITE_CODE");
+const WEEKLY_CAP = Number(Deno.env.get("INVITE_WEEKLY_CAP") || "10");
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -30,13 +39,26 @@ Deno.serve(async (req) => {
     }
 
     const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-    const { error } = await adminClient.from("invite_requests").insert({
+    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const { count, error: countError } = await adminClient
+      .from("invite_requests")
+      .select("id", { count: "exact", head: true })
+      .gte("created_at", since);
+
+    if (countError) return jsonResponse({ error: countError.message }, 500);
+
+    const hayHueco = (count ?? 0) < WEEKLY_CAP && !!SIGNUP_INVITE_CODE;
+
+    const { error: insertError } = await adminClient.from("invite_requests").insert({
       email: email.trim().toLowerCase(),
       empresa: typeof empresa === "string" ? empresa.trim().slice(0, 200) || null : null,
+      atendido: hayHueco,
+      atendido_en: hayHueco ? new Date().toISOString() : null,
     });
 
-    if (error) return jsonResponse({ error: error.message }, 500);
-    return jsonResponse({ ok: true });
+    if (insertError) return jsonResponse({ error: insertError.message }, 500);
+
+    return jsonResponse(hayHueco ? { ok: true, codigo: SIGNUP_INVITE_CODE } : { ok: true });
   } catch (err) {
     return jsonResponse({ error: `Error inesperado: ${(err as Error).message}` }, 500);
   }
