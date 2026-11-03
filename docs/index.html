@@ -1862,7 +1862,38 @@
       return payload;
     }
 
-    return { boot };
+    // Tras comprar un análisis suelto (Bloque 8), Stripe redirige con
+    // ?pliego_comprado=<external_id> -- esto saca esa licitación concreta
+    // de entre las 400 que se renderizan por defecto (slice(0,400), ver
+    // render() arriba) y la abre directamente, en vez de dejar al usuario
+    // sin ver nada tras pagar.
+    function focusItem(externalId) {
+      const item = data.find((d) => d.external_id === externalId);
+      if (!item) return null;
+      listEl.innerHTML = "";
+      const banner = document.createElement("li");
+      banner.className = "cache-note";
+      banner.style.cssText = "padding:10px 0";
+      banner.innerHTML = `Mostrando solo la licitación que acabas de comprar. <a href="#" id="focus-ver-todas">Ver las ${data.length.toLocaleString("es-ES")} ${cfg.noun}</a>`;
+      listEl.appendChild(banner);
+      banner.querySelector("#focus-ver-todas").addEventListener("click", (e) => { e.preventDefault(); render(); });
+      const row = cfg.renderRow(item);
+      listEl.appendChild(row);
+      countEl.textContent = `1 de ${data.length} ${cfg.noun}`;
+      emptyEl.hidden = true;
+      const det = row.querySelector("details.expediente");
+      if (det) {
+        det.open = true;
+        det.scrollIntoView({ behavior: "smooth", block: "start" });
+        // No depender solo del evento "toggle" (su disparo síncrono o no varía
+        // por navegador): se rellena ya mismo, de forma determinista.
+        const toolsDiv = row.querySelector(".empresa-tools");
+        if (toolsDiv) renderEmpresaTools(item, toolsDiv);
+      }
+      return det;
+    }
+
+    return { boot, focusItem };
   }
 
   const licitacionesTab = makeTab({
@@ -1937,6 +1968,32 @@
     }
     if (licPayload) $("#tabbtn-licitaciones").textContent = `Licitaciones abiertas · ${licData.length.toLocaleString("es-ES")}`;
     if (adjPayload) $("#tabbtn-adjudicaciones").textContent = `Histórico de adjudicaciones · ${adjData.length.toLocaleString("es-ES")}`;
+
+    // Tras pagar el análisis de un solo pliego (Bloque 8), create-pliego-checkout
+    // redirige aquí con ?pliego_comprado=<external_id>. Antes esto no se leía en
+    // ningún sitio: el pago se cobraba bien pero el usuario volvía a la portada
+    // sin ver nada. Ahora se abre esa licitación directamente y se lanza el
+    // análisis solo, sin que haga falta otro clic.
+    const pliegoComprado = new URLSearchParams(location.search).get("pliego_comprado");
+    if (pliegoComprado) {
+      window.history.replaceState({}, "", location.pathname + location.search.replace(/[?&]pliego_comprado=[^&]*/, "").replace(/^&/, "?"));
+      const det = licitacionesTab.focusItem(pliegoComprado);
+      if (det) {
+        // focusItem ya puso det.open = true (dispara "toggle" -> renderEmpresaTools,
+        // de forma síncrona o en el siguiente tick según el navegador). Sondeamos
+        // en vez de depender del propio evento, para no perder la carrera si ya
+        // disparó antes de que pudiéramos escucharlo.
+        let intentos = 0;
+        const tryClick = () => {
+          const btn = det.querySelector('[data-action="pliego"]');
+          if (btn) { btn.click(); return; }
+          if (++intentos < 40) setTimeout(tryClick, 50);
+        };
+        tryClick();
+      } else {
+        alert("Pago completado, pero no hemos encontrado esa licitación en el listado actual (puede que se haya cerrado el plazo desde que la compraste). Escríbenos y te lo resolvemos.");
+      }
+    }
   }
 
   boot();
