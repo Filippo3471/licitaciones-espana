@@ -606,6 +606,7 @@
       <div class="field" id="auth-invite-field" hidden>
         <label for="auth-input-invite">Código de invitación</label>
         <input type="text" id="auth-input-invite" autocomplete="off">
+        <p style="font-size:0.78rem;color:var(--ink-muted);margin:6px 0 0">Estamos dando entrada a las primeras empresas mientras afinamos el producto. ¿No tienes código? <a href="#" id="link-pedir-acceso">Pide el tuyo</a>.</p>
       </div>
       <div class="modal-actions">
         <button type="button" class="switch-mode" id="auth-switch-mode">¿No tienes cuenta? Regístrate</button>
@@ -613,6 +614,24 @@
       </div>
       <p class="modal-error" id="auth-error"></p>
     </form>
+    <div id="panel-pedir-acceso" hidden style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line, #e4e1d8)">
+      <p style="font-size:0.85rem;margin:0 0 10px">Déjanos tu email y tu empresa. Si encaja con lo que estamos probando, te mandamos el código.</p>
+      <form id="form-pedir-acceso">
+        <div class="field">
+          <label for="pa-email">Email</label>
+          <input type="email" id="pa-email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="pa-empresa">Empresa</label>
+          <input type="text" id="pa-empresa" autocomplete="organization">
+        </div>
+        <input type="text" id="pa-honeypot" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div class="modal-actions">
+          <button type="submit" class="btn primary" id="pa-submit">Pedir acceso</button>
+        </div>
+        <p id="pa-msg" style="font-size:0.85rem;margin:8px 0 0"></p>
+      </form>
+    </div>
     <div class="modal-actions" style="margin-top:4px">
       <button type="button" class="modal-close" data-close="modal-auth">Cancelar</button>
     </div>
@@ -1667,6 +1686,40 @@
       $("#auth-submit").textContent = authMode === "login" ? "Entrar" : "Crear cuenta";
       $("#auth-switch-mode").textContent = authMode === "login" ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión";
       $("#auth-invite-field").hidden = authMode !== "signup";
+      $("#panel-pedir-acceso").hidden = true;
+    });
+
+    $("#link-pedir-acceso").addEventListener("click", (e) => {
+      e.preventDefault();
+      $("#panel-pedir-acceso").hidden = false;
+      const mainEmail = $("#auth-input-email").value.trim();
+      if (mainEmail) $("#pa-email").value = mainEmail;
+    });
+
+    $("#form-pedir-acceso").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = $("#pa-email").value.trim();
+      const empresa = $("#pa-empresa").value.trim();
+      const honeypot = $("#pa-honeypot").value.trim();
+      $("#pa-submit").disabled = true;
+      $("#pa-msg").style.color = "";
+      $("#pa-msg").textContent = "";
+      try {
+        const resp = await fetch(`${SUPABASE_URL}/functions/v1/request-invite`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+          body: JSON.stringify({ email, empresa, honeypot }),
+        });
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || "Error al enviar la solicitud");
+        $("#pa-msg").textContent = "Hecho. Si tu empresa encaja, te escribimos con el código.";
+        $("#form-pedir-acceso").reset();
+      } catch (err) {
+        $("#pa-msg").style.color = "#b42318";
+        $("#pa-msg").textContent = err.message || "Error al enviar la solicitud";
+      } finally {
+        $("#pa-submit").disabled = false;
+      }
     });
 
     async function checkInvite(code) {
@@ -1694,7 +1747,11 @@
       try {
         if (authMode === "signup") {
           const ok = await checkInvite($("#auth-input-invite").value.trim());
-          if (!ok) throw new Error("El registro es solo por invitación. Escríbeme a filippodinola3471@gmail.com si quieres acceso.");
+          if (!ok) {
+            $("#pa-email").value = email;
+            $("#panel-pedir-acceso").hidden = false;
+            throw new Error("Código no válido o vacío. Pide el tuyo aquí abajo.");
+          }
         }
         const { error } = authMode === "login"
           ? await sb.auth.signInWithPassword({ email, password })
@@ -1706,6 +1763,7 @@
         closeModal("#modal-auth");
         $("#form-auth").reset();
         $("#auth-invite-field").hidden = true;
+        $("#panel-pedir-acceso").hidden = true;
       } catch (err) {
         $("#auth-error").style.color = "";
         $("#auth-error").textContent = err.message || "Error de autenticación";
