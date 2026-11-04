@@ -1405,7 +1405,8 @@
     // Bloque 8: si esto bloqueó "Ayuda con el pliego" de una licitación
     // concreta, se ofrece también comprarla suelta, sin suscripción.
     if (item && (up.reason === "plan_feature_locked" || up.reason === "usage_limit_reached")) {
-      html += `<button type="button" class="btn small" data-action="comprar-pliego">Comprar solo este análisis — desde 5 €</button>`;
+      html += `<button type="button" class="btn small" data-action="comprar-pliego">Comprar solo este análisis</button>`;
+      html += `<span class="cache-note">5 € tu primer análisis suelto; 19 € a partir del segundo (verás el precio exacto en la pantalla de pago antes de confirmar).</span>`;
     }
     html += `</div>`;
     container.innerHTML = html;
