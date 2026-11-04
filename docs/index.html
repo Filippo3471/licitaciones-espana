@@ -967,7 +967,21 @@
     let html = `<span class="verdict-badge ${escapeAttr(veredicto)}">${escapeHtml(VERDICT_LABELS[veredicto] || veredicto)}</span>`;
     if (explicacion) html += `<p class="cache-note">${escapeHtml(explicacion)}</p>`;
     if (puntos && puntos.length) {
-      html += `<ul class="verdict-puntos">${puntos.map((p) => `<li class="${escapeAttr(p.tipo)}">${escapeHtml(p.texto)}</li>`).join("")}</ul>`;
+      // Lo decisivo (cumple/no_cumple) va siempre a la vista -- es la
+      // respuesta en 3 segundos que promete el producto. "revisar" son
+      // puntos que de todos modos tiene que comprobar el usuario contra su
+      // propia documentación (no son un sí/no), suelen ser los más largos
+      // y los más numerosos: van detrás de "Leer más" para no enterrar el
+      // veredicto bajo un muro de citas textuales.
+      const decisivos = puntos.filter((p) => p.tipo !== "revisar");
+      const revisar = puntos.filter((p) => p.tipo === "revisar");
+      if (decisivos.length) {
+        html += `<ul class="verdict-puntos">${decisivos.map((p) => `<li class="${escapeAttr(p.tipo)}">${escapeHtml(p.texto)}</li>`).join("")}</ul>`;
+      }
+      if (revisar.length) {
+        html += `<ul class="verdict-puntos resumen-mas" hidden>${revisar.map((p) => `<li class="${escapeAttr(p.tipo)}">${escapeHtml(p.texto)}</li>`).join("")}</ul>`;
+        html += `<button type="button" class="btn small" data-action="leer-mas">Leer ${revisar.length} punto${revisar.length === 1 ? "" : "s"} más a comprobar ↓</button>`;
+      }
     }
     container.innerHTML = html;
   }
@@ -1082,15 +1096,16 @@
     const ev = data.evaluacion || {};
     renderVerdict(container.querySelector(".pliego-verdict"), ev.veredicto || "sin_datos_suficientes", ev.puntos, ev.explicacion);
     setupChecklist(container, item, r);
-    const leerMasBtn = container.querySelector('[data-action="leer-mas"]');
-    if (leerMasBtn) {
-      leerMasBtn.addEventListener("click", () => {
-        const mas = container.querySelector(".resumen-mas");
+    container.querySelectorAll('[data-action="leer-mas"]').forEach((btn) => {
+      const mas = btn.previousElementSibling;
+      if (!mas || !mas.classList.contains("resumen-mas")) return;
+      const textoOriginal = btn.textContent;
+      btn.addEventListener("click", () => {
         const abierto = !mas.hidden;
         mas.hidden = abierto;
-        leerMasBtn.textContent = abierto ? "Leer más ↓" : "Leer menos ↑";
+        btn.textContent = abierto ? textoOriginal : textoOriginal.replace("Leer", "Ocultar").replace(/↓$/, "↑");
       });
-    }
+    });
   }
 
   function icsEscape(s) { return String(s || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
