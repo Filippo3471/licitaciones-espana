@@ -1044,14 +1044,19 @@
     html += campo("Objeto", "objeto", (v) => `<p>${escapeHtml(v)}</p>`);
     html += campo("Importe de licitación", "importe_licitacion", (v) => `<p>${money.format(v)} €</p>`);
     html += campo("Duración", "duracion", (v) => `<p>${escapeHtml(v)}</p>`);
-    html += campo("Lotes", "lotes", (v) => `<ul>${v.map((l) => `<li>${escapeHtml(l.numero || "")}: ${escapeHtml(l.descripcion || "")}${l.importe ? ` — ${money.format(l.importe)} €` : ""}</li>`).join("")}</ul>`);
-    html += campo("Solvencia económica", "solvencia_economica", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
-    html += campo("Solvencia técnica", "solvencia_tecnica", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
-    html += campo("Clasificación exigida", "clasificacion_exigida", (v) => `<p>${escapeHtml(v)}</p>`);
-    html += campo("Garantías", "garantias", (v) => `<p>${escapeHtml(v)}</p>`);
-    html += campo("Criterios de adjudicación", "criterios_adjudicacion", (v) => `<ul>${v.map((c) => `<li>${escapeHtml(c.criterio || "")} — ${escapeHtml(c.peso || "")}</li>`).join("")}</ul>`);
-    html += campo("Forma de presentación", "forma_presentacion", (v) => `<p>${escapeHtml(v)}</p>`);
-    html += campo("Fecha límite", "fecha_limite", (v) => `<p>${escapeHtml(v)}</p>`);
+    let masHtml = "";
+    masHtml += campo("Lotes", "lotes", (v) => `<ul>${v.map((l) => `<li>${escapeHtml(l.numero || "")}: ${escapeHtml(l.descripcion || "")}${l.importe ? ` — ${money.format(l.importe)} €` : ""}</li>`).join("")}</ul>`);
+    masHtml += campo("Solvencia económica", "solvencia_economica", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
+    masHtml += campo("Solvencia técnica", "solvencia_tecnica", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
+    masHtml += campo("Clasificación exigida", "clasificacion_exigida", (v) => `<p>${escapeHtml(v)}</p>`);
+    masHtml += campo("Garantías", "garantias", (v) => `<p>${escapeHtml(v)}</p>`);
+    masHtml += campo("Criterios de adjudicación", "criterios_adjudicacion", (v) => `<ul>${v.map((c) => `<li>${escapeHtml(c.criterio || "")} — ${escapeHtml(c.peso || "")}</li>`).join("")}</ul>`);
+    masHtml += campo("Forma de presentación", "forma_presentacion", (v) => `<p>${escapeHtml(v)}</p>`);
+    masHtml += campo("Fecha límite", "fecha_limite", (v) => `<p>${escapeHtml(v)}</p>`);
+    masHtml += campo("Riesgos / puntos a vigilar", "riesgos", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
+    if (masHtml) {
+      html += `<div class="resumen-mas" hidden>${masHtml}</div><button type="button" class="btn small" data-action="leer-mas">Leer más ↓</button>`;
+    }
     html += campoObligatorio("Documentos a presentar", "documentacion_requerida", (v) => `<ul class="checklist-preview">${v.map((d) => {
       const link = pdfLinkFromCita(fuentesPdf, d.cita);
       return `<li>${escapeHtml(d.documento || "")}${d.cita ? ` <span class="cita-inline">(${escapeHtml(d.cita)}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver</a>` : ""})</span>` : ""}</li>`;
@@ -1060,7 +1065,6 @@
       const link = pdfLinkFromCita(fuentesPdf, p.cita);
       return `<li><strong>${escapeHtml(p.fecha || "—")}</strong> — ${escapeHtml(p.hito || "")}${p.cita ? ` <span class="cita-inline">(${escapeHtml(p.cita)}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver</a>` : ""})</span>` : ""}</li>`;
     }).join("")}</ul>`);
-    html += campo("Riesgos / puntos a vigilar", "riesgos", (v) => `<ul>${v.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`);
     html += `<p class="cache-note">${data.desde_cache ? "Resumen ya generado antes para esta licitación (caché compartida entre usuarios)." : "Resumen generado ahora mismo por IA a partir del pliego oficial."} Verifica siempre contra el PDF original antes de decidir.</p>`;
     html += `
       <div class="checklist-box">
@@ -1078,6 +1082,15 @@
     const ev = data.evaluacion || {};
     renderVerdict(container.querySelector(".pliego-verdict"), ev.veredicto || "sin_datos_suficientes", ev.puntos, ev.explicacion);
     setupChecklist(container, item, r);
+    const leerMasBtn = container.querySelector('[data-action="leer-mas"]');
+    if (leerMasBtn) {
+      leerMasBtn.addEventListener("click", () => {
+        const mas = container.querySelector(".resumen-mas");
+        const abierto = !mas.hidden;
+        mas.hidden = abierto;
+        leerMasBtn.textContent = abierto ? "Leer más ↓" : "Leer menos ↑";
+      });
+    }
   }
 
   function icsEscape(s) { return String(s || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
