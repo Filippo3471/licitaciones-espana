@@ -1071,24 +1071,33 @@
     if (masHtml) {
       html += `<div class="resumen-mas" hidden>${masHtml}</div><button type="button" class="btn small" data-action="leer-mas">Leer más ↓</button>`;
     }
-    html += campoObligatorio("Documentos a presentar", "documentacion_requerida", (v) => `<ul class="checklist-preview">${v.map((d) => {
+    const nDocs = (r.documentacion_requerida || []).length;
+    const nPlazos = (r.plazos || []).length;
+    html += `<h4>Documentos y plazos</h4>`;
+    html += `<p>${nDocs} documento${nDocs === 1 ? "" : "s"} a presentar y ${nPlazos} plazo${nPlazos === 1 ? "" : "s"}/hito${nPlazos === 1 ? "" : "s"} encontrados en el pliego.</p>`;
+    let docsPlazosHtml = "";
+    docsPlazosHtml += campoObligatorio("Documentos a presentar", "documentacion_requerida", (v) => `<ul class="checklist-preview">${v.map((d) => {
       const link = pdfLinkFromCita(fuentesPdf, d.cita);
       return `<li>${escapeHtml(d.documento || "")}${d.cita ? ` <span class="cita-inline">(${escapeHtml(d.cita)}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver</a>` : ""})</span>` : ""}</li>`;
     }).join("")}</ul>`);
-    html += campoObligatorio("Plazos e hitos", "plazos", (v) => `<ul class="checklist-preview">${v.map((p) => {
+    docsPlazosHtml += campoObligatorio("Plazos e hitos", "plazos", (v) => `<ul class="checklist-preview">${v.map((p) => {
       const link = pdfLinkFromCita(fuentesPdf, p.cita);
       return `<li><strong>${escapeHtml(p.fecha || "—")}</strong> — ${escapeHtml(p.hito || "")}${p.cita ? ` <span class="cita-inline">(${escapeHtml(p.cita)}${link ? ` · <a href="${escapeAttr(link)}" target="_blank" rel="noopener">ver</a>` : ""})</span>` : ""}</li>`;
     }).join("")}</ul>`);
+    html += `<div class="resumen-mas" hidden>${docsPlazosHtml}</div><button type="button" class="btn small" data-action="leer-mas">Ver documentos y plazos detallados ↓</button>`;
     html += `<p class="cache-note">${data.desde_cache ? "Resumen ya generado antes para esta licitación (caché compartida entre usuarios)." : "Resumen generado ahora mismo por IA a partir del pliego oficial."} Verifica siempre contra el PDF original antes de decidir.</p>`;
     html += `
       <div class="checklist-box">
         <h4>Checklist de la oferta</h4>
-        <div class="checklist-progress"></div>
-        <ul class="checklist-items"></ul>
-        <div class="checklist-actions">
-          <button type="button" class="btn small" data-action="ics">Añadir plazos a mi calendario</button>
-          <button type="button" class="btn small" data-action="print">Exportar / imprimir</button>
+        <div class="resumen-mas" hidden>
+          <div class="checklist-progress"></div>
+          <ul class="checklist-items"></ul>
+          <div class="checklist-actions">
+            <button type="button" class="btn small" data-action="ics">Añadir plazos a mi calendario</button>
+            <button type="button" class="btn small" data-action="print">Exportar / imprimir</button>
+          </div>
         </div>
+        <button type="button" class="btn small" data-action="leer-mas">Ver checklist marcable ↓</button>
       </div>
     `;
     html += `</div>`;
