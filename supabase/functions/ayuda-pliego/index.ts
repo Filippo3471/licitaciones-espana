@@ -29,6 +29,12 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const DOC_FETCH_HEADERS = {
+  "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+  "Referer": "https://contrataciondelestado.es/",
+  "Accept": "application/pdf,*/*",
+};
+
 // Sube la versión cuando cambie la forma del JSON que se pide al modelo —
 // un resumen cacheado con una versión distinta se trata como si no
 // existiera y se regenera, sin tocar la fila vieja (queda ahí, solo deja
@@ -163,7 +169,7 @@ Deno.serve(async (req) => {
 
       const documentBlocks = [];
       for (const doc of targets) {
-        const pdfResp = await fetch(doc.url);
+        const pdfResp = await fetch(doc.url, { headers: DOC_FETCH_HEADERS });
         if (!pdfResp.ok) continue;
         const contentType = pdfResp.headers.get("content-type") || "";
         const buf = await pdfResp.arrayBuffer();
@@ -193,7 +199,11 @@ Deno.serve(async (req) => {
         headers: anthropicHeaders,
         body: JSON.stringify({
           model: "claude-sonnet-5",
-          max_tokens: 4096,
+          // 4096 se quedaba corto para pliegos con muchos anexos/plazos/
+          // documentación (la respuesta se cortaba a mitad del JSON y
+          // JSON.parse fallaba) -- claude-sonnet-5 además usa pensamiento
+          // extendido por defecto, que descuenta del mismo límite.
+          max_tokens: 16000,
           messages: [
             {
               role: "user",
