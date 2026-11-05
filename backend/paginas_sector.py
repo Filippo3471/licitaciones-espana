@@ -206,6 +206,17 @@ def render_pagina(sector: str, datos: dict, generado_en: str, adj: dict | None) 
   </table>
 """
 
+    guia_procedimiento = """
+  <h2>Cómo funciona una licitación pública en España</h2>
+  <ol class="guia-pasos">
+    <li><strong>Publicación.</strong> El órgano de contratación publica el pliego (PCAP, administrativo, y PPT, técnico) en PLACSP o su plataforma autonómica, con el plazo de presentación.</li>
+    <li><strong>Filtro de solvencia.</strong> Antes de preparar nada, hay que cumplir los requisitos de solvencia económica y técnica que exige el pliego — es el primer corte, y el que más empresas se saltan sin comprobar.</li>
+    <li><strong>Presentación de ofertas.</strong> Se entrega la documentación exigida (DEUC, memoria técnica, oferta económica...) dentro del plazo — fuera de plazo no se admite.</li>
+    <li><strong>Valoración y adjudicación.</strong> La mesa de contratación valora las ofertas según los criterios del pliego y adjudica — el plazo medio real en España es de varias semanas tras cerrar el plazo.</li>
+  </ol>
+  <p class="sub">El paso que más tiempo hace perder no es ninguno de estos — es leer un pliego de 80 páginas para saber si el punto 2 lo cumples. Eso es justo lo que hace <a href="../">Adjuplica</a> en segundos, con la cita exacta del pliego para comprobarlo.</p>
+"""
+
     lead_form = f"""
   <div class="lead-box">
     <h2>Recibe este informe por email</h2>
@@ -297,6 +308,8 @@ def render_pagina(sector: str, datos: dict, generado_en: str, adj: dict | None) 
   td.num, th.num {{ text-align:right; white-space:nowrap; }}
   .organo {{ color:var(--ink-muted); font-size:0.78rem; margin-top:2px; }}
   .nota {{ font-size:0.8rem; color:var(--ink-muted); }}
+  .guia-pasos {{ padding-left:20px; }}
+  .guia-pasos li {{ margin-bottom:8px; font-size:0.9rem; }}
   .volver {{ display:inline-block; margin-top:24px; }}
   .generado {{ font-size:0.78rem; color:var(--ink-muted); margin-top:30px; }}
   .lead-box {{ background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:24px; }}
@@ -322,6 +335,7 @@ def render_pagina(sector: str, datos: dict, generado_en: str, adj: dict | None) 
   </table>
   {nota_atipicas}
   {seccion_ganadores}
+  {guia_procedimiento}
   <h2>Licitaciones con plazo más próximo</h2>
   <table>
     <thead><tr><th>Licitación</th><th>CCAA</th><th class="num">Importe</th><th>Plazo</th></tr></thead>
