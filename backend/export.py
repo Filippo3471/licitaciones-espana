@@ -13,7 +13,7 @@ from pathlib import Path
 
 from . import update as placsp_update
 from .db import get_conn
-from .sources import bilbao, castilla_y_leon, catalunya, euskadi, placsp_agregadas, ted, tenders_guru
+from .sources import bilbao, castilla_y_leon, catalunya, euskadi, madrid, placsp_agregadas, ted, tenders_guru
 
 OUT_DEFAULT = Path(__file__).resolve().parent.parent / "data" / "licitaciones.json"
 
@@ -206,6 +206,7 @@ def run(
         for nombre, fn in (
             ("Catalunya (Generalitat)", catalunya.fetch),
             ("País Vasco (KontratazioA)", euskadi.fetch),
+            ("Comunidad de Madrid (PCON)", madrid.fetch),
             ("TED (UE)", ted.fetch),
             ("Ayuntamiento de Bilbao", bilbao.fetch),
             ("TendersGuru", tenders_guru.fetch),
