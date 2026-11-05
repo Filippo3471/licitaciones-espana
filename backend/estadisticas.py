@@ -221,7 +221,7 @@ def render_html(stats: dict, generado_en: str) -> str:
 <body>
   <h1>Estadísticas de licitaciones públicas abiertas en España</h1>
   {aviso_placsp_html()}
-  <p class="sub">Datos generados el {generado_en} · fuentes: PLACSP, TED (UE), Generalitat de Catalunya, Ayuntamiento de Bilbao · se actualiza dos veces al día</p>
+  <p class="sub">Datos generados el {generado_en} · fuentes: PLACSP (feed principal y agregado regional), Euskadi, Castilla y León, TED (UE), Generalitat de Catalunya, Ayuntamiento de Bilbao · se actualiza dos veces al día</p>
 
   <div class="resumen">
     <p><strong>Ahora mismo hay {stats['total_abiertas']} licitaciones públicas abiertas en España</strong>, por un importe total de {money(stats['total_importe'])}.</p>

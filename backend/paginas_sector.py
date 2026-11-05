@@ -347,7 +347,7 @@ def render_pagina(sector: str, datos: dict, generado_en: str, adj: dict | None) 
   <a class="volver" href="../">← Buscar todas las licitaciones abiertas</a> ·
   <a class="volver" href="../estadisticas.html">Ver estadísticas completas por sector y CCAA</a>
 
-  <p class="generado">Generado automáticamente a partir de PLACSP, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el {generado_en}.</p>
+  <p class="generado">Generado automáticamente a partir de PLACSP (feed principal y agregado regional), Euskadi, Castilla y León, TED, Generalitat de Catalunya y Ayuntamiento de Bilbao el {generado_en}.</p>
 </div>
 </body>
 </html>
