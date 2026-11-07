@@ -43,12 +43,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/sin-clasificar.html</loc>
-    <lastmod>2026-11-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-medioambientales-saneamiento-residuos.html</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>daily</changefreq>
@@ -79,6 +73,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/sin-clasificar.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>daily</changefreq>
@@ -97,13 +97,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-y-aparatos-electricos.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-y-aparatos-electricos.html</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
