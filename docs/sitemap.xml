@@ -31,19 +31,13 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/sin-clasificar.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-reparacion-y-mantenimiento.html</loc>
-    <lastmod>2026-11-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/vehiculos-transporte.html</loc>
-    <lastmod>2026-11-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-medioambientales-saneamiento-residuos.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -55,7 +49,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-salud-y-accion-social.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-medioambientales-saneamiento-residuos.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/vehiculos-transporte.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -67,13 +67,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-salud-y-accion-social.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/paquetes-de-software-y-sistemas-de-informacion.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -85,25 +91,25 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-y-aparatos-electricos.html</loc>
-    <lastmod>2026-11-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-recreativos-culturales-y-deportivos.html</loc>
-    <lastmod>2026-11-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/materiales-de-construccion.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-transporte.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/maquinaria-y-aparatos-electricos.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-recreativos-culturales-y-deportivos.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -133,7 +139,55 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-de-radio-tv-comunicaciones.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-agricolas-forestales-jardineria.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/otros-servicios-comunitarios-sociales-y-personales.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-de-laboratorio-optica-precision.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-de-seguridad-defensa.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/alimentacion-bebidas-tabaco.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/prendas-de-vestir-calzado.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-inmobiliarios.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
