@@ -19,19 +19,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-empresariales-publicidad-limpieza-consultoria-seguridad.html</loc>
-    <lastmod>2026-11-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-arquitectura-ingenieria-y-construccion.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/sin-clasificar.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-empresariales-publicidad-limpieza-consultoria-seguridad.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -44,6 +38,12 @@
   </url>
   <url>
     <loc>https://filippo3471.github.io/licitaciones-espana/sector/equipos-medicos-farmacia-cosmetica.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/sin-clasificar.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -109,13 +109,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-hosteleria-y-restauracion.html</loc>
+    <loc>https://filippo3471.github.io/licitaciones-espana/sector/servicios-de-educacion-y-formacion.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
