@@ -85,6 +85,19 @@ límite real es la cuota de tu plan, no el dinero. Si prefieres, lo haces tú
 mismo clicando en la web — 20 clics — y yo luego leo el resultado cacheado
 para construir los emails A1/A2.
 
+## Corrección del diagnóstico (19-11-2026, 22:42)
+
+El usuario confirmó, viendo el Instantly real: el producto está bien (GO/NO-GO
+funciona, landing ya con CTA+FAQ, pipeline de datos real). El cuello de
+botella es FOCO y ejecución de venta, no el producto — prueba: 6 campañas
+(Adjuplica.1/.2/.3/.3-B1/.3-B2/Consultoras), la mayoría pausadas a medias
+(Adjuplica.2: 420 enviados de una lista mucho mayor, pausada al 1%;
+Adjuplica.1: pausada al 15%), y la cuenta de prueba del propio fundador en
+plan Free. Decisión: dejar de construir variantes nuevas. Lanzar B1/B2 (el
+lote más limpio y reciente) y no tocar nada más hasta tener señal real
+(respuestas) durante 7-14 días. Congelado hasta entonces: nuevas campañas,
+nuevos lotes, nuevas variantes de email, el parser GO/NO-GO manual.
+
 ## Otras decisiones pendientes (ya reportadas antes en este chat)
 
 - Lanzar Adjuplica.3-B1/B2 (261 leads, en pausa).

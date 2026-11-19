@@ -643,6 +643,7 @@
       <div class="field">
         <label for="auth-input-password">Contraseña</label>
         <input type="password" id="auth-input-password" required autocomplete="current-password" minlength="6">
+        <p style="font-size:0.78rem;margin:6px 0 0"><a href="#" id="link-olvide-password">¿Olvidaste tu contraseña?</a></p>
       </div>
       <div class="field" id="auth-invite-field" hidden>
         <label for="auth-input-invite">Código de invitación</label>
@@ -676,6 +677,40 @@
     <div class="modal-actions" style="margin-top:4px">
       <button type="button" class="modal-close" data-close="modal-auth">Cancelar</button>
     </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-olvide-password" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-olvide-title">
+    <h3 id="modal-olvide-title">Recuperar contraseña</h3>
+    <p class="modal-sub">Te mandamos un enlace a tu email para elegir una contraseña nueva.</p>
+    <form id="form-olvide-password">
+      <div class="field">
+        <label for="olvide-email">Email</label>
+        <input type="email" id="olvide-email" required autocomplete="email">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-close" data-close="modal-olvide-password">Cancelar</button>
+        <button type="submit" class="btn primary" id="olvide-submit">Mandar enlace</button>
+      </div>
+      <p class="modal-error" id="olvide-msg"></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-nueva-password" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-nueva-title">
+    <h3 id="modal-nueva-title">Elige tu nueva contraseña</h3>
+    <form id="form-nueva-password">
+      <div class="field">
+        <label for="nueva-password">Nueva contraseña</label>
+        <input type="password" id="nueva-password" required minlength="6" autocomplete="new-password">
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn primary" id="nueva-submit">Guardar contraseña</button>
+      </div>
+      <p class="modal-error" id="nueva-msg"></p>
+    </form>
   </div>
 </div>
 
@@ -1732,7 +1767,10 @@
     // INITIAL_SESSION) además de en cada cambio futuro — un único punto de
     // entrada evita la carrera de tener dos llamadas a onAuthChange
     // solapándose al cargar la página.
-    sb.auth.onAuthStateChange((_event, session) => onAuthChange(session));
+    sb.auth.onAuthStateChange((_event, session) => {
+      if (_event === "PASSWORD_RECOVERY") openModal("#modal-nueva-password");
+      onAuthChange(session);
+    });
 
     $("#btn-login").addEventListener("click", () => { $("#auth-error").textContent = ""; openModal("#modal-auth"); });
     $("#btn-logout").addEventListener("click", async () => { await sb.auth.signOut(); });
@@ -1768,13 +1806,51 @@
       $("#panel-pedir-acceso").hidden = true;
     });
 
+    $("#link-olvide-password").addEventListener("click", (e) => {
+      e.preventDefault();
+      $("#olvide-email").value = $("#auth-input-email").value || "";
+      $("#olvide-msg").textContent = "";
+      closeModal("#modal-auth");
+      openModal("#modal-olvide-password");
+    });
+    $("#form-olvide-password").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = $("#olvide-email").value.trim();
+      $("#olvide-submit").disabled = true;
+      $("#olvide-msg").style.color = "";
+      $("#olvide-msg").textContent = "Mandando…";
+      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+      $("#olvide-submit").disabled = false;
+      if (error) {
+        $("#olvide-msg").style.color = "var(--danger, #b3261e)";
+        $("#olvide-msg").textContent = error.message;
+      } else {
+        $("#olvide-msg").style.color = "";
+        $("#olvide-msg").textContent = "Listo — revisa tu email (y spam) para el enlace.";
+      }
+    });
+    $("#form-nueva-password").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      $("#nueva-submit").disabled = true;
+      $("#nueva-msg").textContent = "Guardando…";
+      const { error } = await sb.auth.updateUser({ password: $("#nueva-password").value });
+      $("#nueva-submit").disabled = false;
+      if (error) {
+        $("#nueva-msg").style.color = "var(--danger, #b3261e)";
+        $("#nueva-msg").textContent = error.message;
+      } else {
+        $("#nueva-msg").style.color = "";
+        $("#nueva-msg").textContent = "Contraseña guardada.";
+        setTimeout(() => closeModal("#modal-nueva-password"), 1200);
+      }
+    });
+
     const ctaPrueba = $("#btn-cta-prueba");
     if (ctaPrueba) {
       ctaPrueba.addEventListener("click", () => {
         $("#auth-error").textContent = "";
         openModal("#modal-auth");
         if (authMode !== "signup") $("#auth-switch-mode").click();
-        trackEvent("cta_hero_prueba");
       });
     }
 
