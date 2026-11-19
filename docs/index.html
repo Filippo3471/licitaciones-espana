@@ -348,7 +348,19 @@
   .btn:hover { border-color: var(--accent); }
   .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .btn.small { padding: 5px 10px; font-size: 0.76rem; }
+  .btn.large { padding: 13px 22px; font-size: 0.95rem; }
   .btn[disabled] { opacity: 0.55; cursor: default; }
+  .cta-hero-row { margin: 14px 0 6px; }
+  .cta-hero-row .cta-note { display: block; font-size: 0.76rem; color: var(--ink-muted); margin-top: 6px; }
+
+  .faq-section { margin: 30px 0; }
+  .faq-section h2 { margin: 0 0 14px; }
+  .faq-section details {
+    border: 1px solid var(--line-strong); border-radius: 10px; padding: 12px 14px;
+    margin-bottom: 8px; background: var(--paper);
+  }
+  .faq-section summary { cursor: pointer; font-weight: 600; }
+  .faq-section details p { margin: 8px 0 0; color: var(--ink-muted); font-size: 0.88rem; }
 
   .modal-backdrop {
     position: fixed; inset: 0; background: rgba(10,12,16,0.45); z-index: 50;
@@ -464,6 +476,10 @@
       <h1>¿Puedes presentarte a esta licitación? Te lo decimos en 2 minutos</h1>
       <p class="sub">Elige una licitación abierta, evalúa si cumples la solvencia exigida y qué documentos te faltan, con cada dato enlazado a su cláusula del pliego oficial. Datos oficiales, actualizados dos veces al día.</p>
       <p class="sub" style="font-weight:600;color:var(--accent, #1b5e4f)">Garantía: si te decimos que cumples un requisito y la mesa te excluye por ese mismo requisito, te devolvemos el análisis y te regalamos 3 meses de Básico.</p>
+      <div class="cta-hero-row" id="cta-hero-row">
+        <button type="button" class="btn primary large" id="btn-cta-prueba">Pide acceso y prueba 14 días gratis</button>
+        <span class="cta-note">Sin tarjeta. Cancela cuando quieras. Acceso limitado a un número de empresas nuevas por semana.</span>
+      </div>
       <div class="auth-bar" id="auth-bar">
         <button type="button" class="btn" id="btn-login" hidden>Iniciar sesión</button>
         <span class="email" id="auth-email" hidden></span>
@@ -540,6 +556,30 @@
     </div>
     <button type="button" class="btn primary" data-open="modal-precios" id="btn-consultoras-precios">Ver plan Equipo</button>
   </div>
+
+  <section class="faq-section">
+    <h2>Preguntas frecuentes</h2>
+    <details>
+      <summary>¿Cuánto cuesta?</summary>
+      <p>14 días de PRO gratis, sin tarjeta. Después, el plan Básico cuesta 29 €/mes (10 análisis de pliego al mes). Si licitas poco, puedes comprar el análisis de una sola licitación sin suscripción: el primero por 5 €, a partir del segundo 19 €.</p>
+    </details>
+    <details>
+      <summary>¿Puedo cancelar cuando quiera?</summary>
+      <p>Sí, cancela cuando quieras desde "Gestionar suscripción", sin permanencia.</p>
+    </details>
+    <details>
+      <summary>¿Qué pasa si decís que cumplo un requisito y la mesa me excluye por eso?</summary>
+      <p>Te devolvemos el análisis y te regalamos 3 meses de Básico — es nuestra garantía, no una promesa genérica.</p>
+    </details>
+    <details>
+      <summary>¿De dónde salen los datos?</summary>
+      <p>De fuentes oficiales: PLACSP, TED (Unión Europea), Generalitat de Catalunya y Ayuntamiento de Bilbao, actualizadas dos veces al día.</p>
+    </details>
+    <details>
+      <summary>¿Necesito un código de invitación?</summary>
+      <p>Sí: damos acceso a un número limitado de empresas nuevas por semana. Si no tienes código, puedes pedirlo desde el botón de registro.</p>
+    </details>
+  </section>
 
   <nav class="tabs" role="tablist">
     <button type="button" id="tabbtn-licitaciones" role="tab" aria-selected="true" aria-controls="tab-licitaciones">Licitaciones abiertas</button>
@@ -1727,6 +1767,16 @@
       $("#auth-invite-field").hidden = authMode !== "signup";
       $("#panel-pedir-acceso").hidden = true;
     });
+
+    const ctaPrueba = $("#btn-cta-prueba");
+    if (ctaPrueba) {
+      ctaPrueba.addEventListener("click", () => {
+        $("#auth-error").textContent = "";
+        openModal("#modal-auth");
+        if (authMode !== "signup") $("#auth-switch-mode").click();
+        trackEvent("cta_hero_prueba");
+      });
+    }
 
     $("#link-pedir-acceso").addEventListener("click", (e) => {
       e.preventDefault();
